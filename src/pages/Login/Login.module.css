@@ -1,0 +1,15 @@
+.loginPage {
+    display: flex;
+}
+
+.image {
+    height: 100vh;
+    background-color: rgb(152, 202, 185);
+    width: 55%;
+}
+
+.loginTitle {
+    font-size: 3rem;
+    margin-left: 1rem;
+    margin-top: 10rem;
+}
