@@ -5,7 +5,7 @@ import classes from './LoginOptions.module.css'
 
 const LoginOptions = (props) => {
     return (
-        <div>
+        <div className={classes.options}>
             <section>
                 <h2>Join Chirpy today.</h2>
                 <Button onClick={props.onSignUp}>Sign Up</Button>
