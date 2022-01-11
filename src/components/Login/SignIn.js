@@ -4,7 +4,9 @@ import LoginModal from '../UI/LoginModal/LoginModal'
 const SignIn = (props) => {
     return (
         <LoginModal onClick={props.onClose}>
-            Sign In Form To Be Added
+            <h1>
+                Sign IN Form To Be Added
+            </h1>
         </LoginModal>
     )
 }

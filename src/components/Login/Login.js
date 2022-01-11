@@ -19,12 +19,12 @@ const Login = () => {
 
     const openSignInModalHandler = () => {
         setSignIn(true)
-        navigate('signin')
+        navigate('/flow/signin')
     }
 
     const openSignUpModalHandler = () => {
         setSignUp(true)
-        navigate('signup')
+        navigate('/flow/signup')
     }
 
     const closeSignInModalHandler = () => {
