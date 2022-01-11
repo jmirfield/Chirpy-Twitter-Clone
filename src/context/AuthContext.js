@@ -17,6 +17,7 @@ export const AuthProvider = ({ children }) => {
         setIsLogged(false)
     }
 
+
     return (
         <AuthContext.Provider value={{
             isLogged,

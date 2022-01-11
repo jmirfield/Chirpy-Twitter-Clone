@@ -20,7 +20,7 @@ const LoginOverlay = (props) => {
 const LoginModal = (props) => {
     return (
         <React.Fragment>
-            {ReactDOM.createPortal(<Backdrop />, portalElement)}
+            {ReactDOM.createPortal(<Backdrop onClick={props.onClick}/>, portalElement)}
             {ReactDOM.createPortal(<LoginOverlay>{props.children}</LoginOverlay>, portalElement)}
         </React.Fragment>
     )

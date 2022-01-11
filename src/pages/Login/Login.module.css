@@ -10,6 +10,10 @@
 
 .loginTitle {
     font-size: 3rem;
-    margin-left: 1rem;
+    margin-left: .5rem;
     margin-top: 10rem;
+}
+
+.loginSide {
+    padding-left: 2rem;
 }
