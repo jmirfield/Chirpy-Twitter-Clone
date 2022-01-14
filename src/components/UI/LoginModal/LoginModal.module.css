@@ -9,16 +9,16 @@
   }
 
   .modal {
-    position: fixed;
-    top: 33%;
-    left: 33%;
-    width: 33%;
-    background-color: white;
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    min-width: 25rem;
+    background-color: rgb(109, 99, 99);
     padding: 1rem;
     border-radius: 14px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
     z-index: 30;
-    max-height: 94vh;
+    transform: translate(-50%, -50%);
     transform:scale(0);
     transform:scaleY(.01) scaleX(0);
     animation:unfoldIn .25s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards
@@ -33,5 +33,6 @@
     }
     100% {
       transform:scaleY(1) scaleX(1);
+      transform:translateX(-50%);
     }
   }

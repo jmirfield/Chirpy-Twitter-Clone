@@ -1,17 +1,24 @@
-import React, { useContext } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Home from './pages/Home';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import Login from './components/Login/Login';
+import SignIn from './components/Login/SignIn';
+import SignUp from './components/Login/SignUp';
 
 function App() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path='/' element={<Home />}>
-          <Route path='flow/:login' element={<Home />}/>
-        </Route>
-      </Routes>
-    </BrowserRouter>
-  );
+  const loggedIn = false
+
+  if(!loggedIn) {
+    return (
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<Login />}>
+            <Route path='flow/signin' element={<SignIn />} />
+            <Route path='flow/signup' element={<SignUp />} />
+            <Route path='flow/*' element={<Navigate replace to='/' />}/>
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    );
+  }
 }
 
 export default App;

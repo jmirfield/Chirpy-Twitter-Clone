@@ -1,11 +1,16 @@
 .button {
-    border-radius: 2rem;
+    border-radius: 1rem;
+    width: 100%;
     font-size: 1rem;
     padding: .5rem 4rem .5rem 4rem;
     color: white;
-    background-color: #333;
+    background-color: #0063e2;
 }
 
 .button:hover {
-    background-color: rgb(49, 61, 49);
+    background-color: #2f7bdf;
+}
+
+.button:disabled {
+    background-color: #333;
 }

@@ -1,19 +1,19 @@
-.loginPage {
-    display: flex;
+.main {
+    text-align: center;
+    margin-top: 10vh;
 }
 
-.image {
-    height: 100vh;
-    background-color: rgb(152, 202, 185);
-    width: 55%;
-}
-
-.loginTitle {
+.title {
     font-size: 3rem;
-    margin-left: .5rem;
-    margin-top: 10rem;
+    margin-top: 0;
 }
 
-.loginSide {
-    padding-left: 2rem;
+.options {
+    margin: auto;
+    max-width: 20rem;
+}
+
+.logo {
+    max-width: 15rem;
+    fill: #099bf5;
 }

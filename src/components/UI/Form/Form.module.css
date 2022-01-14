@@ -1,0 +1,23 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    max-width: 20rem;
+    justify-content: center;
+    margin: auto; 
+}
+
+.form input {
+    font-size: 1rem;
+    min-height: 2rem;
+    border-radius: .5rem;
+    margin-bottom: 1rem;
+    width: 95%;
+}
+
+.action {
+    margin-top: 4rem;
+}
+
+.error {
+    color: rgb(224, 61, 61);
+}
