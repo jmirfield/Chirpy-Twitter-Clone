@@ -2,9 +2,10 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Login from './components/Login/Login';
 import SignIn from './components/Login/SignIn';
 import SignUp from './components/Login/SignUp';
+import Tweets from './components/Tweets/Tweets';
 
 function App() {
-  const loggedIn = false
+  const loggedIn = true
 
   if(!loggedIn) {
     return (
@@ -19,6 +20,10 @@ function App() {
       </BrowserRouter>
     );
   }
+
+  return (
+    <Tweets />
+  )
 }
 
 export default App;
