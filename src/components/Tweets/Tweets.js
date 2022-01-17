@@ -7,13 +7,13 @@ import classes from './Tweets.module.css'
 
 const DUMMY_TWEETS = [
     {
-        message: 'Hello world',
+        message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tellus at urna condimentum mattis pellentesque id nibh tortor. Nec ullamcorper sit amet risus nullam eget.',
         user: 'TestUser',
         timestamp: formatDate(),
         id: 't1'
     },
     {
-        message: 'This is my second tweet',
+        message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Phasellus vestibulum lorem sed risus ultricies tristique nulla aliquet.',
         user: 'TestUser',
         timestamp: formatDate(),
         id: 't2'
@@ -37,23 +37,11 @@ const DUMMY_TWEETS = [
         id: 't5'
     },
     {
-        message: 'No.',
+        message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Arcu odio ut sem nulla.',
         user: 'TestUser',
         timestamp: formatDate(),
         id: 't6'
     },
-    {
-        message: 'No.',
-        user: 'TestUser',
-        timestamp: formatDate(),
-        id: 't7'
-    },
-    {
-        message: 'No.',
-        user: 'TestUser',
-        timestamp: formatDate(),
-        id: 't8'
-    }
 ]
 
 const Tweets = () => {
