@@ -35,6 +35,24 @@ const DUMMY_TWEETS = [
         user: 'TestUser',
         timestamp: formatDate(),
         id: 't5'
+    },
+    {
+        message: 'No.',
+        user: 'TestUser',
+        timestamp: formatDate(),
+        id: 't6'
+    },
+    {
+        message: 'No.',
+        user: 'TestUser',
+        timestamp: formatDate(),
+        id: 't7'
+    },
+    {
+        message: 'No.',
+        user: 'TestUser',
+        timestamp: formatDate(),
+        id: 't8'
     }
 ]
 

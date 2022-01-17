@@ -1,7 +1,5 @@
 .layout {
     display: flex;
+    overflow: hidden;
 }
 
-.sidebar {
-    width: 30%;
-}

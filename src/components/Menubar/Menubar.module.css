@@ -1,0 +1,26 @@
+.menu {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding-left: 5rem;
+    padding-right: 5rem;
+    background-color: #141618;
+    padding-top: 5rem;
+}
+
+.menu a {
+    display: flex;
+    justify-content: left;
+    margin-bottom: 2rem;
+}
+
+.menu a:link {
+    text-decoration: none;
+  }
+
+.menu span {
+    font-size: 1.5rem;
+    margin-left: 1rem;
+    color: white;
+    align-self: flex-end;
+}
