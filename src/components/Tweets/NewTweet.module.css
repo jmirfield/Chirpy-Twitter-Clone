@@ -1,0 +1,45 @@
+.main {
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+    width: 100%;
+    border: 1px solid rgb(95, 108, 116);
+    padding: 1rem;
+}
+
+.profileIcon {
+    display: inline;
+    height: 50px;
+    width: 50px;
+    background-color: #bbb;
+    border-radius: 50%;
+}
+
+.input {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.input textarea {
+    width: 100%;
+    min-height: 20vh;
+    background-color: rgb(22, 20, 20);
+    resize: none;
+    flex: 1;
+    padding: 1rem;
+    margin: 0;
+    color: white;
+    box-sizing: border-box;
+    outline: none;
+    border: none;
+}
+
+.input button {
+    margin-left: auto;
+    margin-right: 1rem;
+    padding: .5rem 2rem .5rem 2rem;
+    border-radius: 30px;
+
+}
+

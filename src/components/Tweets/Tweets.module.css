@@ -1,35 +1,7 @@
-.tweet {
-    display: flex;
-}
-
-.tempIcon {
-    height: 50px;
-    width: 50px;
-    background-color: #bbb;
-    border-radius: 50%;
-  }
-
-.tweetMain {
+.tweets {
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
-    margin-left: 1rem;
-}
-
-.tweetTime {
-    float: right;
-}
-
-.tweetMessage {
-    margin-bottom: .5rem;
-}
-
-.tweetActions {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 1rem;
-}
-
-.tweetActions button {
-    margin: 0 1rem 0 1rem;
+    min-height: 100vh;
+    border-right: 1px solid rgb(95, 108, 116);
+    border-left: 1px solid rgb(95, 108, 116);
 }

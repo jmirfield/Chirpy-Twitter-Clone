@@ -1,0 +1,7 @@
+.layout {
+    display: flex;
+}
+
+.sidebar {
+    width: 30%;
+}
