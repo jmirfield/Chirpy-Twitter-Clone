@@ -9,9 +9,12 @@
 .form input {
     font-size: 1rem;
     min-height: 2rem;
-    border-radius: .5rem;
+    border-radius: 5px;
     margin-bottom: 1rem;
     width: 95%;
+    outline: none;
+    background-color: rgb(32, 29, 29);
+    color: white;
 }
 
 .action {

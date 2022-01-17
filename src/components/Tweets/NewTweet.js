@@ -1,4 +1,6 @@
 import React from 'react'
+import Button from '../UI/Button/Button'
+import TweetInput from '../UI/TweetInput/TweetInput'
 import classes from './NewTweet.module.css'
 
 const NewTweet = () => {
@@ -8,8 +10,7 @@ const NewTweet = () => {
                 {/* TEMP */}
             </div>
             <div className={classes.input}>
-                <textarea></textarea>
-                <button>Chirp</button>
+                <TweetInput />
             </div>
         </div>
     )

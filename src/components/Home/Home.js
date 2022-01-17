@@ -7,14 +7,14 @@ const Home = () => {
     return (
         <div className={classes.layout}>
             <div className={classes.sidebar}>
-
+                {/* PLACEHOLDER */}
             </div>
             <div className={classes.main}>
                 <NewTweet />
                 <Tweets />
             </div>
             <div>
-
+                {/* PLACEHOLDER */}
             </div>
         </div>
     )

@@ -5,7 +5,7 @@ import SignUp from './components/Login/SignUp';
 import Home from './components/Home/Home';
 
 function App() {
-  const loggedIn = true
+  const loggedIn = false
 
   if (!loggedIn) {
     return (
