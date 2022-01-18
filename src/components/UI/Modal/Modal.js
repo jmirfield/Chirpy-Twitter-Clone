@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import ReactDOM from 'react-dom'
 
 import classes from './Modal.module.css'
@@ -18,9 +18,15 @@ const Overlay = (props) => {
 }
 
 const Modal = (props) => {
+    useEffect(() => {
+        document.body.style.overflow = 'hidden'
+        return () => {
+            document.body.style.overflow = 'auto'
+        }
+    }, [])
     return (
         <React.Fragment>
-            {ReactDOM.createPortal(<Backdrop onClick={props.onClick}/>, portalElement)}
+            {ReactDOM.createPortal(<Backdrop onClick={props.onClick} />, portalElement)}
             {ReactDOM.createPortal(<Overlay>{props.children}</Overlay>, portalElement)}
         </React.Fragment>
     )

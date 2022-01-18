@@ -6,6 +6,7 @@ import classes from './MainLayout.module.css'
 
 const MainLayout = (props) => {
     const [composeChirp, setComposeChirp] = useState(false)
+    
     const onOpenNewChirpHandler = () => {
         setComposeChirp(true)
     }
