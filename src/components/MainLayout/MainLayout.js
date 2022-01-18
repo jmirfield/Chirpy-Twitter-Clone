@@ -6,7 +6,7 @@ import classes from './MainLayout.module.css'
 const MainLayout = () => {
     return (
         <div className={classes.layout}>
-            <header>
+            <header className={classes.menubar}>
                 <Menubar />
             </header>
             <div className={classes.main}>

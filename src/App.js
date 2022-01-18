@@ -18,6 +18,7 @@ function App() {
             <Route path='flow/signup' element={<SignUp />} />
             <Route path='flow/*' element={<Navigate replace to='/' />} />
           </Route>
+          <Route path='*' element={<Navigate replace to='/'/> } />
         </Routes>
       </BrowserRouter>
     );

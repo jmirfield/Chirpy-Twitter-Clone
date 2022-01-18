@@ -1,11 +1,14 @@
 .layout {
     display: flex;
-    overflow: hidden;
+    min-height: 100vh;
 }
 
 .main {
-    max-width: 40rem;
+    width: 40rem;
     border-right: 1px solid rgb(95, 108, 116);
     border-left: 1px solid rgb(95, 108, 116);
 }
 
+.menubar {
+    overflow: hidden;
+}

@@ -1,11 +1,12 @@
 .menu {
     display: flex;
     flex-direction: column;
-    height: 100%;
     padding-left: 5rem;
     padding-right: 5rem;
     background-color: #141618;
     padding-top: 5rem;
+    height: 100%;
+    overflow: hidden;
 }
 
 .menu a {

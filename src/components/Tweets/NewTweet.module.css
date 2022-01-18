@@ -22,7 +22,7 @@
 
 .input textarea {
     width: 100%;
-    min-height: 15vh;
+    min-height: 10vh;
     background-color: black;
     resize: none;
     flex: 1;
