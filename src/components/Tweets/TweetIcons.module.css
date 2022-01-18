@@ -1,0 +1,48 @@
+.icon {
+    display: flex;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    outline: none;
+    align-items: center;
+}
+
+.icon span {
+    color: white;
+    font-size: 1rem;
+    margin-left: 1rem;
+    color: rgb(101, 119, 134);
+}
+
+.iconStyle {
+    display: flex;
+    padding: .5rem;
+    border-radius: 5rem;
+    justify-content: center;
+}
+
+.icon:hover .reply {
+    background-color: rgba(29,155,240,0.1);
+}
+
+.icon:hover .reply svg {
+    fill: #099bf5;
+}
+
+.icon:hover .rechirp {
+    background-color: rgba(0,186,124,0.1);
+}
+
+.icon:hover .rechirp svg {
+    fill: rgba(0,186,124);
+}
+
+.icon:hover .like {
+    background-color: rgba(249,24,128,0.1);
+}
+
+.icon:hover .like svg {
+    fill: rgb(249,24,128);
+}

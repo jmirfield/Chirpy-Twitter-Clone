@@ -2,11 +2,12 @@ import React, { useRef } from 'react'
 import TweetInput from '../UI/TweetInput/TweetInput'
 import classes from './NewTweet.module.css'
 
-const NewTweet = () => {
+const NewTweet = (props) => {
     const textAreaRef = useRef()
 
     const onSubmitTweetHandler = (e) => {
         e.preventDefault()
+        props.onAdd(textAreaRef.current.value)
         textAreaRef.current.value = ''
     }
 

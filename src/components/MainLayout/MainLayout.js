@@ -4,7 +4,7 @@ import Menubar from '../Menubar/Menubar'
 import TweetModal from './TweetModal'
 import classes from './MainLayout.module.css'
 
-const MainLayout = () => {
+const MainLayout = (props) => {
     const [composeChirp, setComposeChirp] = useState(false)
     const onOpenNewChirpHandler = () => {
         setComposeChirp(true)
@@ -16,7 +16,7 @@ const MainLayout = () => {
     return (
         <div className={classes.layout}>
             <header className={classes.menubar}>
-                <Menubar onNewChirp={onOpenNewChirpHandler}/>
+                <Menubar onNewChirp={onOpenNewChirpHandler} username={props.username}/>
             </header>
             <div className={classes.main}>
                 <Outlet />

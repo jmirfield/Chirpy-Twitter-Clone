@@ -1,7 +1,9 @@
 import React from 'react'
+import TweetIcons from './TweetIcons'
 import classes from './Tweet.module.css'
 
-const Tweet = ({id, user, message, timestamp}) => {
+const Tweet = React.memo(({ id, user, message, stats, timestamp }) => {
+    // console.log('render')
     return (
         <div className={classes.tweet} key={id}>
             <span className={classes.tempIcon}></span>
@@ -12,13 +14,11 @@ const Tweet = ({id, user, message, timestamp}) => {
                 </div>
                 <p className={classes.tweetMessage}>{message}</p>
                 <div className={classes.tweetActions}>
-                    <button>Reply</button>
-                    <button>Rechirp</button>
-                    <button>Like</button>
+                    <TweetIcons stats={stats} />
                 </div>
             </div>
         </div>
     )
-}
+})
 
 export default Tweet

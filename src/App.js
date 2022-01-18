@@ -8,6 +8,7 @@ import MainLayout from './components/MainLayout/MainLayout';
 
 function App() {
   const loggedIn = true
+  const username = 'justinmirf'
 
   if (!loggedIn) {
     return (
@@ -27,9 +28,11 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<MainLayout />} >
+        <Route path='/' element={<MainLayout username={username}/>} >
           <Route path='home' element={<Home />} />
           <Route path=':user' element={<p>PLACEHOLDER</p>} />
+          <Route path=':user/lists' element={<p>LISTS PLACEHOLDER</p>} />
+          <Route path='flow/*' element={<p>BOOKMARKS PLACEHOLDER</p>} />
           <Route path='' element={<Navigate replace to='home' />} />
         </Route >
       </Routes>
