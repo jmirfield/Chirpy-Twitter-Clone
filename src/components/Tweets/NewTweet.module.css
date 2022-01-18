@@ -27,3 +27,12 @@
     font-size: 20px;
 }
 
+
+.profileIcon {
+    display: inline-block;
+    min-height: 50px;
+    min-width: 50px;
+    max-height: 50px;
+    background-color: #bbb;
+    border-radius: 50%;
+}

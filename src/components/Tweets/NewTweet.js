@@ -7,12 +7,13 @@ const NewTweet = (props) => {
 
     const onSubmitTweetHandler = (e) => {
         e.preventDefault()
-        props.onAdd(textAreaRef.current.value)
+        if(textAreaRef.current.value.trim().length > 0)props.onAdd(textAreaRef.current.value)
         textAreaRef.current.value = ''
     }
 
     return (
         <div className={classes.main}>
+            <div className={classes.profileIcon} />
             <div className={classes.input}>
                 <TweetInput
                     onSubmit={onSubmitTweetHandler}

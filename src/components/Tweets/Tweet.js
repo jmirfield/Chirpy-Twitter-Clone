@@ -1,4 +1,5 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 import TweetIcons from './TweetIcons'
 import classes from './Tweet.module.css'
 
@@ -9,7 +10,7 @@ const Tweet = React.memo(({ id, user, message, stats, timestamp }) => {
             <span className={classes.tempIcon}></span>
             <div className={classes.tweetMain}>
                 <div>
-                    <span style={{ fontWeight: 'bold', marginRight: '2rem' }}>{user}</span>
+                    <NavLink to={`/${user}`}>{user}</NavLink>
                     <span className={classes.tweetTime}>{timestamp}</span>
                 </div>
                 <p className={classes.tweetMessage}>{message}</p>

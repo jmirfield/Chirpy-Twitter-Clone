@@ -51,7 +51,6 @@ const Home = () => {
                 <h1>Home</h1>
             </div>
             <div className={classes.newTweet}>
-                <div className={classes.profileIcon} />
                 <NewTweet onAdd={addTweetTestHandler}/>
             </div>
             <Tweets tweets={tweets}/>
