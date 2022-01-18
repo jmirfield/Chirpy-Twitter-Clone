@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import classes from './LoginModal.module.css'
+import classes from './Modal.module.css'
 
 const portalElement = document.getElementById('overlays')
 
@@ -9,7 +9,7 @@ const Backdrop = (props) => {
     return <div className={classes.backdrop} onClick={props.onClick} />
 }
 
-const LoginOverlay = (props) => {
+const Overlay = (props) => {
     return (
         <div className={classes.modal} onClick={props.onClick} >
             {props.children}
@@ -17,13 +17,13 @@ const LoginOverlay = (props) => {
     )
 }
 
-const LoginModal = (props) => {
+const Modal = (props) => {
     return (
         <React.Fragment>
             {ReactDOM.createPortal(<Backdrop onClick={props.onClick}/>, portalElement)}
-            {ReactDOM.createPortal(<LoginOverlay>{props.children}</LoginOverlay>, portalElement)}
+            {ReactDOM.createPortal(<Overlay>{props.children}</Overlay>, portalElement)}
         </React.Fragment>
     )
 }
 
-export default LoginModal
+export default Modal

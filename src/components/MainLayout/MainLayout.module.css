@@ -4,11 +4,14 @@
 }
 
 .main {
+    margin-left: 386px;
     width: 40rem;
     border-right: 1px solid rgb(95, 108, 116);
     border-left: 1px solid rgb(95, 108, 116);
 }
 
 .menubar {
+    position: fixed;
+    height: 100vh;
     overflow: hidden;
 }

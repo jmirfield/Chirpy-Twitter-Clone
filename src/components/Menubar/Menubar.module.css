@@ -1,18 +1,28 @@
 .menu {
     display: flex;
     flex-direction: column;
-    padding-left: 5rem;
-    padding-right: 5rem;
+    padding-left: 4rem;
+    padding-right: 4rem;
     background-color: #141618;
-    padding-top: 5rem;
+    padding-top: 4rem;
     height: 100%;
     overflow: hidden;
+}
+
+.menuitem {
+    display: flex;
+    padding: 1rem;
+}
+
+.menuitem:hover {
+    background-color: #272a2e;
+    border-radius: 2rem;
 }
 
 .menu a {
     display: flex;
     justify-content: left;
-    margin-bottom: 2rem;
+    align-items: center;
 }
 
 .menu a:link {
@@ -24,4 +34,9 @@
     margin-left: 1rem;
     color: white;
     align-self: flex-end;
+}
+
+.chirpbutton {
+    margin-top: 1rem;
+    width: 100%;
 }

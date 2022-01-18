@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import LoginModal from '../UI/LoginModal/LoginModal'
+import Modal from '../UI/Modal/Modal'
 import Form from '../UI/Form/Form'
 import classes from './Signin.module.css'
 
@@ -14,7 +14,7 @@ const SignIn = () => {
     }
 
     return (
-        <LoginModal onClick={onCloseHandler}>
+        <Modal onClick={onCloseHandler}>
             <Form formFor={'Sign in'}>
                 <div className={classes.control}>
                     <div>
@@ -27,7 +27,7 @@ const SignIn = () => {
                     </div>
                 </div>
             </Form>
-        </LoginModal>
+        </Modal>
     )
 }
 

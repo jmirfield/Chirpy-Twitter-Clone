@@ -12,9 +12,9 @@ const Tweet = ({id, user, message, timestamp}) => {
                 </div>
                 <p className={classes.tweetMessage}>{message}</p>
                 <div className={classes.tweetActions}>
-                    <button>Action1</button>
-                    <button>Action2</button>
-                    <button>Action3</button>
+                    <button>Reply</button>
+                    <button>Rechirp</button>
+                    <button>Like</button>
                 </div>
             </div>
         </div>

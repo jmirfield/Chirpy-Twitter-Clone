@@ -1,3 +1,21 @@
 .title {
+    position: sticky;
+    top: 0;
+    padding: .5rem 0 0rem 1rem;
+    background-color: black;
+}
+
+.newTweet {
+    display: flex;
+}
+
+.profileIcon {
+    display: inline-block;
+    min-height: 50px;
+    min-width: 50px;
+    max-height: 50px;
+    background-color: #bbb;
+    border-radius: 50%;
     margin-left: 1rem;
+    margin-top: 1rem;
 }

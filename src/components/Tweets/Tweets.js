@@ -19,28 +19,10 @@ const DUMMY_TWEETS = [
         id: 't2'
     },
     {
-        message: 'Testing testing testing',
-        user: 'TestUser',
-        timestamp: formatDate(),
-        id: 't3'
-    },
-    {
-        message: 'Yessir yessir',
-        user: 'TestUser',
-        timestamp: formatDate(),
-        id: 't4'
-    },
-    {
-        message: 'No.',
-        user: 'TestUser',
-        timestamp: formatDate(),
-        id: 't5'
-    },
-    {
         message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Arcu odio ut sem nulla.',
         user: 'TestUser',
         timestamp: formatDate(),
-        id: 't6'
+        id: 't3'
     },
 ]
 

@@ -2,7 +2,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { ErrorMessage } from '@hookform/error-message';
-import LoginModal from '../UI/LoginModal/LoginModal'
+import Modal from '../UI/Modal/Modal'
 import Form from '../UI/Form/Form'
 import classes from './Signup.module.css'
 
@@ -15,7 +15,7 @@ const SignUp = () => {
     }
 
     return (
-        <LoginModal onClick={onCloseHandler}>
+        <Modal onClick={onCloseHandler}>
             <Form formFor={'Sign up'}>
                 <div className={classes.control}>
                     <div>
@@ -58,7 +58,7 @@ const SignUp = () => {
                 </div> */}
             </div>
         </Form>
-        </LoginModal >
+        </Modal >
     )
 }
 

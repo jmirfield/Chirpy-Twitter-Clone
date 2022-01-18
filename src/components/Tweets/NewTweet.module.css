@@ -6,14 +6,6 @@
     padding: 1rem;
 }
 
-.profileIcon {
-    display: inline;
-    height: 50px;
-    width: 50px;
-    background-color: #bbb;
-    border-radius: 50%;
-}
-
 .input {
     display: flex;
     flex-direction: column;
