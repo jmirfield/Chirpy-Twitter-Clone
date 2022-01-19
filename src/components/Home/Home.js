@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import formatDate from '../../helpers/formatDate'
-import NewTweet from '../Tweets/NewTweet'
-import Tweets from '../Tweets/Tweets'
+import NewChirp from '../Chirps/NewChirp'
+import Chirps from '../Chirps/Chirps'
 import classes from './Home.module.css'
 
-const DUMMY_TWEETS = [
+const DUMMY_CHIRPS = [
     {
         message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tellus at urna condimentum mattis pellentesque id nibh tortor. Nec ullamcorper sit amet risus nullam eget.',
         user: 'TestUser',
@@ -34,15 +34,15 @@ const Home = () => {
         document.title = 'Home / Chirpy'
     }, [])
 
-    const [tweets, setTweets] = useState(DUMMY_TWEETS)
-    const addTweetTestHandler = (tweet) => {
-        setTweets(prevTweets => [{
-            message: tweet,
+    const [chirps, setChirps] = useState(DUMMY_CHIRPS)
+    const addChirpTestHandler = (chirp) => {
+        setChirps(prevChirps => [{
+            message: chirp,
             user: 'TestUser123',
             stats: [0,0,0],
             timestamp: formatDate(),
             id: Math.random()
-        },...prevTweets])
+        },...prevChirps])
     }
 
     return (
@@ -50,10 +50,10 @@ const Home = () => {
             <div className={classes.title}>
                 <h1>Home</h1>
             </div>
-            <div className={classes.newTweet}>
-                <NewTweet onAdd={addTweetTestHandler}/>
+            <div className={classes.newChirp}>
+                <NewChirp onAdd={addChirpTestHandler}/>
             </div>
-            <Tweets tweets={tweets}/>
+            <Chirps chirps={chirps}/>
         </>
     )
 }

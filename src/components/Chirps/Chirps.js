@@ -1,15 +1,15 @@
 import React from 'react'
-import Tweet from './Tweet'
+import Chirp from './Chirp'
 import Card from '../UI/Card/Card'
-import classes from './Tweets.module.css'
+import classes from './Chirps.module.css'
 
-const Tweets = (props) => {
+const Chirps = (props) => {
     return (
         <Card>
-            <div className={classes.tweets}>
-                {props.tweets.map(({ id, user, message, stats, timestamp }) => {
+            <div className={classes.chirps}>
+                {props.chirps.map(({ id, user, message, stats, timestamp }) => {
                     return (
-                        <Tweet
+                        <Chirp
                             key={id}
                             user={user}
                             message={message}
@@ -23,4 +23,4 @@ const Tweets = (props) => {
     )
 }
 
-export default Tweets
+export default Chirps

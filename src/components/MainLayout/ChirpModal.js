@@ -1,13 +1,13 @@
 import React from 'react'
 import Modal from '../UI/Modal/Modal'
-import NewTweet from '../Tweets/NewTweet'
+import NewChirp from '../Chirps/NewChirp'
 
-const TweetModal = (props) => {
+const ChirpModal = (props) => {
     return (
         <Modal onClick={props.onClose}>
-            <NewTweet />
+            <NewChirp />
         </Modal>
     )
 }
 
-export default TweetModal
+export default ChirpModal

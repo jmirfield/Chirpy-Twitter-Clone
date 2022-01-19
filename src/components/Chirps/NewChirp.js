@@ -1,11 +1,11 @@
 import React, { useRef } from 'react'
-import TweetInput from '../UI/TweetInput/TweetInput'
-import classes from './NewTweet.module.css'
+import ChirpInput from '../UI/ChirpInput/ChirpInput'
+import classes from './NewChirp.module.css'
 
-const NewTweet = (props) => {
+const NewChirp = (props) => {
     const textAreaRef = useRef()
 
-    const onSubmitTweetHandler = (e) => {
+    const onSubmitChirpHandler = (e) => {
         e.preventDefault()
         if(textAreaRef.current.value.trim().length > 0)props.onAdd(textAreaRef.current.value)
         textAreaRef.current.value = ''
@@ -15,8 +15,8 @@ const NewTweet = (props) => {
         <div className={classes.main}>
             <div className={classes.profileIcon} />
             <div className={classes.input}>
-                <TweetInput
-                    onSubmit={onSubmitTweetHandler}
+                <ChirpInput
+                    onSubmit={onSubmitChirpHandler}
                     ref={textAreaRef}
                 />
             </div>
@@ -24,4 +24,4 @@ const NewTweet = (props) => {
     )
 }
 
-export default NewTweet
+export default NewChirp

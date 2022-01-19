@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Modal from '../UI/Modal/Modal'
 import Form from '../UI/Form/Form'
 import classes from './Signin.module.css'
+import AuthContext from '../../context/AuthContext'
 
 const SignIn = () => {
+    const ctx = useContext(AuthContext)
     const [isFormValid, setIsFormValid] = useState(false)
 
     const navigate = useNavigate()
@@ -15,7 +17,7 @@ const SignIn = () => {
 
     return (
         <Modal onClick={onCloseHandler}>
-            <Form formFor={'Sign in'}>
+            <Form formFor={'Sign in'} onSubmit={ctx.onLogin}>
                 <div className={classes.control}>
                     <div>
                         <label type='text'>Username</label>

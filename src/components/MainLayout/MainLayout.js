@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import Menubar from '../Menubar/Menubar'
-import TweetModal from './TweetModal'
+import ChirpModal from './ChirpModal'
 import classes from './MainLayout.module.css'
 
 const MainLayout = (props) => {
@@ -25,7 +25,7 @@ const MainLayout = (props) => {
             <div>
                 {/* PLACEHOLDER */}
             </div>
-            {composeChirp && <TweetModal onClose={onCloseNewChirpHandler} />}
+            {composeChirp && <ChirpModal onClose={onCloseNewChirpHandler} />}
         </div>
     )
 }

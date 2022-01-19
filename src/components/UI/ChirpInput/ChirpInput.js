@@ -1,8 +1,8 @@
 import React from 'react'
 import Button from '../Button/Button'
-import classes from './TweetInput.module.css'
+import classes from './ChirpInput.module.css'
 
-const TweetInput = React.forwardRef((props, ref) => {
+const ChirpInput = React.forwardRef((props, ref) => {
     return (
         <form onSubmit={props.onSubmit}>
             <textarea
@@ -16,4 +16,4 @@ const TweetInput = React.forwardRef((props, ref) => {
     )
 })
 
-export default TweetInput
+export default ChirpInput

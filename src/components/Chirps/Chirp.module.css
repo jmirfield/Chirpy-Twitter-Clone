@@ -1,4 +1,4 @@
-.tweet {
+.chirp {
     display: flex;
     box-sizing: border-box;
     border-top: 1px solid rgb(95, 108, 116);
@@ -14,40 +14,40 @@
     border-radius: 50%;
   }
 
-.tweetMain {
+.chirpMain {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
     margin-left: 1rem;
 }
 
-.tweetMain a {
+.chirpMain a {
     text-decoration: none;
     color: white;
 }
 
-.tweetMain a:hover {
+.chirpMain a:hover {
     text-decoration: underline;
 }
 
-.tweetTime {
+.chirpTime {
     float: right;
     color: rgb(101, 119, 134);
 }
 
-.tweetMessage {
+.chirpMessage {
     margin-bottom: .5rem;
     font-weight: normal;
 }
 
-.tweetActions {
+.chirpActions {
     display: flex;
     justify-content: space-between;
     margin-bottom: 1rem;
     padding-right: 2rem;
 }
 
-.tweetActions button {
+.chirpActions button {
     margin: 1rem 1rem 0 1rem;
 }
 

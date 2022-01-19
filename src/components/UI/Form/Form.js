@@ -2,9 +2,9 @@ import React from 'react'
 import Button from '../Button/Button'
 import classes from './Form.module.css'
 
-const Form = ({children, formFor}) => {
+const Form = ({children, formFor, onSubmit}) => {
     return (
-        <form className={classes.form}>
+        <form className={classes.form} onSubmit={onSubmit}>
             <div className={classes.control}>
                 {children}
             </div>
