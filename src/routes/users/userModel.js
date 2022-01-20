@@ -36,6 +36,12 @@ const UserSchema = new Schema({
     timestamps: true
 })
 
+UserSchema.virtual('relationships', {
+    ref: 'Relationship',
+    localField: '_id',
+    foreignField: 'user_id'
+})
+
 //Checks for login using email and password
 UserSchema.statics.findByCredentials = async (username, password) => {
     const user = await User.findOne({ username })

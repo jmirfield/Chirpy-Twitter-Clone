@@ -2,6 +2,7 @@ const express = require('express')
 require('./db/connection.js')
 const userRouter = require('./routes/users/userRouter')
 const chirpRouter = require('./routes/chirps/chirpRouter')
+const relationshipRouter = require('./routes/relationships/relationshipRouter')
 
 const app = express()
 const PORT = process.env.PORT
@@ -17,6 +18,7 @@ app.use((req, res, next) => {
 
 app.use(userRouter)
 app.use(chirpRouter)
+app.use(relationshipRouter)
 
 app.listen(PORT, () => {
     console.log(`Server is listening on port: ${PORT}`)

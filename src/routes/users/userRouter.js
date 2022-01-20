@@ -5,9 +5,9 @@ const auth = require('../../middleware/auth')
 
 router.post('/users', userController.createNewUser)
 router.post('/users/login', userController.login)
-router.post('/users/auth', auth, userController.authenticatePersistentLogin)
-router.post('/users/logout', auth, userController.logout)
-router.post('/users/logoutAll', auth, userController.logoutAll)
+router.get('/users/auth', auth, userController.authenticatePersistentLogin)
+router.get('/users/logout', auth, userController.logout)
+router.get('/users/logoutAll', auth, userController.logoutAll)
 
 
 

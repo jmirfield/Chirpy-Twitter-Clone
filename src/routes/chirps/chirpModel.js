@@ -3,8 +3,9 @@ const { Schema } = mongoose
 
 const ChirpSchema = new Schema({
     ownerId: {
-        type: mongoose.ObjectId,
-        required: true
+        type: Schema.ObjectId,
+        required: true,
+        ref: 'Relationship'
     },
     content: {
         type: String,
@@ -22,6 +23,14 @@ const ChirpSchema = new Schema({
 }, {
     timestamps: true
 })
+
+ChirpSchema.methods.toJSON = function() {
+    const chirpObj = this.toObject()
+    delete chirpObj.ownerId
+    delete chirpObj.updatedAt
+    delete chirpObj.__v
+    return chirpObj
+}
 
 const Chirp = mongoose.model('Chirp', ChirpSchema)
 
