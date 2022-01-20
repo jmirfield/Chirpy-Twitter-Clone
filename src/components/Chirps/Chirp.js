@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom'
 import ChirpIcons from './ChirpIcons'
 import classes from './Chirp.module.css'
 
-const Chirp = React.memo(({ id, user, message, stats, timestamp }) => {
+const Chirp = React.memo(({ id, user, message, likes, comments, timestamp }) => {
     // console.log('render')
     return (
         <div className={classes.chirp} key={id}>
@@ -15,7 +15,7 @@ const Chirp = React.memo(({ id, user, message, stats, timestamp }) => {
                 </div>
                 <p className={classes.chirpMessage}>{message}</p>
                 <div className={classes.chirpActions}>
-                    <ChirpIcons stats={stats} />
+                    <ChirpIcons stats={[comments, 0, likes]} />
                 </div>
             </div>
         </div>

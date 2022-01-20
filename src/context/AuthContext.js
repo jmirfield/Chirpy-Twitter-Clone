@@ -44,12 +44,13 @@ export const AuthProvider = ({ children }) => {
     const logoutRequest = async () => {
         try {
             await fetch("http://localhost:3001/users/logout", {
-                method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                method: 'GET', // *GET, POST, PUT, DELETE, etc.
                 headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(localStorage)
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.jwt}`
+                }
             })
+            localStorage.removeItem('jwt')
             setUser('')
             setIsLogged(false)
         } catch (e) {
@@ -61,12 +62,11 @@ export const AuthProvider = ({ children }) => {
     const authPersistentLogin = async () => {
         try {
             const response = await fetch("http://localhost:3001/users/auth", {
-                method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                method: 'GET', // *GET, POST, PUT, DELETE, etc.
                 headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(localStorage)
-
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.jwt}`
+                }
             })
             const data = await response.json()
             if(data.error)localStorage.removeItem('jwt')

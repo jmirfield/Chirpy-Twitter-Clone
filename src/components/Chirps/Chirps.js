@@ -7,14 +7,15 @@ const Chirps = (props) => {
     return (
         <Card>
             <div className={classes.chirps}>
-                {props.chirps.map(({ id, user, message, stats, timestamp }) => {
+                {props.chirps.map(({ _id, username, content, likescount, commentscount , createdAt }) => {
                     return (
                         <Chirp
-                            key={id}
-                            user={user}
-                            message={message}
-                            stats={stats}
-                            timestamp={timestamp}
+                            key={_id}
+                            user={username}
+                            message={content}
+                            likes={likescount}
+                            comments={commentscount}
+                            timestamp={createdAt}
                         />
                     )
                 })}
