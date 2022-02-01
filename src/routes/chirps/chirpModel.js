@@ -17,11 +17,15 @@ const ChirpSchema = new Schema({
         trim: true,
         required: true
     },
-    likesCount: {
+    commentsCount: {
         type: Number,
         required: true
     },
-    commentsCount: {
+    retweetsCount: {
+        type: Number,
+        required: true
+    },
+    likesCount: {
         type: Number,
         required: true
     },

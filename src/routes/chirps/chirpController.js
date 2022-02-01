@@ -8,8 +8,9 @@ class ChirpController {
                 ...req.body,
                 owner_id: req.user._id,
                 ownerUsername: req.user.username,
+                commentsCount: 0,
+                retweetsCount: 0,
                 likesCount: 0,
-                commentsCount: 0
             })
             await chirp.save()
             res.send(chirp)
@@ -48,7 +49,7 @@ class ChirpController {
             feed.sort((a, b) => {
                 return b.createdAt - a.createdAt
             })
-            res.send(feed)
+            res.send({feed, likedChirps: req.user.likedChirps})
         } catch (e) {
             console.log(e)
             res.status(400).send()
@@ -61,7 +62,9 @@ class ChirpController {
             await user.populate({
                 path: 'chirps'
             })
-            res.send(user.chirps)
+            res.send(user.chirps.sort((a, b) => {
+                return b.createdAt - a.createdAt
+            }))
         } catch(e) {
             res.status(404).send()
         }
