@@ -1,5 +1,7 @@
 const User = require('./userModel')
 const Relationship = require('../relationships/relationshipModel')
+const Chirp = require('../chirps/chirpModel')
+const { response } = require('express')
 
 class UserController {
     createNewUser = async (req, res) => {
@@ -52,8 +54,30 @@ class UserController {
             req.user.tokens = []
             await req.user.save()
             res.send()
-        } catch(e) {
+        } catch (e) {
             res.status(500).send()
+        }
+    }
+    likeChirp = async (req, res) => {
+        try {
+            req.user.likedChirps.addToSet(req.body._id)
+            await req.user.save()
+            await Chirp.findOneAndUpdate({ _id: req.body._id }, { $inc: { likesCount: 1 } })
+            res.send()
+        } catch (e) {
+            console.log(e.message)
+            res.status(400).send()
+        }
+    }
+
+    unlikeChirp = async (req, res) => {
+        try {
+            req.user.likedChirps.pull({ _id: req.body._id })
+            await req.user.save()
+            await Chirp.findOneAndUpdate({ _id: req.body._id }, { $inc: { likesCount: -1 } })
+            res.send()
+        } catch (e) {
+            res.status(400).send()
         }
     }
 }

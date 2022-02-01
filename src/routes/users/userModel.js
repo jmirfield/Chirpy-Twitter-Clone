@@ -31,6 +31,9 @@ const UserSchema = new Schema({
             type: String,
             required: true
         }
+    }],
+    likedChirps: [{
+        type: Schema.ObjectId
     }]
 }, {
     timestamps: true
