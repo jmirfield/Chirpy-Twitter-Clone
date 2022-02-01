@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom'
 import Modal from '../UI/Modal/Modal'
 import Form from '../UI/Form/Form'
 import classes from './Signin.module.css'
-import AuthContext from '../../context/AuthContext'
+import MainContext from '../../context/MainContext'
 
 const SignIn = () => {
-    const ctx = useContext(AuthContext)
+    const ctx = useContext(MainContext)
     const [isFormValid, setIsFormValid] = useState(false)
 
     const navigate = useNavigate()

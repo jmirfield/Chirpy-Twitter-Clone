@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { AuthProvider } from './context/AuthContext'
+import { MainProvider } from './context/MainContext'
 import App from './App';
 import './index.css';
 
 ReactDOM.render(
-  <AuthProvider>
+  <MainProvider>
     <App />
-  </AuthProvider>,
+  </MainProvider>,
   document.getElementById('root')
 );

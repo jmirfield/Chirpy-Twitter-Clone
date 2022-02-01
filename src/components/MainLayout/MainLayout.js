@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import { Outlet } from 'react-router-dom'
 import Menubar from '../Menubar/Menubar'
 import ChirpModal from './ChirpModal'
@@ -7,12 +7,13 @@ import classes from './MainLayout.module.css'
 const MainLayout = (props) => {
     const [composeChirp, setComposeChirp] = useState(false)
     
-    const onOpenNewChirpHandler = () => {
+    const onOpenNewChirpHandler = useCallback(() => {
         setComposeChirp(true)
-    }
-    const onCloseNewChirpHandler = () => {
+    }, [])
+
+    const onCloseNewChirpHandler = useCallback(() => {
         setComposeChirp(false)
-    }
+    }, [])
 
     return (
         <div className={classes.layout}>
@@ -30,4 +31,4 @@ const MainLayout = (props) => {
     )
 }
 
-export default MainLayout
+export default React.memo(MainLayout)

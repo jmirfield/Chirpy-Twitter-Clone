@@ -5,11 +5,11 @@ import SignIn from './components/Login/SignIn';
 import SignUp from './components/Login/SignUp';
 import Home from './components/Home/Home';
 import MainLayout from './components/MainLayout/MainLayout';
-import AuthContext from './context/AuthContext';
+import MainContext from './context/MainContext';
 
 
 function App() {
-  const ctx = useContext(AuthContext)
+  const ctx = useContext(MainContext)
   if (!ctx.user && !ctx.isLogged) {
     return (
       <BrowserRouter>
@@ -30,6 +30,10 @@ function App() {
       <Routes>
         <Route path='/' element={<MainLayout username={ctx.user}/>} >
           <Route path='home' element={<Home />} />
+          <Route path='explore' element={<p>EXPLORE PAGE</p>} />
+          <Route path='notifications' element={<p>NOTFICATIONS PAGE</p>} />
+          <Route path='messages' element={<p>MESSAGES PAGE</p>} />
+          <Route path='flow/bookmarks' element={<p>BOOKMARKS PAGE</p>} />
           <Route path=':user' element={<p>PLACEHOLDER</p>} />
           <Route path=':user/lists' element={<p>LISTS PLACEHOLDER</p>} />
           <Route path='*' element={<Navigate replace to='/home' />} />

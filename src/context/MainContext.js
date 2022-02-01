@@ -1,20 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 
-const AuthContext = React.createContext({
+const MainContext = React.createContext({
     user: '',
     error: '',
     loading: false,
     login: () => { },
-    logout: () => { }
+    logout: () => { },
+    chirps: [],
+    onGetFeed: () => { },
+    onAddChirp: () => { }
 })
 
 
-export const AuthProvider = ({ children }) => {
+export const MainProvider = ({ children }) => {
     const [user, setUser] = useState('')
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
     const [isLogged, setIsLogged] = useState(false)
-
+    const [chirps, setChirps] = useState([])
+    
     useEffect(() => {
         if (localStorage.getItem('jwt') && !isLogged) {
             setLoading(true)
@@ -69,7 +73,7 @@ export const AuthProvider = ({ children }) => {
                 }
             })
             const data = await response.json()
-            if(data.error)localStorage.removeItem('jwt')
+            if (data.error) localStorage.removeItem('jwt')
             setUser(data.username)
             setLoading(false)
             setIsLogged(true)
@@ -88,16 +92,29 @@ export const AuthProvider = ({ children }) => {
         logoutRequest()
     }
 
+    const getFeedHandler = (chirps) => {
+        setChirps(chirps)
+    }
+
+    const addChirpHandler = (chirp) => {
+        setChirps((prevChirps) => {
+            return [chirp, ...prevChirps]
+        })
+    }
+
     return (
-        <AuthContext.Provider value={{
+        <MainContext.Provider value={{
             user: user,
             loading: loading,
             onLogin: loginHandler,
-            onLogout: logoutHandler
+            onLogout: logoutHandler,
+            chirps: chirps,
+            onGetFeed: getFeedHandler,
+            onAddChirp: addChirpHandler
         }}>
             {children}
-        </AuthContext.Provider>
+        </MainContext.Provider>
     )
 }
 
-export default AuthContext;
+export default MainContext;

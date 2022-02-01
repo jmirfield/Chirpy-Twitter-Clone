@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import NewChirp from '../Chirps/NewChirp'
 import Chirps from '../Chirps/Chirps'
 import classes from './Home.module.css'
+import MainContext from '../../context/MainContext'
 
 const Home = () => {
 
-    const [chirps, setChirps] = useState([])
+    const ctx = useContext(MainContext)
 
-    const getChirpFeed = async() => {
+    const getChirpFeed = async () => {
         try {
             const response = await fetch("http://localhost:3001/chirps/feed", {
                 method: 'GET', // *GET, POST, PUT, DELETE, etc.
@@ -17,7 +18,7 @@ const Home = () => {
                 }
             })
             const feed = await response.json()
-            setChirps(feed)
+            ctx.onGetFeed(feed)
         } catch (e) {
             console.log('ERROR')
         }
@@ -28,19 +29,17 @@ const Home = () => {
         getChirpFeed()
     }, [])
 
-    const addChirpTestHandler = (chirp) => {
-        setChirps(prevChirps => [chirp,...prevChirps])
-    }
-
     return (
         <>
             <div className={classes.title}>
                 <h1>Home</h1>
             </div>
             <div className={classes.newChirp}>
-                <NewChirp onAdd={addChirpTestHandler}/>
+                <NewChirp onAdd={ctx.onAddChirp} isModal={false} />
             </div>
-            <Chirps chirps={chirps}/>
+            <div className={classes.chirps}>
+                {ctx.chirps.length > 0 ? <Chirps chirps={ctx.chirps} /> : <p>No chirps available...</p>}
+            </div>
         </>
     )
 }

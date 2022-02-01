@@ -11,3 +11,7 @@
 .newTweet {
     display: flex;
 }
+
+.chirps p {
+    margin-left: 1rem;
+}

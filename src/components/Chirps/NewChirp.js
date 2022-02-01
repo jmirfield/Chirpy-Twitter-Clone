@@ -1,11 +1,11 @@
 import React, { useRef, useContext } from 'react'
 import ChirpInput from '../UI/ChirpInput/ChirpInput'
-import AuthContext from '../../context/AuthContext'
+import MainContext from '../../context/MainContext'
 import classes from './NewChirp.module.css'
 
 const NewChirp = (props) => {
     const textAreaRef = useRef()
-    const ctx = useContext(AuthContext)
+    const ctx = useContext(MainContext)
     const sendNewChirpRequest = async (content) => {
         try {
             const response = await fetch("http://localhost:3001/chirps", {
@@ -17,8 +17,10 @@ const NewChirp = (props) => {
                 body: JSON.stringify({content})
             })
             const data = await response.json()
+            if(props.isModal)props.onClose()
             props.onAdd({...data, username: ctx.user})
         } catch (e) {
+            console.log(e.message)
             console.log('ERROR')
         }
     }
