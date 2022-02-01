@@ -2,6 +2,8 @@ const mongoose = require('mongoose')
 const { Schema } = mongoose
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const Relationship = require('../relationships/relationshipModel')
+const Chirp = require('../chirps/chirpModel')
 
 const UserSchema = new Schema({
     username: {
@@ -85,6 +87,13 @@ UserSchema.pre('save', async function (next) {
     if (this.isModified('password')) {
         this.password = await bcrypt.hash(this.password, 8)
     }
+    next()
+})
+
+//Deletes all Relationships and Chirps if User is removed
+UserSchema.pre('deleteOne', { document: true } , async function (next) {
+    await Relationship.deleteMany({ user_id: this._id })
+    await Chirp.deleteMany({owner_id: this._id})
     next()
 })
 

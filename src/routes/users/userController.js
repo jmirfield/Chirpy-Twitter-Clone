@@ -80,6 +80,15 @@ class UserController {
             res.status(400).send()
         }
     }
+
+    deleteUser = async (req, res) => {
+        try {
+            await req.user.deleteOne()
+            res.send(req.user)
+        } catch (e) {
+            res.status(500).send(e)
+        }
+    }
 }
 
 module.exports = new UserController()
