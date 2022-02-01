@@ -42,6 +42,12 @@ UserSchema.virtual('relationships', {
     foreignField: 'user_id'
 })
 
+UserSchema.virtual('chirps', {
+    ref: 'Chirp',
+    localField: 'username',
+    foreignField: 'ownerUsername'
+})
+
 //Checks for login using email and password
 UserSchema.statics.findByCredentials = async (username, password) => {
     const user = await User.findOne({ username })
@@ -63,6 +69,10 @@ UserSchema.methods.toJSON = function () {
     const userObj = this.toObject()
     delete userObj.password
     delete userObj.tokens
+    delete userObj.createdAt
+    delete userObj.updatedAt
+    delete userObj.email
+    delete userObj.__v
     return userObj
 }
 

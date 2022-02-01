@@ -2,10 +2,15 @@ const mongoose = require('mongoose')
 const { Schema } = mongoose
 
 const ChirpSchema = new Schema({
-    ownerId: {
+    owner_id: {
         type: Schema.ObjectId,
         required: true,
         ref: 'Relationship'
+    },
+    ownerUsername: {
+        type: String,
+        required: true,
+        ref: 'User'
     },
     content: {
         type: String,

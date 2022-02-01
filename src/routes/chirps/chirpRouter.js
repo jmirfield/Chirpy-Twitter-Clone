@@ -4,6 +4,7 @@ const controller = require('./chirpController')
 const auth = require('../../middleware/auth')
 
 router.post('/chirps', auth, controller.createChirp)
-router.get('/chirps/feed', auth, controller.getChirpFeed)
+router.get('/chirps/feed', auth, controller.getCurrentUserChirpFeed)
+router.get('/chirps/:username', controller.getUserChirps)
 
 module.exports = router

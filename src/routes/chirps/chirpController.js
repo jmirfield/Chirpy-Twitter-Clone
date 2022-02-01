@@ -1,11 +1,13 @@
 const Chirp = require('./chirpModel')
+const User = require('../users/userModel')
 
 class ChirpController {
     createChirp = async (req, res) => {
         try {
             const chirp = new Chirp({
                 ...req.body,
-                ownerId: req.user._id,
+                owner_id: req.user._id,
+                ownerUsername: req.user.username,
                 likesCount: 0,
                 commentsCount: 0
             })
@@ -17,7 +19,7 @@ class ChirpController {
         }
     }
 
-    getChirpFeed = async (req, res) => {
+    getCurrentUserChirpFeed = async (req, res) => {
         try {
             await req.user
                 .populate({
@@ -35,7 +37,7 @@ class ChirpController {
             req.user.relationships.forEach(user => {
                 const userChirps = [...user.chirps].map((chirp) => {
                     const chirpObj = chirp.toObject()
-                    delete chirpObj.ownerId
+                    delete chirpObj.owner_id
                     delete chirpObj.updatedAt
                     delete chirpObj.__v
                     chirpObj.username = user.users[0].username
@@ -52,6 +54,19 @@ class ChirpController {
             res.status(400).send()
         }
     }
+
+    getUserChirps = async (req, res) => {
+        try{
+            const user = await User.findOne({username: req.params.username})
+            await user.populate({
+                path: 'chirps'
+            })
+            res.send(user.chirps)
+        } catch(e) {
+            res.status(404).send()
+        }
+    }
+
 
 }
 

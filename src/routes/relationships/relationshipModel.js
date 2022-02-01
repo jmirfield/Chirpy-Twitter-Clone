@@ -18,7 +18,7 @@ const RelationshipSchema = new Schema({
 RelationshipSchema.virtual('chirps', {
     ref: 'Chirp',
     localField: 'following_id',
-    foreignField: 'ownerId'
+    foreignField: 'owner_id'
 })
 
 RelationshipSchema.virtual('users', {
