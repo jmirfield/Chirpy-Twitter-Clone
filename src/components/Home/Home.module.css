@@ -8,10 +8,10 @@
     margin: 0;
 }
 
-.newTweet {
-    display: flex;
+.newChirp {
+    border-bottom: 16px solid rgb(95, 108, 116);
 }
 
-.chirps p {
+.empty {
     margin-left: 1rem;
 }

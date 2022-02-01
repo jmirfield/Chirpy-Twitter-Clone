@@ -17,10 +17,10 @@ const Home = () => {
                     'Authorization': `Bearer ${localStorage.jwt}`
                 }
             })
-            const feed = await response.json()
-            ctx.onGetFeed(feed)
+            const {feed, likedChirps} = await response.json()
+            ctx.onGetFeed(feed, likedChirps)
         } catch (e) {
-            console.log('ERROR')
+            console.log(e.message)
         }
     }
 
@@ -38,7 +38,7 @@ const Home = () => {
                 <NewChirp onAdd={ctx.onAddChirp} isModal={false} />
             </div>
             <div className={classes.chirps}>
-                {ctx.chirps.length > 0 ? <Chirps chirps={ctx.chirps} /> : <p>No chirps available...</p>}
+                {ctx.chirps.length > 0 ? <Chirps chirps={ctx.chirps} /> : <p className={classes.empty}>No chirps available...</p>}
             </div>
         </>
     )

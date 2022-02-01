@@ -5,6 +5,7 @@ import SignIn from './components/Login/SignIn';
 import SignUp from './components/Login/SignUp';
 import Home from './components/Home/Home';
 import MainLayout from './components/MainLayout/MainLayout';
+import GuestLayout from './components/GuestLayout/GuestLayout';
 import MainContext from './context/MainContext';
 
 
@@ -19,6 +20,8 @@ function App() {
             <Route path='flow/signup' element={<SignUp />} />
             <Route path='flow/*' element={<Navigate replace to='/' />} />
           </Route>
+          <Route path='home' element={<Navigate replace to='/' />} />
+          <Route path=':user' element={<GuestLayout />}/>
           <Route path='*' element={<Navigate replace to='/'/> } />
         </Routes>
       </BrowserRouter>

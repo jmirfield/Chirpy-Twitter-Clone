@@ -3,19 +3,22 @@ import Chirp from './Chirp'
 import Card from '../UI/Card/Card'
 import classes from './Chirps.module.css'
 
-const Chirps = (props) => {
+const Chirps = ({chirps}) => {
     return (
         <Card>
             <div className={classes.chirps}>
-                {props.chirps.map(({ _id, username, content, likescount, commentscount , createdAt }) => {
+                {chirps.map((chirp) => {
                     return (
                         <Chirp
-                            key={_id}
-                            user={username}
-                            message={content}
-                            likes={likescount}
-                            comments={commentscount}
-                            timestamp={createdAt}
+                            key={chirp._id}
+                            id={chirp._id}
+                            user={chirp.username}
+                            message={chirp.content}
+                            comments={chirp.commentsCount}
+                            retweets={chirp.retweetsCount}
+                            likes={chirp.likesCount}
+                            isChirpLiked={chirp.isLiked}
+                            timestamp={chirp.createdAt}
                         />
                     )
                 })}

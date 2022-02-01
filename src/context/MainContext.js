@@ -18,7 +18,7 @@ export const MainProvider = ({ children }) => {
     const [loading, setLoading] = useState(false)
     const [isLogged, setIsLogged] = useState(false)
     const [chirps, setChirps] = useState([])
-    
+
     useEffect(() => {
         if (localStorage.getItem('jwt') && !isLogged) {
             setLoading(true)
@@ -57,6 +57,7 @@ export const MainProvider = ({ children }) => {
             localStorage.removeItem('jwt')
             setUser('')
             setIsLogged(false)
+            setChirps([])
         } catch (e) {
             console.log('ERROR')
         }
@@ -92,8 +93,12 @@ export const MainProvider = ({ children }) => {
         logoutRequest()
     }
 
-    const getFeedHandler = (chirps) => {
-        setChirps(chirps)
+    const getFeedHandler = (chirps, likedChirps) => {
+        const chirpArr = chirps.map(chirp => {
+            const isLiked = likedChirps.includes(chirp._id)
+            return { ...chirp, isLiked }
+        })
+        setChirps(chirpArr)
     }
 
     const addChirpHandler = (chirp) => {
