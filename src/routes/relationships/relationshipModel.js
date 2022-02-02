@@ -4,14 +4,12 @@ const { Schema } = mongoose
 const RelationshipSchema = new Schema({
     following_id: {
         type: Schema.ObjectId,
-        required: true,
-        index: true
+        required: true
     },
     user_id: {
         type: Schema.ObjectId,
         required: true,
-        ref: 'User',
-        index: true
+        ref: 'User'
     }
 })
 

@@ -1,7 +1,6 @@
 const User = require('./userModel')
 const Relationship = require('../relationships/relationshipModel')
 const Chirp = require('../chirps/chirpModel')
-const { response } = require('express')
 
 class UserController {
     createNewUser = async (req, res) => {
