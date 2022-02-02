@@ -6,7 +6,7 @@ import classes from './MainLayout.module.css'
 
 const MainLayout = (props) => {
     const [composeChirp, setComposeChirp] = useState(false)
-    
+
     const onOpenNewChirpHandler = useCallback(() => {
         setComposeChirp(true)
     }, [])
@@ -16,17 +16,16 @@ const MainLayout = (props) => {
     }, [])
 
     return (
-        <div className={classes.layout}>
-            <header className={classes.menubar}>
-                <Menubar onNewChirp={onOpenNewChirpHandler} username={props.username}/>
+        <div className={classes['layout']}>
+            <header className={classes['layout__menubar']}>
+                <Menubar onNewChirp={onOpenNewChirpHandler} username={props.username} />
             </header>
-            <div className={classes.main}>
+            <section className={classes['layout__main']}>
                 <Outlet />
-            </div>
-            <div>
-                {/* PLACEHOLDER */}
-            </div>
-            {composeChirp && <ChirpModal onClose={onCloseNewChirpHandler} />}
+            </section>
+            <section  className={classes['layout__new-chirp-modal']}>
+                {composeChirp && <ChirpModal onClose={onCloseNewChirpHandler} />}
+            </section>
         </div>
     )
 }

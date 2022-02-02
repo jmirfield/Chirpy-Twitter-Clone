@@ -1,17 +1,17 @@
-.title {
+.home__title {
     position: sticky;
     top: 0;
     padding: 1rem 0 1rem 1rem;
     background-color: black;
 }
-.title h1 {
+.home__title h1 {
     margin: 0;
 }
 
-.newChirp {
+.home__new-chirp {
     border-bottom: 16px solid rgb(95, 108, 116);
 }
 
-.empty {
+.home__chirps-none {
     margin-left: 1rem;
 }

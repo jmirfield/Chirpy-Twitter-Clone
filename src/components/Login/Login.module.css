@@ -3,17 +3,12 @@
     margin-top: 10vh;
 }
 
-.title {
+.main__title {
     font-size: 3rem;
     margin-top: 0;
 }
 
-.options {
+.main__login-options {
     margin: auto;
     max-width: 20rem;
-}
-
-.logo {
-    max-width: 15rem;
-    fill: #099bf5;
 }

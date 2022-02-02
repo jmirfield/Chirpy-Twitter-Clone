@@ -3,15 +3,18 @@
     min-height: 100vh;
 }
 
-.main {
-    margin-left: 386px;
-    width: 40rem;
-    border-right: 1px solid rgb(95, 108, 116);
-    border-left: 1px solid rgb(95, 108, 116);
-}
-
-.menubar {
+.layout__menubar {
+    display: flex;
     position: fixed;
     height: 100vh;
-    overflow: hidden;
+    width: 25%;
+    background-color: #141618;
+    justify-content: center;
+}
+
+.layout__main {
+    margin-left: 25%;
+    border-right: 1px solid rgb(95, 108, 116);
+    border-left: 1px solid rgb(95, 108, 116);
+    width: 40%;
 }

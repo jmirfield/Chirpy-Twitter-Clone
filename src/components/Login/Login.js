@@ -8,16 +8,14 @@ const logo = ["M23.643 4.937c-.835.37-1.732.62-2.675.733.962-.576 1.7-1.49 2.048
 
 const Login = () => {
     return (
-        <div className={classes.main}>
-            <Icon width="96px" height="96px" fill="#099bf5" d={logo}/>
-            <h1 className={classes.title}>Ready to Chirp?</h1>
-            <div className={classes.options}>
+        <div className={classes['main']}>
+            <Icon width="96px" height="96px" fill="#099bf5" d={logo} />
+            <h1 className={classes['main__title']}>Ready to Chirp?</h1>
+            <div className={classes['main__login-options']}>
                 <LoginOptions />
             </div>
-            <div>
-                <Outlet />
-            </div>
-
+            {/* MODAL */}
+            <Outlet />
         </div>
     )
 }

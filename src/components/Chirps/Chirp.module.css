@@ -7,41 +7,41 @@
     padding: 1rem;
 }
 
-.tempIcon {
+.chirp__icon {
     height: 50px;
     min-width: 50px;
     background-color: #bbb;
     border-radius: 50%;
   }
 
-.chirpMain {
+.chirp__main {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
     margin-left: 1rem;
 }
 
-.chirpMain a {
+.chirp__main a {
     text-decoration: none;
     color: white;
 }
 
-.chirpMain a:hover {
+.chirp__main a:hover {
     text-decoration: underline;
 }
 
-.chirpTime {
+.chirp__main-timestamp {
     float: right;
     color: rgb(101, 119, 134);
 }
 
-.chirpMessage {
+.chirp__main-message {
     margin-bottom: .5rem;
     font-weight: normal;
     margin-left: 0;
 }
 
-.chirpActions {
+.chirp__main-actions {
     display: flex;
     position: relative;
     right: 1rem;

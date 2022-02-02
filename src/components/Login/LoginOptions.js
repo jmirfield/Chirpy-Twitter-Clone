@@ -1,7 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import Button from '../UI/Button/Button'
-
 import classes from './LoginOptions.module.css'
 
 const LoginOptions = () => {
@@ -22,7 +21,7 @@ const LoginOptions = () => {
                 <Button onClick={openSignUpModalHandler}>Sign Up</Button>
             </section>
             <section>
-                <p style={{ 'marginTop': '3rem' }}>Already have an account?</p>
+                <p>Already have an account?</p>
                 <Button onClick={openSignInModalHandler}>Sign In</Button>
             </section>
         </div>

@@ -32,9 +32,9 @@ const NewChirp = (props) => {
     }
 
     return (
-        <div className={classes.main}>
-            <div className={classes.profileIcon} />
-            <div className={classes.input}>
+        <div className={classes['new-chirp']}>
+            <div className={classes['new-chirp__icon']} />
+            <div className={classes['new-chirp__input']}>
                 <ChirpInput
                     onSubmit={onSubmitChirpHandler}
                     ref={textAreaRef}

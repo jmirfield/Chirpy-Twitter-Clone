@@ -1,15 +1,14 @@
 import React, { useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
-import Modal from '../UI/Modal/Modal'
-import Form from '../UI/Form/Form'
-import classes from './Signin.module.css'
 import MainContext from '../../context/MainContext'
+import Modal from '../UI/Modal/Modal'
+import Button from '../UI/Button/Button'
+import classes from './Signin.module.css'
 
 const SignIn = () => {
     const ctx = useContext(MainContext)
-    const [isFormValid, setIsFormValid] = useState(false)
-
     const navigate = useNavigate()
+    const [isFormValid, setIsFormValid] = useState(false)
 
     const onCloseHandler = () => {
         navigate('/')
@@ -17,18 +16,33 @@ const SignIn = () => {
 
     return (
         <Modal onClick={onCloseHandler}>
-            <Form formFor={'Sign in'} onSubmit={ctx.onLogin}>
-                <div className={classes.control}>
+            <form name="signin-form" className={classes['signin-form']} onSubmit={ctx.onLogin}>
+                <div className={classes['signin-form__control']}>
                     <div>
-                        <label type='text'>Username</label>
-                        <input />
+                        <label htmlFor='username'>Username</label>
+                        <input
+                            type='text'
+                            id='username'
+                            name='username'
+                            placeholder='Enter username'
+                            autoComplete='off'
+                        />
                     </div>
                     <div>
-                        <label>Password</label>
-                        <input type='password' />
+                        <label htmlFor='password'>Password</label>
+                        <input
+                            type='password'
+                            id='password'
+                            name='password'
+                            placeholder='Enter password'
+                        />
                     </div>
                 </div>
-            </Form>
+                <div className={classes['signin-form__action']}>
+                    <Button>Sign In</Button>
+                    <Button type='button' onClick={onCloseHandler}>Cancel</Button>
+                </div>
+            </form>
         </Modal>
     )
 }

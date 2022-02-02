@@ -44,15 +44,17 @@ const Chirp = ({ id, user, message, comments, retweets, isRetweet, likes, isChir
         console.log('test')
     }
     return (
-        <div className={classes.chirp} key={id}>
-            <span className={classes.tempIcon}></span>
-            <div className={classes.chirpMain}>
-                <div>
+        <div className={classes['chirp']} key={id}>
+            <span className={classes['chirp__icon']}></span>
+            <div className={classes['chirp__main']}>
+                <section>
                     <NavLink to={`/${user}`}>{user}</NavLink>
-                    <span className={classes.chirpTime}>{timestamp}</span>
-                </div>
-                <p className={classes.chirpMessage}>{message}</p>
-                <div className={classes.chirpActions}>
+                    <span className={classes['chirp__main-timestamp']}>{timestamp}</span>
+                </section>
+                <section>
+                    <p className={classes['chirp__main-message']}>{message}</p>
+                </section>
+                <section className={classes['chirp__main-actions']}>
                     <ChirpIcons stats={
                         [
                             { count: comments, active: false, onClick: testHandler },
@@ -60,7 +62,7 @@ const Chirp = ({ id, user, message, comments, retweets, isRetweet, likes, isChir
                             { count: likeCount, active: isLiked, onClick: onLikeButtonHandler }
                         ]
                     } />
-                </div>
+                </section>
             </div>
         </div>
     )

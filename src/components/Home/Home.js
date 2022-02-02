@@ -31,14 +31,14 @@ const Home = () => {
 
     return (
         <>
-            <div className={classes.title}>
+            <div className={classes['home__title']}>
                 <h1>Home</h1>
             </div>
-            <div className={classes.newChirp}>
+            <div className={classes['home__new-chirp']}>
                 <NewChirp onAdd={ctx.onAddChirp} isModal={false} />
             </div>
-            <div className={classes.chirps}>
-                {ctx.chirps.length > 0 ? <Chirps chirps={ctx.chirps} /> : <p className={classes.empty}>No chirps available...</p>}
+            <div className={classes['home__chirps']}>
+                {ctx.chirps.length > 0 ? <Chirps chirps={ctx.chirps} /> : <p className={classes['home__chirps-none']}>No chirps available...</p>}
             </div>
         </>
     )

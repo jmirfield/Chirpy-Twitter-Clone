@@ -23,7 +23,7 @@ const ChirpIcons = (props) => {
                                 <Icon width='24px' height='24px' fill='red' d={chirpIcons[icon]} />
                             }
                         </div>
-                        <span>{props.stats[idx].count}</span>
+                        {props.stats[idx].count > 0 && <span>{props.stats[idx].count}</span>}
                     </button>
                 )
             })}

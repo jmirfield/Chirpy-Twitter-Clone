@@ -1,4 +1,4 @@
-.main {
+.new-chirp {
     display: flex;
     flex-direction: row;
     box-sizing: border-box;
@@ -6,13 +6,22 @@
     padding: 1rem;
 }
 
-.input {
+.new-chirp__icon {
+    display: inline-block;
+    min-height: 50px;
+    min-width: 50px;
+    max-height: 50px;
+    background-color: #bbb;
+    border-radius: 50%;
+}
+
+.new-chirp__input {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
 }
 
-.input textarea {
+.new-chirp__input textarea {
     width: 100%;
     min-height: 10vh;
     background-color: black;
@@ -27,12 +36,3 @@
     font-size: 20px;
 }
 
-
-.profileIcon {
-    display: inline-block;
-    min-height: 50px;
-    min-width: 50px;
-    max-height: 50px;
-    background-color: #bbb;
-    border-radius: 50%;
-}
