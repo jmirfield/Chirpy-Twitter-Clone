@@ -1,11 +1,19 @@
-import React, { useRef, useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import ChirpInput from '../UI/ChirpInput/ChirpInput'
 import MainContext from '../../context/MainContext'
 import classes from './NewChirp.module.css'
 
 const NewChirp = (props) => {
     const ctx = useContext(MainContext)
-    const textAreaRef = useRef()
+    const [textInput, setTextInput] = useState('')
+
+    const textChangeHandler = (e) => {
+        setTextInput(e.target.value)
+    }
+
+    const resetTextHandler = () => {
+        setTextInput('')
+    }
 
     const sendNewChirpRequest = async (content) => {
         try {
@@ -15,11 +23,11 @@ const NewChirp = (props) => {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${localStorage.jwt}`
                 },
-                body: JSON.stringify({content})
+                body: JSON.stringify({ content })
             })
             const data = await response.json()
-            if(props.isModal)props.onClose()
-            props.onAdd({...data, username: ctx.user, isLiked: false})
+            if (props.isModal) props.onClose()
+            props.onAdd({ ...data, username: ctx.user, isLiked: false })
         } catch (e) {
             console.log(e.message)
             console.log('ERROR')
@@ -28,8 +36,8 @@ const NewChirp = (props) => {
 
     const onSubmitChirpHandler = (e) => {
         e.preventDefault()
-        if (textAreaRef.current.value.trim().length > 0) sendNewChirpRequest(textAreaRef.current.value)
-        textAreaRef.current.value = ''
+        if (textInput.trim().length > 0) sendNewChirpRequest(textInput)
+        resetTextHandler()
     }
 
     return (
@@ -38,7 +46,8 @@ const NewChirp = (props) => {
             <div className={classes['new-chirp__input']}>
                 <ChirpInput
                     onSubmit={onSubmitChirpHandler}
-                    ref={textAreaRef}
+                    text={textInput}
+                    onChange={textChangeHandler}
                 />
             </div>
         </div>

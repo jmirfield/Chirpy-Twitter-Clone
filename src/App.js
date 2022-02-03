@@ -8,6 +8,7 @@ import MainLayout from './components/MainLayout/MainLayout';
 import GuestLayout from './components/GuestLayout/GuestLayout';
 import MainContext from './context/MainContext';
 import Loading from './components/Loading/Loading';
+import Profile from './components/Profile/Profile';
 
 
 function App() {
@@ -46,7 +47,7 @@ function App() {
           <Route path='notifications' element={<p>NOTFICATIONS PAGE</p>} />
           <Route path='messages' element={<p>MESSAGES PAGE</p>} />
           <Route path='flow/bookmarks' element={<p>BOOKMARKS PAGE</p>} />
-          <Route path=':user' element={<p>PLACEHOLDER</p>} />
+          <Route path=':user' element={<Profile />} />
           <Route path=':user/lists' element={<p>LISTS PLACEHOLDER</p>} />
           <Route path='*' element={<Navigate replace to='/home' />} />
           <Route path='/' element={<Navigate replace to='/home' />} />
