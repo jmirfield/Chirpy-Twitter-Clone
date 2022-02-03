@@ -1,4 +1,6 @@
 .button {
     margin-top: 1rem;
     float: right;
+    padding: .5rem 1rem .5rem 1rem;
+    border-radius: 1rem;
 }

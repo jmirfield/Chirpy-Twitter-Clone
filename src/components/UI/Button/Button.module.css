@@ -1,12 +1,12 @@
 .button {
-    border-radius: 1rem;
+    border-radius: inherit;
     width: inherit;
     font-size: 1rem;
     font-weight: bold;
-    padding: .5rem 3rem .5rem 3rem;
     color: white;
     background-color: #0063e2;
     border: none;
+    padding: inherit;
 }
 
 .button:hover {

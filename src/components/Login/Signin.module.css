@@ -4,6 +4,7 @@
     max-width: 20rem;
     justify-content: center;
     margin: auto; 
+    padding: 1rem 0 1rem 0;
 }
 
 .signin-form__control input {
@@ -26,6 +27,11 @@
 
 .signin-form__action {
     display: flex;
-    margin-top: 4rem;
+    margin-top: 2rem;
     justify-content: space-between;
+}
+
+.signin-form__action button {
+    padding: .5rem 1rem .5rem 1rem;
+    border-radius: 1rem;
 }

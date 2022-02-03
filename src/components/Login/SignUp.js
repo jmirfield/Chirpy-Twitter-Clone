@@ -20,8 +20,8 @@ const SignUp = () => {
 
     return (
         <Modal onClick={onCloseHandler}>
-            <form name="signin-form" className={classes['signin-form']} onSubmit={submitPlaceholder}>
-                <div className={classes['signin-form__control']}>
+            <form name="signup-form" className={classes['signup-form']} onSubmit={submitPlaceholder}>
+                <div className={classes['signup-form__control']}>
                     <div>
                         <label htmlFor='username'>Username</label>
                         <input
@@ -61,7 +61,7 @@ const SignUp = () => {
                         />
                     </div>
                 </div>
-                <div className={classes['signin-form__action']}>
+                <div className={classes['signup-form__action']}>
                     <Button>Sign Up</Button>
                     <Button type='button' onClick={onCloseHandler}>Cancel</Button>
                 </div>
