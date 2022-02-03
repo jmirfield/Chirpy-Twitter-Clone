@@ -16,9 +16,7 @@ const ChirpInput = React.forwardRef((props, ref) => {
                 onChange={textChangeHandler}
             ></textarea>
             <div className={classes.button}>
-                <Button disabled={textInput.length === 0 || textInput.length > 150}>
-                    Chirp
-                </Button>
+                <Button disabled={textInput.trim().length === 0 || textInput.length > 150}>Chirp</Button>
             </div>
         </form>
     )

@@ -4,8 +4,9 @@ import MainContext from '../../context/MainContext'
 import classes from './NewChirp.module.css'
 
 const NewChirp = (props) => {
-    const textAreaRef = useRef()
     const ctx = useContext(MainContext)
+    const textAreaRef = useRef()
+
     const sendNewChirpRequest = async (content) => {
         try {
             const response = await fetch("http://localhost:3001/chirps", {

@@ -6,9 +6,9 @@
 .layout__menubar {
     display: flex;
     position: fixed;
-    height: 100vh;
+    height: 100%;
     width: 25%;
-    background-color: #141618;
+    background-color: black;
     justify-content: center;
 }
 
@@ -16,5 +16,6 @@
     margin-left: 25%;
     border-right: 1px solid rgb(95, 108, 116);
     border-left: 1px solid rgb(95, 108, 116);
+    min-width: 45%;
     max-width: 45%;
 }

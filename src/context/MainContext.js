@@ -1,8 +1,10 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'
 
 const MainContext = React.createContext({
     user: '',
     error: '',
+    onRemoveError: () => { },
     isLoading: true,
     isLogged: false,
     login: () => { },
@@ -35,11 +37,13 @@ export const MainProvider = ({ children }) => {
             })
             const data = await response.json()
             localStorage.setItem('jwt', data.token)
+            setError()
             setUser(data.user.username)
             setLoading(false)
             setIsLogged(true)
         } catch (e) {
             setError(e.message)
+            setLoading(false)
             console.log('ERROR')
         }
     }
@@ -59,6 +63,7 @@ export const MainProvider = ({ children }) => {
             setChirps([])
         } catch (e) {
             console.log('ERROR')
+            console.log(e)
         }
     }
 
@@ -113,10 +118,15 @@ export const MainProvider = ({ children }) => {
         })
     }
 
+    const removeErrorHandler = () => {
+        setError()
+    }
+
     return (
         <MainContext.Provider value={{
             user,
             error,
+            onRemoveError: removeErrorHandler,
             isLoading,
             isLogged,
             onLogin: loginHandler,

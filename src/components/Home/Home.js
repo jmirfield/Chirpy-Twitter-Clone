@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useEffect, useContext } from 'react'
 import NewChirp from '../Chirps/NewChirp'
 import Chirps from '../Chirps/Chirps'
 import classes from './Home.module.css'

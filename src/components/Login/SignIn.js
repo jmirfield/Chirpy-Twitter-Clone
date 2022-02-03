@@ -11,12 +11,14 @@ const SignIn = () => {
     const [isFormValid, setIsFormValid] = useState(false)
 
     const onCloseHandler = () => {
+        ctx.onRemoveError()
         navigate('/')
     }
 
     return (
         <Modal onClick={onCloseHandler}>
             <form name="signin-form" className={classes['signin-form']} onSubmit={ctx.onLogin}>
+                {ctx.error && <p className={classes['signin-form__error']}>Incorrect username or password</p>}
                 <div className={classes['signin-form__control']}>
                     <div>
                         <label htmlFor='username'>Username</label>
