@@ -7,18 +7,18 @@ const Chirps = ({chirps}) => {
     return (
         <Card>
             <div className={classes.chirps}>
-                {chirps.map((chirp) => {
+                {chirps.map(({_id, username, content, commentsCount, retweetsCount, likesCount, isLiked, createdAt}) => {
                     return (
                         <Chirp
-                            key={chirp._id}
-                            id={chirp._id}
-                            user={chirp.username}
-                            message={chirp.content}
-                            comments={chirp.commentsCount}
-                            retweets={chirp.retweetsCount}
-                            likes={chirp.likesCount}
-                            isChirpLiked={chirp.isLiked}
-                            timestamp={chirp.createdAt}
+                            key={_id}
+                            id={_id}
+                            user={username}
+                            message={content}
+                            comments={commentsCount}
+                            retweets={retweetsCount}
+                            likes={likesCount}
+                            isChirpLiked={isLiked}
+                            timestamp={createdAt}
                         />
                     )
                 })}

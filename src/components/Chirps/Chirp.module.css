@@ -46,11 +46,10 @@
     position: relative;
     right: 1rem;
     justify-content: space-between;
-    margin-bottom: 1rem;
     padding-right: 2rem;
 }
 
-.chirpActions button {
+.chirp__main-actions button {
     margin: 1rem 1rem 0 1rem;
 }
 

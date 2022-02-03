@@ -16,14 +16,16 @@ const ChirpIcons = (props) => {
         <>
             {Object.keys(chirpIcons).map((icon, idx) => {
                 return (
-                    <button className={classes.icon} key={idx} onClick={props.stats[idx].onClick}>
-                        <div className={`${classes[`${icon}`]} ${classes.iconStyle}`}>
+                    <button className={classes['icon']} key={idx} onClick={props.stats[idx].onClick}>
+                        <section className={`${classes[`icon__${icon}`]} ${classes[`icon__main`]}`}>
                             {!props.stats[idx].active ?
-                                <Icon width='24px' height='24px' fill='rgb(101, 119, 134)' d={chirpIcons[icon]} /> : 
+                                <Icon width='24px' height='24px' fill='rgb(101, 119, 134)' d={chirpIcons[icon]} /> :
                                 <Icon width='24px' height='24px' fill='red' d={chirpIcons[icon]} />
                             }
-                        </div>
-                        {props.stats[idx].count > 0 && <span>{props.stats[idx].count}</span>}
+                        </section>
+                        <section className={classes['icon__count']}>
+                            {props.stats[idx].count > 0 && <span>{props.stats[idx].count}</span>}
+                        </section>
                     </button>
                 )
             })}

@@ -6,12 +6,12 @@
     overflow: hidden;
 }
 
-.menuitem {
+.menu__item {
     display: flex;
     padding: 1rem;
 }
 
-.menuitem:hover {
+.menu__item:hover {
     background-color: #272a2e;
     border-radius: 2rem;
 }
@@ -33,7 +33,7 @@
     align-self: flex-end;
 }
 
-.chirpbutton {
+.menu button {
     margin-top: 1rem;
     width: 100%;
 }

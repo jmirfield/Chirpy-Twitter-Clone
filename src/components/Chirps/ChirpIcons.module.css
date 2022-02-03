@@ -9,39 +9,43 @@
     align-items: center;
 }
 
-.icon span {
-    color: white;
-    font-size: 1rem;
-    color: rgb(101, 119, 134);
-}
-
-.iconStyle {
+.icon__main {
     display: flex;
     padding: .5rem;
     border-radius: 5rem;
     justify-content: center;
 }
 
-.icon:hover .reply {
+.icon:hover .icon__reply {
     background-color: rgba(29,155,240,0.1);
 }
 
-.icon:hover .reply svg {
+.icon:hover .icon__reply svg {
     fill: #099bf5;
 }
 
-.icon:hover .rechirp {
+.icon:hover .icon__rechirp {
     background-color: rgba(0,186,124,0.1);
 }
 
-.icon:hover .rechirp svg {
+.icon:hover .icon__rechirp svg {
     fill: rgba(0,186,124);
 }
 
-.icon:hover .like {
+.icon:hover .icon__like {
     background-color: rgba(249,24,128,0.1);
 }
 
-.icon:hover .like svg {
+.icon:hover .icon__like svg {
     fill: rgb(249,24,128);
+}
+
+.icon__count {
+    display: flex;
+    padding: .5rem;
+    border-radius: 5rem;
+    justify-content: center;
+    color: white;
+    font-size: 1rem;
+    color: rgb(101, 119, 134);
 }

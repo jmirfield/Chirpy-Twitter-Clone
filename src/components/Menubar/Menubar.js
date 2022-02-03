@@ -46,7 +46,7 @@ const Menubar = (props) => {
             {Object.keys(paths).map((path, idx) => {
                 return (
                     <NavLink to={paths[path].link} key={idx}>
-                        <div className={classes.menuitem}>
+                        <div className={classes['menu__item']}>
                             <Icon width='28px' height='28px' fill='white' d={paths[path].d} />
                             <span>{`${path}`}</span>
                         </div>
@@ -54,12 +54,8 @@ const Menubar = (props) => {
                 )
             }
             )}
-            <div className={classes.chirpbutton}>
-                <Button onClick={props.onNewChirp}>Chirp</Button>
-            </div>
-            <div className={classes.chirpbutton}>
-                <Button onClick={ctx.onLogout}>Logout</Button>
-            </div>
+            <Button onClick={props.onNewChirp}>Chirp</Button>
+            <Button onClick={ctx.onLogout}>Logout</Button>
         </div>
     )
 }
