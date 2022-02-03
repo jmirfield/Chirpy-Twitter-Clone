@@ -7,7 +7,6 @@ import MainContext from '../../context/MainContext'
 const Home = () => {
 
     const ctx = useContext(MainContext)
-
     const getChirpFeed = async () => {
         try {
             const response = await fetch("http://localhost:3001/chirps/feed", {

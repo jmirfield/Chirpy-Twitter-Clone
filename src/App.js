@@ -7,10 +7,19 @@ import Home from './components/Home/Home';
 import MainLayout from './components/MainLayout/MainLayout';
 import GuestLayout from './components/GuestLayout/GuestLayout';
 import MainContext from './context/MainContext';
+import Loading from './components/Loading/Loading';
 
 
 function App() {
   const ctx = useContext(MainContext)
+  if (ctx.isLoading) {
+    return (
+      <>
+        <Loading />
+      </>
+    )
+  }
+
   if (!ctx.user && !ctx.isLogged) {
     return (
       <BrowserRouter>
@@ -21,8 +30,8 @@ function App() {
             <Route path='flow/*' element={<Navigate replace to='/' />} />
           </Route>
           <Route path='home' element={<Navigate replace to='/' />} />
-          <Route path=':user' element={<GuestLayout />}/>
-          <Route path='*' element={<Navigate replace to='/'/> } />
+          <Route path=':user' element={<GuestLayout />} />
+          <Route path='*' element={<Navigate replace to='/' />} />
         </Routes>
       </BrowserRouter>
     );
@@ -31,7 +40,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<MainLayout username={ctx.user}/>} >
+        <Route path='/' element={<MainLayout username={ctx.user} />} >
           <Route path='home' element={<Home />} />
           <Route path='explore' element={<p>EXPLORE PAGE</p>} />
           <Route path='notifications' element={<p>NOTFICATIONS PAGE</p>} />

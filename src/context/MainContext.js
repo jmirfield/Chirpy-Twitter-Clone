@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 const MainContext = React.createContext({
     user: '',
     error: '',
-    loading: false,
+    isLoading: true,
+    isLogged: false,
     login: () => { },
     logout: () => { },
     chirps: [],
@@ -11,19 +12,16 @@ const MainContext = React.createContext({
     onAddChirp: () => { }
 })
 
-
 export const MainProvider = ({ children }) => {
+
     const [user, setUser] = useState('')
     const [error, setError] = useState('')
-    const [loading, setLoading] = useState(false)
+    const [isLoading, setLoading] = useState(true)
     const [isLogged, setIsLogged] = useState(false)
     const [chirps, setChirps] = useState([])
 
     useEffect(() => {
-        if (localStorage.getItem('jwt') && !isLogged) {
-            setLoading(true)
-            authPersistentLogin()
-        }
+        authPersistentLogin()
     }, [])
 
     const loginRequest = async (username, password) => {
@@ -41,6 +39,7 @@ export const MainProvider = ({ children }) => {
             setLoading(false)
             setIsLogged(true)
         } catch (e) {
+            setError(e.message)
             console.log('ERROR')
         }
     }
@@ -65,21 +64,28 @@ export const MainProvider = ({ children }) => {
 
 
     const authPersistentLogin = async () => {
-        try {
-            const response = await fetch("http://localhost:3001/users/auth", {
-                method: 'GET', // *GET, POST, PUT, DELETE, etc.
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.jwt}`
+        if (localStorage.getItem('jwt') && !isLogged) {
+            try {
+                const response = await fetch("http://localhost:3001/users/auth", {
+                    method: 'GET', // *GET, POST, PUT, DELETE, etc.
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.jwt}`
+                    }
+                })
+                const data = await response.json()
+                if (data.error) {
+                    localStorage.removeItem('jwt')
+                    return
                 }
-            })
-            const data = await response.json()
-            if (data.error) localStorage.removeItem('jwt')
-            setUser(data.username)
+                setUser(data.username)
+                setIsLogged(true)
+                setLoading(false)
+            } catch (e) {
+                console.log('ERROR')
+            }
+        } else {
             setLoading(false)
-            setIsLogged(true)
-        } catch (e) {
-            console.log('ERROR')
         }
     }
 
@@ -93,8 +99,8 @@ export const MainProvider = ({ children }) => {
         logoutRequest()
     }
 
-    const getFeedHandler = (chirps, likedChirps) => {
-        const chirpArr = chirps.map(chirp => {
+    const getFeedHandler = (feed, likedChirps) => {
+        const chirpArr = feed.map(chirp => {
             const isLiked = likedChirps.includes(chirp._id)
             return { ...chirp, isLiked }
         })
@@ -109,11 +115,13 @@ export const MainProvider = ({ children }) => {
 
     return (
         <MainContext.Provider value={{
-            user: user,
-            loading: loading,
+            user,
+            error,
+            isLoading,
+            isLogged,
             onLogin: loginHandler,
             onLogout: logoutHandler,
-            chirps: chirps,
+            chirps,
             onGetFeed: getFeedHandler,
             onAddChirp: addChirpHandler
         }}>

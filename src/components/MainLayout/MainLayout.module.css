@@ -16,5 +16,5 @@
     margin-left: 25%;
     border-right: 1px solid rgb(95, 108, 116);
     border-left: 1px solid rgb(95, 108, 116);
-    width: 40%;
+    max-width: 45%;
 }
