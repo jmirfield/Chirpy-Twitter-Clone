@@ -1,9 +1,13 @@
 .menu {
     display: flex;
     flex-direction: column;
-    padding-top: 4rem;
+    padding-top: 1rem;
     height: 100%;
     overflow: hidden;
+}
+
+.menu__logo {
+    padding: 1rem;
 }
 
 .menu__item {
@@ -33,10 +37,17 @@
     align-self: flex-end;
 }
 
+.menu__item-actions {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: space-between;
+}
+
 .menu__item-actions button {
     border-radius: 2rem;
     padding: 1rem 0 1rem 0;
     margin-top: 1rem;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
     width: 100%;
 }

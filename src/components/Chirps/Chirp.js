@@ -49,7 +49,7 @@ const Chirp = ({ id, user, message, comments, retweets, isRetweet, likes, isChir
             <div className={classes['chirp__main']}>
                 <section>
                     <NavLink to={`/${user}`}>{user}</NavLink>
-                    <span className={classes['chirp__main-timestamp']}>{timestamp}</span>
+                    <span className={classes['chirp__main-timestamp']}>{` · ${timestamp}`}</span>
                 </section>
                 <section>
                     <p className={classes['chirp__main-message']}>{message}</p>
