@@ -38,10 +38,8 @@ class ChirpController {
             req.user.relationships.forEach(user => {
                 const userChirps = [...user.chirps].map((chirp) => {
                     const chirpObj = chirp.toObject()
-                    delete chirpObj.owner_id
                     delete chirpObj.updatedAt
                     delete chirpObj.__v
-                    chirpObj.username = user.users[0].username
                     return chirpObj
                 })
                 feed.push(...userChirps)
@@ -62,9 +60,10 @@ class ChirpController {
             await user.populate({
                 path: 'chirps'
             })
-            res.send(user.chirps.sort((a, b) => {
+            user.chirps.sort((a, b) => {
                 return b.createdAt - a.createdAt
-            }))
+            })
+            res.send({feed: user.chirps, likedChirps: req.user.likedChirps})
         } catch(e) {
             res.status(404).send()
         }

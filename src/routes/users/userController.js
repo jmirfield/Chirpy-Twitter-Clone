@@ -76,6 +76,7 @@ class UserController {
             await Chirp.findOneAndUpdate({ _id: req.body._id }, { $inc: { likesCount: -1 } })
             res.send()
         } catch (e) {
+            console.log('error')
             res.status(400).send()
         }
     }
