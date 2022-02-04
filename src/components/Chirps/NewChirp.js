@@ -18,7 +18,7 @@ const NewChirp = (props) => {
     const sendNewChirpRequest = async (content) => {
         try {
             const response = await fetch("http://localhost:3001/chirps", {
-                method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${localStorage.jwt}`
@@ -29,7 +29,6 @@ const NewChirp = (props) => {
             if (props.isModal) props.onClose()
             props.onAdd({ ...data, username: ctx.user, isLiked: false })
         } catch (e) {
-            console.log(e.message)
             console.log('ERROR')
         }
     }

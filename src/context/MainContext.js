@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'
 
 const MainContext = React.createContext({
     user: '',
@@ -11,7 +10,9 @@ const MainContext = React.createContext({
     logout: () => { },
     chirps: [],
     onGetFeed: () => { },
-    onAddChirp: () => { }
+    onAddChirp: () => { },
+    onClearFeed: () => { },
+    authHeaders: {}
 })
 
 export const MainProvider = ({ children }) => {
@@ -29,7 +30,7 @@ export const MainProvider = ({ children }) => {
     const loginRequest = async (username, password) => {
         try {
             const response = await fetch("http://localhost:3001/users/login", {
-                method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -51,7 +52,7 @@ export const MainProvider = ({ children }) => {
     const logoutRequest = async () => {
         try {
             await fetch("http://localhost:3001/users/logout", {
-                method: 'GET', // *GET, POST, PUT, DELETE, etc.
+                method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${localStorage.jwt}`
@@ -72,7 +73,7 @@ export const MainProvider = ({ children }) => {
         if (localStorage.getItem('jwt') && !isLogged) {
             try {
                 const response = await fetch("http://localhost:3001/users/auth", {
-                    method: 'GET', // *GET, POST, PUT, DELETE, etc.
+                    method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${localStorage.jwt}`
@@ -122,6 +123,10 @@ export const MainProvider = ({ children }) => {
         setError()
     }
 
+    const clearFeedHandler = () => {
+        setChirps([])
+    }
+
     return (
         <MainContext.Provider value={{
             user,
@@ -133,6 +138,7 @@ export const MainProvider = ({ children }) => {
             onLogout: logoutHandler,
             chirps,
             onGetFeed: getFeedHandler,
+            onClearFeed: clearFeedHandler,
             onAddChirp: addChirpHandler
         }}>
             {children}

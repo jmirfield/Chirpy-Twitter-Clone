@@ -10,7 +10,7 @@ const Home = () => {
     const getChirpFeed = async () => {
         try {
             const response = await fetch("http://localhost:3001/chirps/feed", {
-                method: 'GET', // *GET, POST, PUT, DELETE, etc.
+                method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${localStorage.jwt}`
@@ -25,6 +25,7 @@ const Home = () => {
 
     useEffect(() => {
         document.title = 'Home / Chirpy'
+        ctx.onClearFeed()
         getChirpFeed()
     }, [])
 
