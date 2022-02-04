@@ -55,7 +55,7 @@ UserSchema.virtual('chirps', {
 
 //Checks for login using email and password
 UserSchema.statics.findByCredentials = async (username, password) => {
-    const user = await User.findOne({ username })
+    const user = await User.findOne({ "username": { $regex : new RegExp(username, "i") } })
     if (!user) throw new Error('Unable to login')
     const isMatch = await bcrypt.compare(password, user.password)
     if (!isMatch) throw new Error('Unable to login')
