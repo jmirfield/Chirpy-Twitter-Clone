@@ -36,12 +36,7 @@ class ChirpController {
                 )
             const feed = []
             req.user.relationships.forEach(user => {
-                const userChirps = [...user.chirps].map((chirp) => {
-                    const chirpObj = chirp.toObject()
-                    delete chirpObj.updatedAt
-                    delete chirpObj.__v
-                    return chirpObj
-                })
+                const userChirps = [...user.chirps]
                 feed.push(...userChirps)
             });
             feed.sort((a, b) => {

@@ -59,10 +59,15 @@ class UserController {
     }
     likeChirp = async (req, res) => {
         try {
+            if(!req.body._id)throw new Error('Cannot provide null value')
+            const startingLength = req.user.likedChirps.length
             req.user.likedChirps.addToSet(req.body._id)
-            await req.user.save()
-            await Chirp.findOneAndUpdate({ _id: req.body._id }, { $inc: { likesCount: 1 } })
-            res.send()
+            // console.log(req.user.likedChirps)
+            if (startingLength !== req.user.likedChirps.length) {
+                await req.user.save()
+                await Chirp.findOneAndUpdate({ _id: req.body._id }, { $inc: { likesCount: 1 } })
+            }
+            res.status(202).send()
         } catch (e) {
             console.log(e.message)
             res.status(400).send()
@@ -71,12 +76,17 @@ class UserController {
 
     unlikeChirp = async (req, res) => {
         try {
+            if(!req.body._id)throw new Error('Cannot provide null value')
+            const startingLength = req.user.likedChirps.length
             req.user.likedChirps.pull({ _id: req.body._id })
-            await req.user.save()
-            await Chirp.findOneAndUpdate({ _id: req.body._id }, { $inc: { likesCount: -1 } })
-            res.send()
+            // console.log(req.user.likedChirps)
+            if (startingLength !== req.user.likedChirps.length) {
+                await req.user.save()
+                await Chirp.findOneAndUpdate({ _id: req.body._id }, { $inc: { likesCount: -1 } })
+            }
+            res.status(202).send()
         } catch (e) {
-            console.log('error')
+            console.log(e.message)
             res.status(400).send()
         }
     }
