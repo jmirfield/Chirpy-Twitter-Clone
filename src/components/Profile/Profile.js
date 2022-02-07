@@ -26,7 +26,7 @@ const Profile = () => {
     }
 
     useEffect(() => {
-        ctx.onClearFeed()
+        if(ctx.chirps.length > 0)ctx.onClearFeed()
         getUserProfileFeed()
     }, [])
 

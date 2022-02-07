@@ -39,6 +39,7 @@
     margin-bottom: .5rem;
     font-weight: normal;
     margin-left: 0;
+    overflow-wrap: break-word;
 }
 
 .chirp__main-actions {

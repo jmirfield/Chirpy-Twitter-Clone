@@ -6,7 +6,7 @@ import MainContext from '../../context/MainContext'
 
 const Home = () => {
     const ctx = useContext(MainContext)
-    
+
     const getChirpFeed = async () => {
         try {
             const response = await fetch("http://localhost:3001/chirps/feed", {
@@ -25,7 +25,7 @@ const Home = () => {
 
     useEffect(() => {
         document.title = 'Home / Chirpy'
-        ctx.onClearFeed()
+        if(ctx.chirps.length > 0)ctx.onClearFeed()
         getChirpFeed()
     }, [])
 
