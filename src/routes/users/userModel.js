@@ -36,6 +36,9 @@ const UserSchema = new Schema({
     }],
     likedChirps: [{
         type: Schema.ObjectId
+    }],
+    retweetedChirps: [{
+        type: Schema.ObjectId
     }]
 }, {
     timestamps: true
