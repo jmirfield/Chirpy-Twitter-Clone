@@ -46,4 +46,4 @@ const Menubar = (props) => {
     )
 }
 
-export default React.memo(Menubar)
+export default Menubar

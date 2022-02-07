@@ -1,11 +1,14 @@
 import React, { useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import ChirpIcons from './ChirpIcons'
+import { date } from '../../helpers/date'
 import classes from './Chirp.module.css'
 
 const Chirp = ({ id, user, message, comments, retweets, isRetweet, likes, isChirpLiked, timestamp }) => {
     const [isLiked, setIsLiked] = useState(isChirpLiked)
     const [likeCount, setLikeCount] = useState(likes)
+
+    const time = new Date(timestamp)
 
     const onLikeButtonHandler = async () => {
         if (!isLiked) {
@@ -44,27 +47,30 @@ const Chirp = ({ id, user, message, comments, retweets, isRetweet, likes, isChir
         console.log('test')
     }
     return (
-        <div className={classes['chirp']} key={id}>
-            <span className={classes['chirp__icon']}></span>
+        <article className={classes['chirp']} key={id}>
+            <Link to={`/${user}`} className={classes['chirp__icon']} />
             <div className={classes['chirp__main']}>
-                <section>
-                    <NavLink to={`/${user}`}>{user}</NavLink>
-                    <span className={classes['chirp__main-timestamp']}>{` · ${timestamp}`}</span>
+                <section className={classes['chirp__main-header']}>
+                    <Link to={`/${user}`} className={classes['chirp__main-user']}>{user}</Link>
+                    <span>·</span>
+                    <Link to={`/${user}/status/${id}`} className={classes['chirp__main-timestamp']}>{date(timestamp)}</Link>
                 </section>
                 <section>
-                    <p className={classes['chirp__main-message']}>{message}</p>
+                    <Link to={`/${user}/status/${id}`} className={classes['chirp__main-message']}>
+                        <p>{message}</p>
+                    </Link>
                 </section>
                 <section className={classes['chirp__main-actions']}>
                     <ChirpIcons stats={
                         [
                             { count: comments, active: false, onClick: testHandler },
-                            { count: retweets, active: isRetweet, onClick: testHandler },
+                            { count: retweets, active: false, onClick: testHandler },
                             { count: likeCount, active: isLiked, onClick: onLikeButtonHandler }
                         ]
                     } />
                 </section>
             </div>
-        </div>
+        </article>
     )
 }
 

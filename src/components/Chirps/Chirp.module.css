@@ -8,11 +8,17 @@
 }
 
 .chirp__icon {
-    height: 50px;
+    max-height: 50px;
     min-width: 50px;
     background-color: #bbb;
     border-radius: 50%;
   }
+
+.chirp__main > section > span {
+    color: rgb(110, 118, 125);
+    margin-right: 2px;
+    padding: 0;
+}
 
 .chirp__main {
     display: flex;
@@ -22,20 +28,30 @@
     overflow: hidden;
 }
 
-.chirp__main a {
+.chirp__main-timestamp {
+    text-decoration: none;
+    color: rgb(101, 119, 134);
+}
+
+.chirp__main-timestamp:hover {
+    text-decoration: underline;
+}
+
+.chirp__main-user {
     text-decoration: none;
     color: white;
 }
 
-.chirp__main a:hover {
+.chirp__main-user:hover {
     text-decoration: underline;
 }
 
-.chirp__main-timestamp {
-    color: rgb(101, 119, 134);
+.chirp__main-message {
+    text-decoration: none;
+    color:white;
 }
 
-.chirp__main-message {
+.chirp__main-message p {
     margin-bottom: .5rem;
     font-weight: normal;
     margin-left: 0;
@@ -43,14 +59,16 @@
 }
 
 .chirp__main-actions {
-    display: flex;
     position: relative;
-    right: 1rem;
+    display: flex;
     justify-content: space-between;
     padding-right: 2rem;
+    z-index: 2;
 }
 
 .chirp__main-actions button {
-    margin: 1rem 1rem 0 1rem;
+    margin: 0;
+    padding: 0;
+    z-index: 3;
 }
 

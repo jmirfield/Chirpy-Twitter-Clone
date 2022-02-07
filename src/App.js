@@ -49,6 +49,7 @@ function App() {
           <Route path='flow/bookmarks' element={<p>BOOKMARKS PAGE</p>} />
           <Route path=':user' element={<Profile />} />
           <Route path=':user/lists' element={<p>LISTS PLACEHOLDER</p>} />
+          <Route path=':user/status/:chirpId' element={<p>CHIRP PLACEHOLDER</p>} />
           <Route path='*' element={<Navigate replace to='/home' />} />
           <Route path='/' element={<Navigate replace to='/home' />} />
         </Route >
