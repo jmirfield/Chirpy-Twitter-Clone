@@ -8,8 +8,7 @@ const RelationshipSchema = new Schema({
     },
     user_id: {
         type: Schema.ObjectId,
-        required: true,
-        ref: 'User'
+        required: true
     }
 })
 
@@ -19,7 +18,7 @@ RelationshipSchema.virtual('chirps', {
     foreignField: 'owner_id'
 })
 
-RelationshipSchema.virtual('users', {
+RelationshipSchema.virtual('user', {
     ref: 'User',
     localField: 'following_id',
     foreignField: '_id'

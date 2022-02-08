@@ -44,7 +44,7 @@ const UserSchema = new Schema({
     timestamps: true
 })
 
-UserSchema.virtual('relationships', {
+UserSchema.virtual('following', {
     ref: 'Relationship',
     localField: '_id',
     foreignField: 'user_id'
