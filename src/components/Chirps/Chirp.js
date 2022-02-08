@@ -8,8 +8,6 @@ const Chirp = ({ id, user, message, comments, retweets, isRetweet, likes, isChir
     const [isLiked, setIsLiked] = useState(isChirpLiked)
     const [likeCount, setLikeCount] = useState(likes)
 
-    const time = new Date(timestamp)
-
     const onLikeButtonHandler = async () => {
         if (!isLiked) {
             try {

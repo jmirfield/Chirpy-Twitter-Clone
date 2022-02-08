@@ -27,7 +27,7 @@ const NewChirp = (props) => {
             })
             const data = await response.json()
             if (props.isModal) props.onClose()
-            props.onAdd({ ...data, username: ctx.user, isLiked: false })
+            ctx.onAddChirp({ ...data, username: ctx.user, isLiked: false })
         } catch (e) {
             console.log('ERROR')
         }

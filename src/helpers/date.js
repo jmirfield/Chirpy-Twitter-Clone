@@ -8,7 +8,7 @@ export const date = (time) => {
     //Difference provides when post was created relative to now in seconds
     const difference = (now/1000) - (postTime/1000)
 
-    if(difference < 60)return `${difference}s`
+    if(difference < 60)return `${Math.ceil(difference)}s`
     else if((difference/60) < 60) return `${Math.floor(difference/60)}m`
     else if((difference/3600) < 24) return `${Math.floor(difference/3600)}h`
     else if((difference/(3600*24) < 365)){

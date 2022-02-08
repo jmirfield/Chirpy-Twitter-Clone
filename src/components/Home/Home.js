@@ -35,7 +35,7 @@ const Home = () => {
                 <h1>Home</h1>
             </div>
             <div className={classes['home__new-chirp']}>
-                <NewChirp onAdd={ctx.onAddChirp} isModal={false} />
+                <NewChirp isModal={false} />
             </div>
             <div className={classes['home__chirps']}>
                 {ctx.chirps.length > 0 ? <Chirps chirps={ctx.chirps} /> : <p className={classes['home__chirps-none']}>No chirps available...</p>}
