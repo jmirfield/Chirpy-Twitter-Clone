@@ -73,28 +73,6 @@ class ChirpController {
         }
     }
 
-    test = async (req, res) => {
-        try {
-            await req.user
-                .populate({
-                    path: 'following',
-                    populate: {
-                        path: 'user',
-                        justOne: true
-                    }
-                })
-            const followQuery = req.user.following.map(user => user.following_id)
-            const chirps = await Chirp.find({
-                'owner_id': { $in: followQuery }
-            }, null, {
-                sort: { createdAt: -1 }
-            }).populate('owner_id')
-            console.log(chirps[0].owner_id)
-            res.send(chirps)
-        } catch (e) {
-            res.status(400).send(e)
-        }
-    }
 
     getUserChirps = async (req, res) => {
         try {
