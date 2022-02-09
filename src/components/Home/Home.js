@@ -4,10 +4,11 @@ import Chirps from '../Chirps/Chirps'
 import classes from './Home.module.css'
 import MainContext from '../../context/MainContext'
 
-const Home = () => {
+const Home = (props) => {
     const ctx = useContext(MainContext)
+    console.log(props)
 
-    const getChirpFeed = async () => {
+    const getMainChirpFeed = async () => {
         try {
             const response = await fetch("http://localhost:3001/chirps/feed", {
                 method: 'GET',
@@ -17,7 +18,7 @@ const Home = () => {
                 }
             })
             const {feed, likedChirps, retweetedChirps} = await response.json()
-            ctx.onGetFeed(feed, likedChirps, retweetedChirps)
+            props.onGetFeed(feed, likedChirps, retweetedChirps)
         } catch (e) {
             console.log(e.message)
         }
@@ -25,8 +26,8 @@ const Home = () => {
 
     useEffect(() => {
         document.title = 'Home / Chirpy'
-        if(ctx.chirps.length > 0)ctx.onClearFeed()
-        getChirpFeed()
+        if(props.chirps.length > 0)ctx.onClearFeed()
+        getMainChirpFeed()
     }, [])
 
     return (
@@ -38,7 +39,7 @@ const Home = () => {
                 <NewChirp isModal={false} />
             </div>
             <div className={classes['home__chirps']}>
-                {ctx.chirps.length > 0 ? <Chirps chirps={ctx.chirps} /> : <p className={classes['home__chirps-none']}>No chirps available...</p>}
+                {props.chirps.length > 0 ? <Chirps chirps={props.chirps} /> : <p className={classes['home__chirps-none']}>No chirps available...</p>}
             </div>
         </>
     )

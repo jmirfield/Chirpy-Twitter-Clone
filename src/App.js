@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Login from './components/Login/Login';
 import SignIn from './components/Login/SignIn';
@@ -13,6 +13,25 @@ import Profile from './components/Profile/Profile';
 
 function App() {
   const ctx = useContext(MainContext)
+  const [chirps, setChirps] = useState([])
+  const [likedChirps, setLikedChirps] = useState([])
+  const [retweetedChirps, setRetweetedChirps] = useState([])
+
+  const getFeedHandler = (feed, likedChirps, retweetedChirps) => {
+    const chirpArr = feed.map(chirp => {
+      let isLiked;
+      let isRechirped = false;
+      if (chirp.rechirp) {
+        isLiked = likedChirps.includes(chirp.rechirp.original_id)
+      } else {
+        isLiked = likedChirps.includes(chirp._id)
+        isRechirped = retweetedChirps.includes(chirp._id)
+      }
+      return { ...chirp, isLiked, isRechirped }
+    })
+    setChirps(chirpArr)
+  }
+
   if (ctx.isLoading) {
     return (
       <>
@@ -42,7 +61,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<MainLayout username={ctx.user} />} >
-          <Route path='home' element={<Home />} />
+          <Route path='home' element={<Home chirps={chirps} onGetFeed={getFeedHandler}/>} />
           <Route path='explore' element={<p>EXPLORE PAGE</p>} />
           <Route path='notifications' element={<p>NOTFICATIONS PAGE</p>} />
           <Route path='messages' element={<p>MESSAGES PAGE</p>} />

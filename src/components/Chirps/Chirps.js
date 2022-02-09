@@ -22,7 +22,7 @@ const Chirps = ({ chirps }) => {
                                 likes={likesCount}
                                 isChirpLiked={isLiked}
                                 timestamp={rechirp.original_time}
-                                rechirp_original={rechirp}
+                                rechirp={rechirp}
                             />
                         )
                     }
