@@ -7,12 +7,12 @@ const Chirps = ({chirps}) => {
     return (
         <Card>
             <div className={classes.chirps}>
-                {chirps.map(({_id, ownerUsername, content, commentsCount, retweetsCount, likesCount, isLiked, createdAt}) => {
+                {chirps.map(({_id, owner_username, content, commentsCount, retweetsCount, likesCount, isLiked, createdAt}) => {
                     return (
                         <Chirp
                             key={_id}
                             id={_id}
-                            user={ownerUsername}
+                            user={owner_username}
                             message={content}
                             comments={commentsCount}
                             retweets={retweetsCount}
