@@ -7,7 +7,7 @@ class UserController {
         try {
             const user = new User(req.body)
             const relationship = new Relationship({
-                _id: user._id,
+                following_id: user._id,
                 user_id: user._id
             })
             const token = await user.generateAuthToken()
@@ -66,6 +66,7 @@ class UserController {
             if (startingLength !== req.user.likedChirps.length) {
                 await req.user.save()
                 await Chirp.findOneAndUpdate({ _id: req.body._id }, { $inc: { likesCount: 1 } })
+                await Chirp.updateMany({ 'rechirp.original_id': req.body._id }, { $inc: { likesCount: 1 } })
             }
             res.status(202).send()
         } catch (e) {
@@ -83,6 +84,7 @@ class UserController {
             if (startingLength !== req.user.likedChirps.length) {
                 await req.user.save()
                 await Chirp.findOneAndUpdate({ _id: req.body._id }, { $inc: { likesCount: -1 } })
+                await Chirp.updateMany({ 'rechirp.original_id': req.body._id }, { $inc: { likesCount: -1 } })
             }
             res.status(202).send()
         } catch (e) {

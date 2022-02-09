@@ -8,8 +8,7 @@ class ChirpController {
                 ...req.body,
                 owner_id: req.user._id,
                 owner_username: req.user.username,
-                commentsCount: 0,
-                retweetsCount: 0,
+                rechirpsCount: 0,
                 likesCount: 0,
             })
             await chirp.save()
@@ -22,20 +21,52 @@ class ChirpController {
 
     getCurrentUserChirpFeed = async (req, res) => {
         try {
-            await req.user
-                .populate({
-                    path: 'following',
-                    populate: {
-                            path: 'user',
-                            justOne: true
-                        }
-                })
-            const chirps = await Chirp.find({
-                'owner_id': { $in: req.user.following }
-            }, null, {
-                sort: { createdAt: -1 }
+            await req.user.populate({
+                path: 'following',
+                populate: {
+                    path: 'user'
+                }
             })
-            res.send({ feed: chirps, likedChirps: req.user.likedChirps })
+            const retweetQuery = []
+            req.user.following.forEach(follow => {
+                retweetQuery.concat(follow.user.retweetedChirps)
+            })
+            const followQuery = req.user.following.map(user => user.following_id)
+            const chirps = await Chirp.find({
+                $or: [
+                    { 'owner_id': { $in: followQuery } }
+                ]
+            }, null, {
+                sort: { createdAt: -1 },
+                lean: true
+            })
+            res.send({
+                feed: chirps,
+                likedChirps: req.user.likedChirps,
+                retweetedChirps: req.user.retweetedChirps
+            })
+        } catch (e) {
+            console.log(e)
+            res.status(400).send()
+        }
+    }
+
+    addRechirp = async (req, res) => {
+        try {
+            const chirp = new Chirp({
+                ...req.body,
+                owner_id: req.user._id,
+                owner_username: req.user.username,
+            })
+            const startingLength = req.user.retweetedChirps.length
+            req.user.retweetedChirps.addToSet(chirp.rechirp.original_id)
+            if (startingLength !== req.user.retweetedChirps.length) {
+                await req.user.save()
+            }
+            await chirp.save()
+            await Chirp.findOneAndUpdate({ _id: chirp.rechirp.original_id }, { $inc: { rechirpsCount: 1 } })
+            await Chirp.updateMany({ 'rechirp.original_id': chirp.rechirp.original_id }, { $inc: { rechirpsCount: 1 } })
+            res.send(chirp)
         } catch (e) {
             console.log(e)
             res.status(400).send()
@@ -47,27 +78,21 @@ class ChirpController {
             await req.user
                 .populate({
                     path: 'following',
-                    populate: [
-                        {
-                            path: 'chirps'
-                        }, {
-                            path: 'user',
-                            justOne: true
-                        }]
-                },
-                )
-            const feed = []
-            req.user.following.forEach(followingUser => {
-                console.log(followingUser.user[0].retweetedChirps)
-                feed.push(...followingUser.chirps)
-            });
-            const chirps = await Chirp.find(req.user.following)
-            console.log(chirps)
-            feed.sort((a, b) => b.createdAt - a.createdAt)
-            res.send(feed)
+                    populate: {
+                        path: 'user',
+                        justOne: true
+                    }
+                })
+            const followQuery = req.user.following.map(user => user.following_id)
+            const chirps = await Chirp.find({
+                'owner_id': { $in: followQuery }
+            }, null, {
+                sort: { createdAt: -1 }
+            }).populate('owner_id')
+            console.log(chirps[0].owner_id)
+            res.send(chirps)
         } catch (e) {
-            console.log(e)
-            res.status(400).send()
+            res.status(400).send(e)
         }
     }
 

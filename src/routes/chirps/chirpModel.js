@@ -15,11 +15,7 @@ const ChirpSchema = new Schema({
         trim: true,
         required: true
     },
-    commentsCount: {
-        type: Number,
-        required: true
-    },
-    retweetsCount: {
+    rechirpsCount: {
         type: Number,
         required: true
     },
@@ -27,11 +23,22 @@ const ChirpSchema = new Schema({
         type: Number,
         required: true
     },
+    rechirp: {
+        original_id: {
+            type: Schema.ObjectId
+        },
+        original_owner: {
+
+        },
+        original_time: {
+            type: String
+        }
+    }
 }, {
     timestamps: true
 })
 
-ChirpSchema.methods.toJSON = function() {
+ChirpSchema.methods.toJSON = function () {
     const chirpObj = this.toObject()
     delete chirpObj.ownerId
     delete chirpObj.updatedAt

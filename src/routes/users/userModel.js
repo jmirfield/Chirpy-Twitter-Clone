@@ -52,8 +52,8 @@ UserSchema.virtual('following', {
 
 UserSchema.virtual('chirps', {
     ref: 'Chirp',
-    localField: 'username',
-    foreignField: 'ownerUsername'
+    localField: '_id',
+    foreignField: 'owner_id'
 })
 
 //Checks for login using email and password
@@ -96,6 +96,7 @@ UserSchema.pre('save', async function (next) {
 //Deletes all Relationships and Chirps if User is removed
 UserSchema.pre('deleteOne', { document: true } , async function (next) {
     await Relationship.deleteMany({ user_id: this._id })
+    await Relationship.deleteMany({ following_id: this._id })
     await Chirp.deleteMany({owner_id: this._id})
     next()
 })
