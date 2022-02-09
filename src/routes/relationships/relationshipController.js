@@ -4,9 +4,9 @@ class RelationshipController {
     getRelationships = async (req, res) => {
         try {
             await req.user.populate({
-                path: 'relationships'
+                path: 'following'
             })
-            res.status(200).send(req.user.relationships)
+            res.status(200).send(req.user.following)
         } catch (e) {
             res.status(500).send(e)
         }
@@ -21,6 +21,7 @@ class RelationshipController {
             await relationship.save()
             res.send()
         } catch(e) {
+            console.log(e)
             res.status(400).send(e)
         }
     }

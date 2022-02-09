@@ -7,7 +7,7 @@ class UserController {
         try {
             const user = new User(req.body)
             const relationship = new Relationship({
-                following_id: user._id,
+                _id: user._id,
                 user_id: user._id
             })
             const token = await user.generateAuthToken()

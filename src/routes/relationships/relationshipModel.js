@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const { Schema } = mongoose
 
 const RelationshipSchema = new Schema({
-    following_id: {
+    _id: {
         type: Schema.ObjectId,
         required: true
     },
@@ -14,17 +14,17 @@ const RelationshipSchema = new Schema({
 
 RelationshipSchema.virtual('chirps', {
     ref: 'Chirp',
-    localField: 'following_id',
+    localField: '_id',
     foreignField: 'owner_id'
 })
 
 RelationshipSchema.virtual('user', {
     ref: 'User',
-    localField: 'following_id',
+    localField: '_id',
     foreignField: '_id'
 })
 
-RelationshipSchema.index({ following_id: 1, user_id: 1 }, { unique: true })
+RelationshipSchema.index({ 'user_id': 1, '_id': 1 }, { unique: true })
 
 const Relationship = mongoose.model('Relationship', RelationshipSchema)
 

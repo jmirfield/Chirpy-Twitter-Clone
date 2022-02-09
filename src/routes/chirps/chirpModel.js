@@ -6,6 +6,10 @@ const ChirpSchema = new Schema({
         type: Schema.ObjectId,
         required: true
     },
+    owner_username: {
+        type: String,
+        required: true
+    },
     content: {
         type: String,
         trim: true,
