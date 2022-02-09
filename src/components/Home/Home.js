@@ -16,8 +16,8 @@ const Home = () => {
                     'Authorization': `Bearer ${localStorage.jwt}`
                 }
             })
-            const {feed, likedChirps} = await response.json()
-            ctx.onGetFeed(feed, likedChirps)
+            const {feed, likedChirps, retweetedChirps} = await response.json()
+            ctx.onGetFeed(feed, likedChirps, retweetedChirps)
         } catch (e) {
             console.log(e.message)
         }

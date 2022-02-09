@@ -6,13 +6,13 @@ const MainContext = React.createContext({
     onRemoveError: () => { },
     isLoading: true,
     isLogged: false,
-    login: () => { },
-    logout: () => { },
+    onLogin: () => { },
+    onLogout: () => { },
     chirps: [],
     onGetFeed: () => { },
-    onAddChirp: () => { },
     onClearFeed: () => { },
-    authHeaders: {}
+    onAddChirp: () => { },
+    onReset: () => { }
 })
 
 export const MainProvider = ({ children }) => {
@@ -59,9 +59,7 @@ export const MainProvider = ({ children }) => {
                 }
             })
             localStorage.removeItem('jwt')
-            setUser('')
-            setIsLogged(false)
-            setChirps([])
+            resetHandler()
         } catch (e) {
             console.log('ERROR')
             console.log(e)
@@ -82,6 +80,7 @@ export const MainProvider = ({ children }) => {
                 const data = await response.json()
                 if (data.error) {
                     localStorage.removeItem('jwt')
+                    resetHandler()
                     return
                 }
                 setUser(data.username)
@@ -105,10 +104,17 @@ export const MainProvider = ({ children }) => {
         logoutRequest()
     }
 
-    const getFeedHandler = (feed, likedChirps) => {
+    const getFeedHandler = (feed, likedChirps, retweetedChirps) => {
         const chirpArr = feed.map(chirp => {
-            const isLiked = likedChirps.includes(chirp._id)
-            return { ...chirp, isLiked }
+            let isLiked;
+            let isRechirped = false;
+            if(chirp.rechirp) {
+                isLiked = likedChirps.includes(chirp.rechirp.original_id) 
+            } else {
+                isLiked = likedChirps.includes(chirp._id)
+                isRechirped = retweetedChirps.includes(chirp._id)
+            }
+            return { ...chirp, isLiked, isRechirped }
         })
         setChirps(chirpArr)
     }
@@ -120,10 +126,18 @@ export const MainProvider = ({ children }) => {
     }
 
     const removeErrorHandler = () => {
-        setError()
+        setError('')
     }
 
     const clearFeedHandler = () => {
+        setChirps([])
+    }
+
+    const resetHandler = () => {
+        setUser('')
+        setError('')
+        setLoading(false)
+        setIsLogged(false)
         setChirps([])
     }
 
@@ -139,7 +153,8 @@ export const MainProvider = ({ children }) => {
             chirps,
             onGetFeed: getFeedHandler,
             onClearFeed: clearFeedHandler,
-            onAddChirp: addChirpHandler
+            onAddChirp: addChirpHandler,
+            onReset: resetHandler
         }}>
             {children}
         </MainContext.Provider>
