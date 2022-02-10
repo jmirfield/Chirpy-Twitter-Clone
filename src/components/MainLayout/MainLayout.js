@@ -18,13 +18,13 @@ const MainLayout = (props) => {
     return (
         <div className={classes['layout']}>
             <header className={classes['layout__menubar']}>
-                <Menubar onNewChirp={onOpenNewChirpHandler} username={props.username} />
+                <Menubar onOpenModal={onOpenNewChirpHandler} username={props.username} />
             </header>
             <section className={classes['layout__main']}>
                 <Outlet />
             </section>
             <section  className={classes['layout__new-chirp-modal']}>
-                {composeChirp && <ChirpModal onClose={onCloseNewChirpHandler} />}
+                {composeChirp && <ChirpModal onNewChirp={props.onNewChirp} onClose={onCloseNewChirpHandler} />}
             </section>
         </div>
     )

@@ -1,10 +1,9 @@
 body {
   margin: 0;
-  font-family:'Courier New', Courier, monospace;
+  font-family:'Helvetica', 'Courier New', Courier, monospace;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: black;
-  font-weight: bold;
   color: white;
 }
 

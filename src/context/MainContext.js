@@ -8,10 +8,6 @@ const MainContext = React.createContext({
     isLogged: false,
     onLogin: () => { },
     onLogout: () => { },
-    chirps: [],
-    onGetFeed: () => { },
-    onClearFeed: () => { },
-    onAddChirp: () => { },
     onReset: () => { }
 })
 
@@ -21,7 +17,6 @@ export const MainProvider = ({ children }) => {
     const [error, setError] = useState('')
     const [isLoading, setLoading] = useState(true)
     const [isLogged, setIsLogged] = useState(false)
-    const [chirps, setChirps] = useState([])
 
     useEffect(() => {
         authPersistentLogin()
@@ -103,34 +98,8 @@ export const MainProvider = ({ children }) => {
     const logoutHandler = () => {
         logoutRequest()
     }
-
-    const getFeedHandler = (feed, likedChirps, retweetedChirps) => {
-        const chirpArr = feed.map(chirp => {
-            let isLiked;
-            let isRechirped = false;
-            if(chirp.rechirp) {
-                isLiked = likedChirps.includes(chirp.rechirp.original_id) 
-            } else {
-                isLiked = likedChirps.includes(chirp._id)
-                isRechirped = retweetedChirps.includes(chirp._id)
-            }
-            return { ...chirp, isLiked, isRechirped }
-        })
-        setChirps(chirpArr)
-    }
-
-    const addChirpHandler = (chirp) => {
-        setChirps((prevChirps) => {
-            return [chirp, ...prevChirps]
-        })
-    }
-
     const removeErrorHandler = () => {
         setError('')
-    }
-
-    const clearFeedHandler = () => {
-        setChirps([])
     }
 
     const resetHandler = () => {
@@ -138,7 +107,6 @@ export const MainProvider = ({ children }) => {
         setError('')
         setLoading(false)
         setIsLogged(false)
-        setChirps([])
     }
 
     return (
@@ -150,10 +118,6 @@ export const MainProvider = ({ children }) => {
             isLogged,
             onLogin: loginHandler,
             onLogout: logoutHandler,
-            chirps,
-            onGetFeed: getFeedHandler,
-            onClearFeed: clearFeedHandler,
-            onAddChirp: addChirpHandler,
             onReset: resetHandler
         }}>
             {children}

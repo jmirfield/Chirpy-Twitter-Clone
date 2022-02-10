@@ -39,7 +39,7 @@ const Menubar = (props) => {
             }
             )}
             <div className={classes['menu__item-actions']}>
-                <Button onClick={props.onNewChirp}>Chirp</Button>
+                <Button onClick={props.onOpenModal}>Chirp</Button>
                 <Button onClick={ctx.onLogout}>Logout</Button>
             </div>
         </div>

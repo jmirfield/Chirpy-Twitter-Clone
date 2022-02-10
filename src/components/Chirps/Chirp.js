@@ -16,6 +16,7 @@ const Chirp = ({ id, user, message, comments, rechirps, isChirpRechirped, likes,
     const onLikeButtonHandler = async () => {
         if (!isLiked) {
             try {
+                const req = !rechirp ?  id : rechirp.original_id
                 if (!rechirp) {
                     await fetch("http://localhost:3001/users/like", {
                         method: 'POST', // *GET, POST, PUT, DELETE, etc.
@@ -23,16 +24,7 @@ const Chirp = ({ id, user, message, comments, rechirps, isChirpRechirped, likes,
                             'Content-Type': 'application/json',
                             'Authorization': `Bearer ${localStorage.jwt}`
                         },
-                        body: JSON.stringify({ _id: id })
-                    })
-                } else {
-                    await fetch("http://localhost:3001/users/like", {
-                        method: 'POST', // *GET, POST, PUT, DELETE, etc.
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${localStorage.jwt}`
-                        },
-                        body: JSON.stringify({ _id: rechirp.original_id })
+                        body: JSON.stringify({ _id: req })
                     })
                 }
                 setIsLiked(true)
@@ -74,8 +66,8 @@ const Chirp = ({ id, user, message, comments, rechirps, isChirpRechirped, likes,
             try {
                 const req = !rechirp ? {
                     content: message,
-                    rechirpsCount: rechirps,
-                    likesCount: likes,
+                    rechirpsCount: rechirpCount,
+                    likesCount: likeCount,
                     rechirp: {
                         original_id: id,
                         original_owner: user,
@@ -83,8 +75,8 @@ const Chirp = ({ id, user, message, comments, rechirps, isChirpRechirped, likes,
                     }
                 } : {
                     content: message,
-                    rechirpsCount: rechirps,
-                    likesCount: likes,
+                    rechirpsCount: rechirpCount,
+                    likesCount: likeCount,
                     rechirp: {
                         original_id: rechirp.original_id,
                         original_owner: rechirp.original_owner,
@@ -147,6 +139,7 @@ const Chirp = ({ id, user, message, comments, rechirps, isChirpRechirped, likes,
 
     const post_owner = rechirp ? rechirp.original_owner : user
     const post_id = rechirp ? rechirp.original_id : id
+    const post_time = rechirp ? rechirp.original_time : timestamp
 
     return (
         <>
@@ -157,7 +150,7 @@ const Chirp = ({ id, user, message, comments, rechirps, isChirpRechirped, likes,
                     <section className={classes['chirp__main-header']}>
                         <Link to={`/${post_owner}`} className={classes['chirp__main-user']}>{post_owner}</Link>
                         <span>·</span>
-                        <Link to={`/${post_owner}/status/${post_id}`} className={classes['chirp__main-timestamp']}>{date(timestamp)}</Link>
+                        <Link to={`/${post_owner}/status/${post_id}`} className={classes['chirp__main-timestamp']}>{date(post_time)}</Link>
                     </section>
                     <section>
                         <Link to={`/${post_owner}/status/${post_id}`} className={classes['chirp__main-message']}>

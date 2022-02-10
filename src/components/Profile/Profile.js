@@ -1,13 +1,10 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom'
-import MainContext from '../../context/MainContext';
 import Chirps from '../Chirps/Chirps';
 import classes from './Profile.module.css'
 
-const Profile = () => {
-    const ctx = useContext(MainContext)
+const Profile = (props) => {
     const params = useParams()
-
     const getUserProfileFeed = async () => {
         try {
             const response = await fetch(`http://localhost:3001/chirps/auth/${params.user}`, {
@@ -18,22 +15,22 @@ const Profile = () => {
                 }
             })
 
-            const { feed, likedChirps } = await response.json()
-            ctx.onGetFeed(feed, likedChirps)
+            const { feed, likedChirps, retweetedChirps } = await response.json()
+            props.onGetFeed(feed, likedChirps, retweetedChirps)
         } catch (e) {
             console.log(e.message)
         }
     }
 
     useEffect(() => {
-        if(ctx.chirps.length > 0)ctx.onClearFeed()
+        if (props.chirps.length > 0) props.onClearFeed()
         getUserProfileFeed()
-    }, [])
+    }, [params.user])
 
     return (
         <>
             <div className={classes['profile_chirps']}>
-                {ctx.chirps.length > 0 ? <Chirps chirps={ctx.chirps} /> : <p className={classes['home__chirps-none']}>No chirps available...</p>}
+                {props.chirps.length > 0 ? <Chirps chirps={props.chirps} onDelete={props.onDeleteChirp} onRechirp={props.onNewChirp} /> : <p className={classes['home__chirps-none']}>No chirps available...</p>}
             </div>
         </>
     )

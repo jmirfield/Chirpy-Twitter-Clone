@@ -29,7 +29,7 @@ const NewChirp = (props) => {
             if (props.isModal) props.onClose()
             props.onNewChirp({ ...data, username: ctx.user, isLiked: false })
         } catch (e) {
-            console.log('ERROR')
+            console.log(e)
         }
     }
 

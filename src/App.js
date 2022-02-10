@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from 'react'
+import { useContext, useState } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Login from './components/Login/Login';
 import SignIn from './components/Login/SignIn';
@@ -14,8 +14,6 @@ import Profile from './components/Profile/Profile';
 function App() {
   const ctx = useContext(MainContext)
   const [chirps, setChirps] = useState([])
-  const [likedChirps, setLikedChirps] = useState([])
-  const [retweetedChirps, setRetweetedChirps] = useState([])
 
   const getFeedHandler = (feed, likedChirps, retweetedChirps) => {
     const chirpArr = feed.map(chirp => {
@@ -35,8 +33,6 @@ function App() {
 
   const clearFeedHandler = () => {
     setChirps([])
-    setLikedChirps([])
-    setRetweetedChirps([])
   }
 
   const newChirpHandler = (chirp) => {
@@ -53,12 +49,6 @@ function App() {
       })
     })
   }
-
-  useEffect(() => {
-    if (likedChirps.length > 0 || retweetedChirps.length > 0) {
-      console.log('test')
-    }
-  }, [likedChirps, retweetedChirps])
 
   if (ctx.isLoading) {
     return (
@@ -88,7 +78,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<MainLayout username={ctx.user} />} >
+        <Route path='/' element={<MainLayout onNewChirp={newChirpHandler} username={ctx.user} />} >
           <Route path='home' element={<Home
             chirps={chirps}
             onGetFeed={getFeedHandler}
@@ -100,7 +90,13 @@ function App() {
           <Route path='notifications' element={<p>NOTFICATIONS PAGE</p>} />
           <Route path='messages' element={<p>MESSAGES PAGE</p>} />
           <Route path='flow/bookmarks' element={<p>BOOKMARKS PAGE</p>} />
-          <Route path=':user' element={<Profile />} />
+          <Route path=':user' element={<Profile
+            chirps={chirps}
+            onGetFeed={getFeedHandler}
+            onClearFeed={clearFeedHandler}
+            onNewChirp={newChirpHandler}
+            onDeleteChirp={deleteChirpHandler}
+          />} />
           <Route path=':user/lists' element={<p>LISTS PLACEHOLDER</p>} />
           <Route path=':user/status/:chirpId' element={<p>CHIRP PLACEHOLDER</p>} />
           <Route path='*' element={<Navigate replace to='/home' />} />
