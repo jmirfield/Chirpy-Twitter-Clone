@@ -50,12 +50,6 @@ UserSchema.virtual('following', {
     foreignField: 'user_id'
 })
 
-UserSchema.virtual('chirps', {
-    ref: 'Chirp',
-    localField: '_id',
-    foreignField: 'owner_id'
-})
-
 //Checks for login using email and password
 UserSchema.statics.findByCredentials = async (username, password) => {
     const user = await User.findOne({ "username": { $regex : new RegExp(username, "i") } })

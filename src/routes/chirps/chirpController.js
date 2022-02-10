@@ -29,9 +29,7 @@ class ChirpController {
             })
             const followQuery = req.user.following.map(user => user.following_id)
             const chirps = await Chirp.find({
-                $or: [
-                    { 'owner_id': { $in: followQuery } }
-                ]
+                'owner_id': { $in: followQuery }
             }, null, {
                 sort: { createdAt: -1 },
                 lean: true
@@ -95,14 +93,17 @@ class ChirpController {
 
     getUserChirps = async (req, res) => {
         try {
-            const user = await User.findOne({ username: req.params.username })
-            await user.populate({
-                path: 'chirps'
+            const chirps = await Chirp.find({
+                'owner_username': req.params.username
+            }, null, {
+                sort: { createdAt: -1 },
+                lean: true
             })
-            user.chirps.sort((a, b) => {
-                return b.createdAt - a.createdAt
+            res.send({
+                feed: chirps,
+                likedChirps: req.user.likedChirps,
+                retweetedChirps: req.user.retweetedChirps
             })
-            res.send({ feed: user.chirps, likedChirps: req.user.likedChirps })
         } catch (e) {
             res.status(404).send()
         }

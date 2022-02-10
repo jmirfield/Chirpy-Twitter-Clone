@@ -62,7 +62,6 @@ class UserController {
             if(!req.body._id)throw new Error('Cannot provide null value')
             const startingLength = req.user.likedChirps.length
             req.user.likedChirps.addToSet(req.body._id)
-            // console.log(req.user.likedChirps)
             if (startingLength !== req.user.likedChirps.length) {
                 await req.user.save()
                 await Chirp.findOneAndUpdate({ _id: req.body._id }, { $inc: { likesCount: 1 } })
