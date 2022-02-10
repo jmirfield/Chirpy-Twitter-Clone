@@ -1,31 +1,13 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import Chirp from './Chirp'
-import MainContext from '../../context/MainContext'
 import Card from '../UI/Card/Card'
 import classes from './Chirps.module.css'
 
-const Chirps = ({ chirps }) => {
-    const ctx = useContext(MainContext)
+const Chirps = ({ chirps, onDelete, onRechirp }) => {
     return (
         <Card>
             <div className={classes.chirps}>
-                {chirps.map(({ _id, owner_username, content, rechirpsCount,isRechirped, likesCount, isLiked, createdAt, rechirp }) => {
-                    if (rechirp) {
-                        return (
-                            <Chirp
-                                key={_id}
-                                id={_id}
-                                user={rechirp.original_owner}
-                                message={content}
-                                rechirps={rechirpsCount}
-                                isChirpRechirped={ctx.user === owner_username}
-                                likes={likesCount}
-                                isChirpLiked={isLiked}
-                                timestamp={rechirp.original_time}
-                                rechirp={rechirp}
-                            />
-                        )
-                    }
+                {chirps.map(({ _id, owner_username, content, rechirpsCount, isRechirped, likesCount, isLiked, createdAt, rechirp = null }) => {
                     return (
                         <Chirp
                             key={_id}
@@ -37,6 +19,9 @@ const Chirps = ({ chirps }) => {
                             likes={likesCount}
                             isChirpLiked={isLiked}
                             timestamp={createdAt}
+                            rechirp={rechirp}
+                            onDelete={onDelete}
+                            onRechirp={onRechirp}
                         />
                     )
                 })}

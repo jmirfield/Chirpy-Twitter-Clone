@@ -19,10 +19,11 @@ function App() {
 
   const getFeedHandler = (feed, likedChirps, retweetedChirps) => {
     const chirpArr = feed.map(chirp => {
-      let isLiked;
+      let isLiked = false;
       let isRechirped = false;
       if (chirp.rechirp) {
         isLiked = likedChirps.includes(chirp.rechirp.original_id)
+        isRechirped = retweetedChirps.includes(chirp.rechirp.original_id)
       } else {
         isLiked = likedChirps.includes(chirp._id)
         isRechirped = retweetedChirps.includes(chirp._id)
@@ -31,6 +32,33 @@ function App() {
     })
     setChirps(chirpArr)
   }
+
+  const clearFeedHandler = () => {
+    setChirps([])
+    setLikedChirps([])
+    setRetweetedChirps([])
+  }
+
+  const newChirpHandler = (chirp) => {
+    setChirps((prev) => [chirp, ...prev])
+  }
+
+  const deleteChirpHandler = (id) => {
+    setChirps((prev) => {
+      return prev.filter(chirp => {
+        if (!chirp.rechirp) return true
+        else {
+          return chirp.rechirp.original_id !== id || ctx.user !== chirp.owner_username
+        }
+      })
+    })
+  }
+
+  useEffect(() => {
+    if (likedChirps.length > 0 || retweetedChirps.length > 0) {
+      console.log('test')
+    }
+  }, [likedChirps, retweetedChirps])
 
   if (ctx.isLoading) {
     return (
@@ -61,7 +89,13 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<MainLayout username={ctx.user} />} >
-          <Route path='home' element={<Home chirps={chirps} onGetFeed={getFeedHandler}/>} />
+          <Route path='home' element={<Home
+            chirps={chirps}
+            onGetFeed={getFeedHandler}
+            onClearFeed={clearFeedHandler}
+            onNewChirp={newChirpHandler}
+            onDeleteChirp={deleteChirpHandler}
+          />} />
           <Route path='explore' element={<p>EXPLORE PAGE</p>} />
           <Route path='notifications' element={<p>NOTFICATIONS PAGE</p>} />
           <Route path='messages' element={<p>MESSAGES PAGE</p>} />
