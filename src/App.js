@@ -16,19 +16,25 @@ function App() {
   const [chirps, setChirps] = useState([])
 
   const getFeedHandler = (feed, likedChirps, retweetedChirps) => {
-    const chirpArr = feed.map(chirp => {
-      let isLiked = false;
-      let isRechirped = false;
-      if (chirp.rechirp) {
-        isLiked = likedChirps.includes(chirp.rechirp.original_id)
-        isRechirped = retweetedChirps.includes(chirp.rechirp.original_id)
-      } else {
-        isLiked = likedChirps.includes(chirp._id)
-        isRechirped = retweetedChirps.includes(chirp._id)
-      }
-      return { ...chirp, isLiked, isRechirped }
+    setChirps(feed)
+    syncFeedHandler(likedChirps, retweetedChirps)
+  }
+
+  const syncFeedHandler = (likedChirps, retweetedChirps) => {
+    setChirps((chirps) => {
+      return chirps.map(chirp => {
+        let isLiked = false;
+        let isRechirped = false;
+        if (chirp.rechirp) {
+          isLiked = likedChirps.includes(chirp.rechirp.original_id)
+          isRechirped = retweetedChirps.includes(chirp.rechirp.original_id)
+        } else {
+          isLiked = likedChirps.includes(chirp._id)
+          isRechirped = retweetedChirps.includes(chirp._id)
+        }
+        return { ...chirp, isLiked, isRechirped }
+      })
     })
-    setChirps(chirpArr)
   }
 
   const clearFeedHandler = () => {
@@ -85,6 +91,7 @@ function App() {
             onClearFeed={clearFeedHandler}
             onNewChirp={newChirpHandler}
             onDeleteChirp={deleteChirpHandler}
+            onSyncFeed={syncFeedHandler}
           />} />
           <Route path='explore' element={<p>EXPLORE PAGE</p>} />
           <Route path='notifications' element={<p>NOTFICATIONS PAGE</p>} />
@@ -96,6 +103,7 @@ function App() {
             onClearFeed={clearFeedHandler}
             onNewChirp={newChirpHandler}
             onDeleteChirp={deleteChirpHandler}
+            onSyncFeed={syncFeedHandler}
           />} />
           <Route path=':user/lists' element={<p>LISTS PLACEHOLDER</p>} />
           <Route path=':user/status/:chirpId' element={<p>CHIRP PLACEHOLDER</p>} />

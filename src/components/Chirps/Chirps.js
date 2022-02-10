@@ -3,7 +3,7 @@ import Chirp from './Chirp'
 import Card from '../UI/Card/Card'
 import classes from './Chirps.module.css'
 
-const Chirps = ({ chirps, onDelete, onRechirp }) => {
+const Chirps = ({ chirps, onDelete, onRechirp, onSyncFeed }) => {
     return (
         <Card>
             <div className={classes.chirps}>
@@ -22,6 +22,7 @@ const Chirps = ({ chirps, onDelete, onRechirp }) => {
                             rechirp={rechirp}
                             onDelete={onDelete}
                             onRechirp={onRechirp}
+                            onSyncFeed={onSyncFeed}
                         />
                     )
                 })}
