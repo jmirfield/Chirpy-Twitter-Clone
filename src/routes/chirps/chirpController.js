@@ -56,11 +56,17 @@ class ChirpController {
             req.user.retweetedChirps.addToSet(chirp.rechirp.original_id)
             if (startingLength !== req.user.retweetedChirps.length) {
                 await req.user.save()
+                const original = await Chirp.findOneAndUpdate({ _id: chirp.rechirp.original_id }, { $inc: { rechirpsCount: 1 } })
+                chirp.rechirpsCount = original.rechirpsCount
+                chirp.likesCount = original.likesCount
                 await chirp.save()
-                await Chirp.findOneAndUpdate({ _id: chirp.rechirp.original_id }, { $inc: { rechirpsCount: 1 } })
                 await Chirp.updateMany({ 'rechirp.original_id': chirp.rechirp.original_id }, { $inc: { rechirpsCount: 1 } })
             }
-            res.status(202).send(chirp)
+            res.status(202).send({
+                chirp: chirp,
+                likedChirps: req.user.likedChirps,
+                retweetedChirps: req.user.retweetedChirps
+            })
         } catch (e) {
             console.log(e)
             res.status(400).send()
@@ -83,7 +89,10 @@ class ChirpController {
                 await Chirp.findOneAndUpdate({ _id: req.body._id }, { $inc: { rechirpsCount: -1 } })
                 await Chirp.updateMany({ 'rechirp.original_id': req.body._id }, { $inc: { rechirpsCount: -1 } })
             }
-            res.status(202).send()
+            res.status(202).send({
+                likedChirps: req.user.likedChirps,
+                retweetedChirps: req.user.retweetedChirps
+            })
         } catch (e) {
             console.log(e)
             res.status(400).send()

@@ -59,7 +59,7 @@ class UserController {
     }
     likeChirp = async (req, res) => {
         try {
-            if(!req.body._id)throw new Error('Cannot provide null value')
+            if (!req.body._id) throw new Error('Cannot provide null value')
             const startingLength = req.user.likedChirps.length
             req.user.likedChirps.addToSet(req.body._id)
             if (startingLength !== req.user.likedChirps.length) {
@@ -67,7 +67,10 @@ class UserController {
                 await Chirp.findOneAndUpdate({ _id: req.body._id }, { $inc: { likesCount: 1 } })
                 await Chirp.updateMany({ 'rechirp.original_id': req.body._id }, { $inc: { likesCount: 1 } })
             }
-            res.status(202).send()
+            res.status(202).send({
+                likedChirps: req.user.likedChirps,
+                retweetedChirps: req.user.retweetedChirps
+            })
         } catch (e) {
             console.log(e.message)
             res.status(400).send()
@@ -76,7 +79,7 @@ class UserController {
 
     unlikeChirp = async (req, res) => {
         try {
-            if(!req.body._id)throw new Error('Cannot provide null value')
+            if (!req.body._id) throw new Error('Cannot provide null value')
             const startingLength = req.user.likedChirps.length
             req.user.likedChirps.pull({ _id: req.body._id })
             // console.log(req.user.likedChirps)
@@ -85,7 +88,10 @@ class UserController {
                 await Chirp.findOneAndUpdate({ _id: req.body._id }, { $inc: { likesCount: -1 } })
                 await Chirp.updateMany({ 'rechirp.original_id': req.body._id }, { $inc: { likesCount: -1 } })
             }
-            res.status(202).send()
+            res.status(202).send({
+                likedChirps: req.user.likedChirps,
+                retweetedChirps: req.user.retweetedChirps
+            })
         } catch (e) {
             console.log(e.message)
             res.status(400).send()
