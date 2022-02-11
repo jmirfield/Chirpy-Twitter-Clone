@@ -24,7 +24,7 @@ const Home = (props) => {
     useEffect(() => {
         document.title = 'Home / Chirpy'
         window.scrollTo(0, 0);
-        if (props.chirps.length > 0) props.onClearFeed()
+        if (props.chirps.length > 0) props.clearFeed()
         getMainChirpFeed()
     }, [])
 
@@ -42,7 +42,7 @@ const Home = (props) => {
                         chirps={props.chirps}
                         onDeleteRechirp={props.onDeleteRechirp}
                         onRechirp={props.onNewChirp}
-                        onSyncFeed={props.onSyncFeed}
+                        syncFeed={props.syncFeed}
                     />
                     : <p className={classes['home__chirps-none']}>No chirps available...</p>}
             </section>

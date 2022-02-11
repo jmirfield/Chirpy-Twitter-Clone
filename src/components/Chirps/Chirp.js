@@ -18,7 +18,7 @@ const Chirp = ({
     rechirp,
     onDeleteRechirp,
     onRechirp,
-    onSyncFeed
+    syncFeed
 }) => {
 
     const ctx = useContext(MainContext)
@@ -39,7 +39,7 @@ const Chirp = ({
                 })
                 const { likedChirps, retweetedChirps } = await response.json()
                 setLikesCount(prev => prev + 1)
-                onSyncFeed(likedChirps, retweetedChirps)
+                syncFeed(likedChirps, retweetedChirps)
             } catch (e) {
                 console.log(e.message)
             }
@@ -56,7 +56,7 @@ const Chirp = ({
                 })
                 const { likedChirps, retweetedChirps } = await response.json()
                 setLikesCount(prev => prev - 1)
-                onSyncFeed(likedChirps, retweetedChirps)
+                syncFeed(likedChirps, retweetedChirps)
             } catch (e) {
                 console.log(e.message)
             }
@@ -97,7 +97,7 @@ const Chirp = ({
                     isRechirped: true
                 })
                 setRechirpsCount(prev => prev + 1)
-                onSyncFeed(likedChirps, retweetedChirps)
+                syncFeed(likedChirps, retweetedChirps)
             } catch (e) {
                 console.log(e.message)
             }
@@ -114,7 +114,7 @@ const Chirp = ({
                         body: JSON.stringify({ _id: req })
                     })
                     const { likedChirps, retweetedChirps } = await response.json()
-                    onSyncFeed(likedChirps, retweetedChirps)
+                    syncFeed(likedChirps, retweetedChirps)
                 } else {
                     const response = await fetch("http://localhost:3001/chirps/rechirp/delete", {
                         method: 'DELETE', // *GET, POST, PUT, DELETE, etc.
@@ -125,7 +125,7 @@ const Chirp = ({
                         body: JSON.stringify({ _id: req })
                     })
                     const { likedChirps, retweetedChirps } = await response.json()
-                    onSyncFeed(likedChirps, retweetedChirps)
+                    syncFeed(likedChirps, retweetedChirps)
                 }
                 setRechirpsCount(prev => prev - 1)
                 onDeleteRechirp(req)

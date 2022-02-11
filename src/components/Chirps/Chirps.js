@@ -1,7 +1,7 @@
 import React from 'react'
 import Chirp from './Chirp'
 
-const Chirps = ({ chirps, onDeleteRechirp, onRechirp, onSyncFeed }) => {
+const Chirps = ({ chirps, onDeleteRechirp, onRechirp, syncFeed }) => {
     return (
         <>
             {chirps.map(({
@@ -29,7 +29,7 @@ const Chirps = ({ chirps, onDeleteRechirp, onRechirp, onSyncFeed }) => {
                         rechirp={rechirp}
                         onDeleteRechirp={onDeleteRechirp}
                         onRechirp={onRechirp}
-                        onSyncFeed={onSyncFeed}
+                        syncFeed={syncFeed}
                     />
                 )
             })}

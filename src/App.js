@@ -91,10 +91,10 @@ function App() {
           <Route path='home' element={<Home
             chirps={chirps}
             onGetFeed={getFeedHandler}
-            onClearFeed={clearFeedHandler}
+            clearFeed={clearFeedHandler}
             onNewChirp={newChirpHandler}
             onDeleteRechirp={deleteRechirpHandler}
-            onSyncFeed={syncFeedHandler}
+            syncFeed={syncFeedHandler}
           />} />
           <Route path='explore' element={<p>EXPLORE PAGE</p>} />
           <Route path='notifications' element={<p>NOTFICATIONS PAGE</p>} />
@@ -103,7 +103,7 @@ function App() {
           <Route path=':user' element={<Profile
             chirps={chirps}
             onGetFeed={getFeedHandler}
-            onClearFeed={clearFeedHandler}
+            clearFeed={clearFeedHandler}
             onNewChirp={newChirpHandler}
             onDeleteRechirp={deleteRechirpHandler}
             onSyncFeed={syncFeedHandler}
