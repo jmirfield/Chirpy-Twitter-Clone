@@ -9,6 +9,7 @@ import GuestLayout from './components/GuestLayout/GuestLayout';
 import MainContext from './context/MainContext';
 import Loading from './components/Loading/Loading';
 import Profile from './components/Profile/Profile';
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 
 function App() {

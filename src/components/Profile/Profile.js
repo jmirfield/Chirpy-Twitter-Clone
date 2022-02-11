@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import MainContext from '../../context/MainContext';
 import Chirps from '../Chirps/Chirps';
 import Icon from '../UI/Icon/Icon';
 import { BACK_BUTTON } from '../../utils/icon';
-import Loading from '../Loading/Loading';
+import LoadingFeed from '../Loading/LoadingFeed';
 import classes from './Profile.module.css'
 
 const Profile = (props) => {
@@ -46,8 +46,10 @@ const Profile = (props) => {
         getUserProfileFeed()
     }, [params.user])
 
-    if (isLoading) {
-        return <></>
+    if (isLoading) {    
+        return (
+            <LoadingFeed />
+        )
     }
 
     return (
@@ -62,7 +64,7 @@ const Profile = (props) => {
                     <h3>{params.user}</h3>
                     <span>
                         {/* Will need to be fixed when feed gets pulled incrementally */}
-                        {`${props.chirps.length} chirps`} 
+                        {`${props.chirps.length} chirps`}
                     </span>
                 </section>
             </header>
