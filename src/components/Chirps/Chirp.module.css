@@ -62,12 +62,10 @@
     display: flex;
     justify-content: space-between;
     padding-right: 2rem;
-    z-index: 2;
 }
 
 .chirp__main-actions button {
     margin: 0;
     padding: 0;
-    z-index: 3;
 }
 

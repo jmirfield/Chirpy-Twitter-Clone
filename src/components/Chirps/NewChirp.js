@@ -41,7 +41,7 @@ const NewChirp = (props) => {
 
     return (
         <div className={classes['new-chirp']}>
-            <div className={classes['new-chirp__icon']} />
+            <img className={classes['new-chirp__icon']} />
             <div className={classes['new-chirp__input']}>
                 <ChirpInput
                     onSubmit={onSubmitChirpHandler}

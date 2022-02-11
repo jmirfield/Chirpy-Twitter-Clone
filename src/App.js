@@ -45,7 +45,7 @@ function App() {
     setChirps((prev) => [chirp, ...prev])
   }
 
-  const deleteChirpHandler = (id) => {
+  const deleteRechirpHandler = (id) => {
     setChirps((prev) => {
       return prev.filter(chirp => {
         if (!chirp.rechirp) return true
@@ -84,13 +84,16 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<MainLayout onNewChirp={newChirpHandler} username={ctx.user} />} >
+        <Route path='/' element={<MainLayout
+          onNewChirp={newChirpHandler}
+          username={ctx.user}
+        />} >
           <Route path='home' element={<Home
             chirps={chirps}
             onGetFeed={getFeedHandler}
             onClearFeed={clearFeedHandler}
             onNewChirp={newChirpHandler}
-            onDeleteChirp={deleteChirpHandler}
+            onDeleteRechirp={deleteRechirpHandler}
             onSyncFeed={syncFeedHandler}
           />} />
           <Route path='explore' element={<p>EXPLORE PAGE</p>} />
@@ -102,7 +105,7 @@ function App() {
             onGetFeed={getFeedHandler}
             onClearFeed={clearFeedHandler}
             onNewChirp={newChirpHandler}
-            onDeleteChirp={deleteChirpHandler}
+            onDeleteRechirp={deleteRechirpHandler}
             onSyncFeed={syncFeedHandler}
           />} />
           <Route path=':user/lists' element={<p>LISTS PLACEHOLDER</p>} />

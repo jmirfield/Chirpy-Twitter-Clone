@@ -5,7 +5,21 @@ import { date } from '../../helpers/date'
 import MainContext from '../../context/MainContext'
 import classes from './Chirp.module.css'
 
-const Chirp = ({ id, user, message, comments, rechirps, isChirpRechirped, likes, isChirpLiked, timestamp, rechirp, onDelete, onRechirp, onSyncFeed }) => {
+const Chirp = ({
+    id,
+    user,
+    message,
+    comments,
+    rechirps,
+    isChirpRechirped,
+    likes,
+    isChirpLiked,
+    timestamp,
+    rechirp,
+    onDeleteRechirp,
+    onRechirp,
+    onSyncFeed
+}) => {
 
     const ctx = useContext(MainContext)
     const [likesCount, setLikesCount] = useState(likes)
@@ -114,7 +128,7 @@ const Chirp = ({ id, user, message, comments, rechirps, isChirpRechirped, likes,
                     onSyncFeed(likedChirps, retweetedChirps)
                 }
                 setRechirpsCount(prev => prev - 1)
-                onDelete(req)
+                onDeleteRechirp(req)
             } catch (e) {
                 console.log(e.message)
             }

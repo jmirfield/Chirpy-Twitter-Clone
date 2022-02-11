@@ -1,11 +1,11 @@
-.home__title {
+.home__header {
     position: sticky;
     top: 0;
     padding: 1rem 0 1rem 1rem;
     background-color: black;
     z-index: 2;
 }
-.home__title h1 {
+.home__header > h2 {
     margin: 0;
 }
 
@@ -18,5 +18,7 @@
 }
 
 .home__chirps {
-    
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }

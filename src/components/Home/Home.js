@@ -23,14 +23,15 @@ const Home = (props) => {
 
     useEffect(() => {
         document.title = 'Home / Chirpy'
+        window.scrollTo(0, 0);
         if (props.chirps.length > 0) props.onClearFeed()
         getMainChirpFeed()
     }, [])
 
     return (
         <>
-            <header className={classes['home__title']}>
-                <h1>Home</h1>
+            <header className={classes['home__header']}>
+                <h2>Home</h2>
             </header>
             <section className={classes['home__new-chirp']}>
                 <NewChirp onNewChirp={props.onNewChirp} isModal={false} />
@@ -39,7 +40,7 @@ const Home = (props) => {
                 {props.chirps.length > 0
                     ? <Chirps
                         chirps={props.chirps}
-                        onDelete={props.onDeleteChirp}
+                        onDeleteRechirp={props.onDeleteRechirp}
                         onRechirp={props.onNewChirp}
                         onSyncFeed={props.onSyncFeed}
                     />

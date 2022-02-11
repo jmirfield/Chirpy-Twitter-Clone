@@ -9,7 +9,7 @@ const ChirpInput = ({text, onChange, onSubmit}) => {
                 placeholder='Chirp chirp?'
                 value={text}
                 onChange={onChange}
-            ></textarea>
+            />
             <div className={classes.button}>
                 <Button disabled={text.trim().length === 0 || text.length > 150}>Chirp</Button>
             </div>
