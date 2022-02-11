@@ -20,12 +20,12 @@ const MainLayout = (props) => {
             <header className={classes['layout__menubar']}>
                 <Menubar onOpenModal={onOpenNewChirpHandler} username={props.username} />
             </header>
-            <section className={classes['layout__main']}>
+            <main className={classes['layout__main']}>
                 <Outlet />
-            </section>
-            <section  className={classes['layout__new-chirp-modal']}>
+            </main>
+            <aside  className={classes['layout__new-chirp-modal']}>
                 {composeChirp && <ChirpModal onNewChirp={props.onNewChirp} onClose={onCloseNewChirpHandler} />}
-            </section>
+            </aside>
         </div>
     )
 }

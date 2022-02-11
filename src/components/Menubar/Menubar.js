@@ -9,40 +9,42 @@ import classes from './Menubar.module.css'
 
 const Menubar = (props) => {
     const ctx = useContext(MainContext)
-
     return (
-        <div className={classes.menu}>
-            <div className={classes['menu__logo']}>
-                <NavLink to='/'>
-                    <Icon width='28px' height='28px' fill='white' d={LOGO} />
-                </NavLink>
-            </div>
+        <nav className={classes.menu}>
+            <NavLink to='/' className={classes.menu__logo}>
+                <Icon width='28px' height='28px' fill='white' d={LOGO} />
+            </NavLink>
             {Object.keys(PATHS).map((path, idx) => {
                 let link = path.toLowerCase()
                 if (link === 'profile') link = `${props.username}`
                 else if (link === 'lists') link = `${props.username}/lists`
                 else if (link === 'bookmarks') link = 'flow/bookmarks'
                 return (
-                    <NavLink to={link} key={idx} end={true} children={({ isActive }) => {
-                        return (
-                            <div className={classes['menu__item']}>
-                                <Icon
-                                    width='28px'
-                                    height='28px'
-                                    fill='white'
-                                    d={isActive ? PATHS[path].active : PATHS[path].inactive} />
-                                <span>{`${path}`}</span>
-                            </div>
-                        )
-                    }} />
+                    <NavLink
+                        to={link}
+                        key={idx}
+                        end={true}
+                        className={classes.menu__item}
+                        children={({ isActive }) => {
+                            return (
+                                <>
+                                    <Icon
+                                        width='28px'
+                                        height='28px'
+                                        fill='white'
+                                        d={isActive ? PATHS[path].active : PATHS[path].inactive} />
+                                    <span>{`${path}`}</span>
+                                </>
+                            )
+                        }} />
                 )
             }
             )}
-            <div className={classes['menu__item-actions']}>
+            <section className={classes['menu__item-actions']}>
                 <Button onClick={props.onOpenModal}>Chirp</Button>
                 <Button onClick={ctx.onLogout}>Logout</Button>
-            </div>
-        </div>
+            </section>
+        </nav>
     )
 }
 

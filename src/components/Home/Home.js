@@ -29,13 +29,13 @@ const Home = (props) => {
 
     return (
         <>
-            <div className={classes['home__title']}>
+            <header className={classes['home__title']}>
                 <h1>Home</h1>
-            </div>
-            <div className={classes['home__new-chirp']}>
+            </header>
+            <section className={classes['home__new-chirp']}>
                 <NewChirp onNewChirp={props.onNewChirp} isModal={false} />
-            </div>
-            <div className={classes['home__chirps']}>
+            </section>
+            <section className={classes['home__chirps']}>
                 {props.chirps.length > 0
                     ? <Chirps
                         chirps={props.chirps}
@@ -44,7 +44,7 @@ const Home = (props) => {
                         onSyncFeed={props.onSyncFeed}
                     />
                     : <p className={classes['home__chirps-none']}>No chirps available...</p>}
-            </div>
+            </section>
         </>
     )
 }
