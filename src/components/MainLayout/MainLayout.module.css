@@ -7,15 +7,20 @@
     display: flex;
     position: fixed;
     height: 100%;
-    width: 25%;
+    width: 28%;
     background-color: black;
-    justify-content: center;
+    justify-content: right;
 }
 
 .layout__main {
-    margin-left: 25%;
+    margin-left: 30%;
     border-right: 1px solid rgb(95, 108, 116);
     border-left: 1px solid rgb(95, 108, 116);
     min-width: 40%;
     max-width: 40%;
+    min-height: 100%;
+}
+
+.layout__sidebar {
+    margin-left: 1rem;
 }

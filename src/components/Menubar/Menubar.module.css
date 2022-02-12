@@ -12,20 +12,24 @@
 
 .menu__item {
     display: flex;
+}
+
+.menu__item > a {
+    display: flex;
     padding: 1rem;
 }
 
-.menu__item:hover {
+.menu__item > a:hover {
     background-color: #272a2e;
     border-radius: 2rem;
 }
 
-.menu > a:link {
+.menu__item > a:link {
     text-decoration: none;
   }
 
 .menu span {
-    font-size: 1.5rem;
+    font-size: 24px;
     margin-left: 1rem;
     color: white;
     align-self: flex-end;
@@ -41,7 +45,7 @@
 .menu__item-actions > button {
     border-radius: 2rem;
     padding: 1rem 0 1rem 0;
-    margin-top: 1rem;
+    margin-top: 2rem;
     margin-bottom: 2rem;
     width: 100%;
 }

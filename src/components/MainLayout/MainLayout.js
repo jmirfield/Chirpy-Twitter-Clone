@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react'
 import { Outlet } from 'react-router-dom'
 import Menubar from '../Menubar/Menubar'
+import Sidebar from '../Sidebar/Sidebar'
 import ChirpModal from './ChirpModal'
 import classes from './MainLayout.module.css'
 
@@ -23,6 +24,9 @@ const MainLayout = (props) => {
             <main className={classes['layout__main']}>
                 <Outlet />
             </main>
+            <aside className={classes['layout__sidebar']}>
+                <Sidebar />
+            </aside>
             <aside  className={classes['layout__new-chirp-modal']}>
                 {composeChirp && <ChirpModal onNewChirp={props.onNewChirp} onClose={onCloseNewChirpHandler} />}
             </aside>

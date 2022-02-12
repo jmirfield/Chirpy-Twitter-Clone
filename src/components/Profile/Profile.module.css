@@ -5,6 +5,8 @@
     background-color: black;
     z-index: 2;
     padding: .5rem 0 .5rem 0;
+    background: transparent;
+    backdrop-filter: blur(10px);
 }
 
 .profile__header-back {
@@ -41,7 +43,7 @@
 }
 
 .profile__summary-banner {
-    height: 13rem;
+    height: 8rem;
     border: none;
     width: 100%;
     background-color: rgb(47, 51, 54);

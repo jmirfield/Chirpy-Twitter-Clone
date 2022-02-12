@@ -107,7 +107,7 @@ function App() {
             clearFeed={clearFeedHandler}
             onNewChirp={newChirpHandler}
             onDeleteRechirp={deleteRechirpHandler}
-            onSyncFeed={syncFeedHandler}
+            syncFeed={syncFeedHandler}
           />} />
           <Route path=':user/lists' element={<p>LISTS PLACEHOLDER</p>} />
           <Route path=':user/status/:chirpId' element={<p>CHIRP PLACEHOLDER</p>} />

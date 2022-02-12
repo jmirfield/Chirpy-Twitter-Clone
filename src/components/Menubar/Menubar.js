@@ -20,23 +20,23 @@ const Menubar = (props) => {
                 else if (link === 'lists') link = `${props.username}/lists`
                 else if (link === 'bookmarks') link = 'flow/bookmarks'
                 return (
-                    <NavLink
-                        to={link}
-                        key={idx}
-                        end={true}
-                        className={classes.menu__item}
-                        children={({ isActive }) => {
-                            return (
-                                <>
-                                    <Icon
-                                        width='28px'
-                                        height='28px'
-                                        fill='white'
-                                        d={isActive ? PATHS[path].active : PATHS[path].inactive} />
-                                    <span>{`${path}`}</span>
-                                </>
-                            )
-                        }} />
+                    <div className={classes.menu__item} key={path}>
+                        <NavLink
+                            to={link}
+                            end={true}
+                            children={({ isActive }) => {
+                                return (
+                                    <>
+                                        <Icon
+                                            width='28px'
+                                            height='28px'
+                                            fill='white'
+                                            d={isActive ? PATHS[path].active : PATHS[path].inactive} />
+                                        <span>{`${path}`}</span>
+                                    </>
+                                )
+                            }} />
+                    </div>
                 )
             }
             )}

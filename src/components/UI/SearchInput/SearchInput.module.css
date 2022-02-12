@@ -1,0 +1,23 @@
+.input {
+    display: flex;
+    border: 1px solid rgb(32, 35, 39);
+    background-color: rgb(32, 35, 39);
+    padding: .5rem 2rem .5rem 1rem;
+    align-items: center;
+    margin: .25rem;
+    border-radius: 1rem;
+}
+
+.active {
+    border: 1px solid rgb(29, 155,240);
+    border-color: rgb(29, 155,240);
+    background-color: rgb(32, 35, 39);
+}
+
+.input > input {
+    outline: none;
+    background-color: rgb(32, 35, 39);
+    border: none;
+    margin-left: 1rem;
+    color: white;
+}
