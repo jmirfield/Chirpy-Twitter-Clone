@@ -40,7 +40,7 @@ const NewChirp = (props) => {
     }
 
     return (
-        <div className={classes['new-chirp']}>
+        <section className={`${props.className} ${classes['new-chirp']}`}>
             <img className={classes['new-chirp__icon']} />
             <div className={classes['new-chirp__input']}>
                 <ChirpInput
@@ -49,7 +49,7 @@ const NewChirp = (props) => {
                     onChange={textChangeHandler}
                 />
             </div>
-        </div>
+        </section>
     )
 }
 

@@ -1,9 +1,9 @@
 import React from 'react'
 import Chirp from './Chirp'
 
-const Chirps = ({ chirps, onDeleteRechirp, onRechirp, syncFeed }) => {
+const Chirps = ({ chirps, onDeleteRechirp, onRechirp, syncFeed, className }) => {
     return (
-        <>
+        <section className={className}>
             {chirps.map(({
                 _id,
                 owner_username,
@@ -33,7 +33,7 @@ const Chirps = ({ chirps, onDeleteRechirp, onRechirp, syncFeed }) => {
                     />
                 )
             })}
-        </>
+        </section>
     )
 }
 

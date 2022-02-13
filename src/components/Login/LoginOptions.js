@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import Button from '../UI/Button/Button'
 import classes from './LoginOptions.module.css'
 
-const LoginOptions = () => {
+const LoginOptions = ({className}) => {
     const navigate = useNavigate()
 
     const openSignUpModalHandler = () => {
@@ -15,7 +15,7 @@ const LoginOptions = () => {
     }
 
     return (
-        <div className={classes.options}>
+        <div className={`${className} ${classes.options}`}>
             <section>
                 <h2>Join Chirpy today.</h2>
                 <Button onClick={openSignUpModalHandler}>Sign Up</Button>

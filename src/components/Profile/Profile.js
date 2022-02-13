@@ -46,7 +46,7 @@ const Profile = (props) => {
         getUserProfileFeed()
     }, [params.user])
 
-    if (isLoading) {    
+    if (isLoading) {
         return (
             <LoadingFeed />
         )
@@ -74,16 +74,16 @@ const Profile = (props) => {
                     <section className={classes['profile__summary-picture']} />
                 </section>
             </section>
-            <section className={classes['profile__chirps']}>
-                {props.chirps.length > 0
-                    ? <Chirps
-                        chirps={props.chirps}
-                        onDeleteRechirp={props.onDeleteRechirp}
-                        onRechirp={props.onNewChirp}
-                        syncFeed={props.syncFeed}
-                    />
-                    : <p className={classes['profile__chirps-none']}>No chirps available...</p>}
-            </section>
+            {props.chirps.length > 0
+                ? <Chirps
+                    chirps={props.chirps}
+                    onDeleteRechirp={props.onDeleteRechirp}
+                    onRechirp={props.onNewChirp}
+                    syncFeed={props.syncFeed}
+                    className={classes['profile__chirps']}
+                />
+                : <p className={classes['profile__chirps-none']}>No chirps available...</p>
+            }
         </>
     )
 };
