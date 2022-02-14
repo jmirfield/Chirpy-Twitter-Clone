@@ -108,15 +108,19 @@ class ChirpController {
                 sort: { createdAt: -1 },
                 lean: true
             })
-            const user = await User.findOne({ username: req.params.username })
-            if(user === null)throw new Error('User not found')
+            const user = (req.user.username !== req.params.username)
+                ? await User.findOne({ username: req.params.username }).populate({ path: 'following' })
+                : req.user
+            if (user === null) throw new Error('User not found')
             await req.user.populate({ path: 'following' })
             const isFollowing = req.user.following.some(u => u.following_id.equals(user._id))
             res.send({
                 feed: chirps,
                 likedChirps: req.user.likedChirps,
                 retweetedChirps: req.user.retweetedChirps,
-                isFollowing
+                isFollowing,
+                followerCount: 0,
+                followingCount: 1
             })
         } catch (e) {
             console.log(e)
