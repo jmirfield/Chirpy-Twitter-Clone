@@ -4,7 +4,7 @@ import MainContext from '../../context/MainContext'
 import classes from './NewChirp.module.css'
 
 const NewChirp = (props) => {
-    const ctx = useContext(MainContext)
+    const { state } = useContext(MainContext)
     const [textInput, setTextInput] = useState('')
 
     const textChangeHandler = (e) => {
@@ -27,9 +27,9 @@ const NewChirp = (props) => {
             })
             const data = await response.json()
             if (props.isModal) props.onClose()
-            props.onNewChirp({ ...data, username: ctx.user, isLiked: false })
+            props.onNewChirp({ ...data, username: state.user, isLiked: false })
         } catch (e) {
-            console.log(e)
+            console.log('Error with chirp request')
         }
     }
 

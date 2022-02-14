@@ -11,9 +11,8 @@ import LoadingIcon from './components/Loading/LoadingIcon';
 import Profile from './components/Profile/Profile';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
-
-function App() {
-  const ctx = useContext(MainContext)
+const App = () => {
+  const { state } = useContext(MainContext)
   const [chirps, setChirps] = useState([])
 
   const getFeedHandler = (feed, likedChirps, retweetedChirps) => {
@@ -51,13 +50,13 @@ function App() {
       return prev.filter(chirp => {
         if (!chirp.rechirp) return true
         else {
-          return chirp.rechirp.original_id !== id || ctx.user !== chirp.owner_username
+          return chirp.rechirp.original_id !== id || state.user !== chirp.owner_username
         }
       })
     })
   }
 
-  if (ctx.isLoading) {
+  if (state.isLoading) {
     return (
       <>
         <LoadingIcon />
@@ -65,7 +64,7 @@ function App() {
     )
   }
 
-  if (!ctx.user && !ctx.isLogged) {
+  if (!state.user && !state.isLogged) {
     return (
       <BrowserRouter>
         <Routes>
@@ -87,7 +86,7 @@ function App() {
       <Routes>
         <Route path='/' element={<MainLayout
           onNewChirp={newChirpHandler}
-          username={ctx.user}
+          username={state.user}
         />} >
           <Route path='home' element={<Home
             chirps={chirps}

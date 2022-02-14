@@ -53,7 +53,6 @@ const Home = (props) => {
                 onDeleteRechirp={props.onDeleteRechirp}
                 onRechirp={props.onNewChirp}
                 syncFeed={props.syncFeed}
-                className={classes['home__chirps']}
             />
         </>
     )

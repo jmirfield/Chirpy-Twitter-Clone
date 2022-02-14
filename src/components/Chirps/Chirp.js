@@ -9,7 +9,6 @@ const Chirp = ({
     id,
     user,
     message,
-    comments,
     rechirps,
     isChirpRechirped,
     likes,
@@ -18,10 +17,11 @@ const Chirp = ({
     rechirp,
     onDeleteRechirp,
     onRechirp,
-    syncFeed
+    syncFeed,
+    dispatch
 }) => {
 
-    const ctx = useContext(MainContext)
+    const { state } = useContext(MainContext)
     const [likesCount, setLikesCount] = useState(likes)
     const [rechirpsCount, setRechirpsCount] = useState(rechirps)
 
@@ -38,8 +38,14 @@ const Chirp = ({
                     body: JSON.stringify({ _id: req })
                 })
                 const { likedChirps, retweetedChirps } = await response.json()
+                dispatch({
+                    type: 'LIKE',
+                    payload: {
+                        liked: likedChirps,
+                        rechirped: retweetedChirps
+                    }
+                })
                 setLikesCount(prev => prev + 1)
-                syncFeed(likedChirps, retweetedChirps)
             } catch (e) {
                 console.log(e.message)
             }
@@ -55,8 +61,14 @@ const Chirp = ({
                     body: JSON.stringify({ _id: req })
                 })
                 const { likedChirps, retweetedChirps } = await response.json()
+                dispatch({
+                    type: 'LIKE',
+                    payload: {
+                        liked: likedChirps,
+                        rechirped: retweetedChirps
+                    }
+                })
                 setLikesCount(prev => prev - 1)
-                syncFeed(likedChirps, retweetedChirps)
             } catch (e) {
                 console.log(e.message)
             }
@@ -90,14 +102,20 @@ const Chirp = ({
                     body: JSON.stringify(req)
                 })
                 const { chirp, likedChirps, retweetedChirps } = await response.json()
-                onRechirp({
-                    ...chirp,
-                    username: ctx.user,
-                    isLiked: isChirpLiked,
-                    isRechirped: true
+                dispatch({
+                    type: 'ADD',
+                    payload: {
+                        chirp: {
+                            ...chirp,
+                            username: state.user,
+                            isLiked: isChirpLiked,
+                            isRechirped: true
+                        },
+                        liked: likedChirps,
+                        rechirped: retweetedChirps
+                    }
                 })
                 setRechirpsCount(prev => prev + 1)
-                syncFeed(likedChirps, retweetedChirps)
             } catch (e) {
                 console.log(e.message)
             }
@@ -162,7 +180,7 @@ const Chirp = ({
                     <ChirpIcons
                         stats={
                             [
-                                { count: comments, active: false, onClick: testHandler },
+                                { count: 0, active: false, onClick: testHandler },
                                 { count: rechirpsCount, active: isChirpRechirped, onClick: onRechirpButtonHandler },
                                 { count: likesCount, active: isChirpLiked, onClick: onLikeButtonHandler }
                             ]

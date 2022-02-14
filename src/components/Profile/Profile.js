@@ -1,22 +1,41 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useReducer } from 'react';
 import { useParams, useNavigate } from 'react-router-dom'
+
 import MainContext from '../../context/MainContext';
+import useFeed from '../../hooks/useFeed';
 import ChirpList from '../Chirps/ChirpList';
 import LoadingFeed from '../Loading/LoadingFeed';
 import classes from './Profile.module.css'
 import ProfileHeader from './ProfileHeader';
 import ProfileSummary from './ProfileSummary';
 
-const Profile = (props) => {
+const initialState = {
+    isFollow: false,
+    followerCount: 0,
+    followingCount: 0
+}
 
+const reducer = (state, action) => {
+    switch (action.type) {
+        case 'PROFILE_READ':
+            return {
+                ...state,
+                isFollow: action.payload.isFollow,
+                followerCount: action.payload.followerCount,
+                followingCount: action.payload.followingCount
+            }
+        default:
+            return state
+    }
+}
+
+const Profile = (props) => {
     const params = useParams()
     const navigate = useNavigate()
-    const ctx = useContext(MainContext)
-    const myProfile = params.user === ctx.user
-
-    const [isLoading, setIsLoading] = useState(true)
-    const [isFollow, setIsFollow] = useState(false)
-    const [error, setError] = useState(false)
+    const { state } = useContext(MainContext)
+    const myProfile = params.user === state.user
+    const [profile, dispatch] = useReducer(reducer, initialState)
+    const [{ feed, isLoading, error }, feedDispatch] = useFeed()
 
     const getUserProfileFeed = async () => {
         try {
@@ -27,27 +46,44 @@ const Profile = (props) => {
                     'Authorization': `Bearer ${localStorage.jwt}`
                 }
             })
-            const { feed, likedChirps, retweetedChirps, isFollowing } = await response.json()
-            props.onGetFeed(feed, likedChirps, retweetedChirps)
-            setIsFollow(isFollowing)
-            setIsLoading(false)
+            const {
+                feed,
+                likedChirps,
+                retweetedChirps,
+                isFollowing,
+                followingCount,
+                followerCount
+            } = await response.json()
+            feedDispatch({
+                type: 'INIT_SYNC',
+                payload: {
+                    feed,
+                    liked: likedChirps,
+                    rechirped: retweetedChirps
+                }
+            })
+            dispatch({
+                type: 'PROFILE_READ',
+                payload: {
+                    isFollow: isFollowing,
+                    followingCount: followingCount || 0,
+                    followerCount: followerCount || 0
+                }
+            })
         } catch (e) {
-            setIsLoading(false)
-            setError(true)
+            feedDispatch({ type: 'ERROR' })
         }
     }
 
     const goBackHandler = e => {
         e.preventDefault()
-        setIsLoading(true)
         navigate(-1)
     }
 
     useEffect(() => {
-        setIsLoading(true)
+        feedDispatch({ type: 'CHANGE_USER' })
         document.title = `@${params.user} / Chirpy`
         window.scrollTo(0, 0);
-        if (props.chirps.length > 0) props.clearFeed()
         getUserProfileFeed()
     }, [params.user])
 
@@ -57,7 +93,7 @@ const Profile = (props) => {
         )
     }
 
-    if(error) {
+    if (error) {
         return <span>User not found</span>
     }
 
@@ -68,17 +104,17 @@ const Profile = (props) => {
                 chirpCount={props.chirps.length}
                 onBackButton={goBackHandler}
             />
-            <ProfileSummary 
+            <ProfileSummary
                 myProfile={myProfile}
                 user={params.user}
-                isFollowing={isFollow}
+                isFollowing={profile.isFollow}
             />
             <ChirpList
-                chirps={props.chirps}
+                chirps={feed}
                 onDeleteRechirp={props.onDeleteRechirp}
                 onRechirp={props.onNewChirp}
                 syncFeed={props.syncFeed}
-                className={classes['profile__chirps']}
+                dispatch={feedDispatch}
             />
 
         </>
