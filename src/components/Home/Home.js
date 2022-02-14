@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import NewChirp from '../Chirps/NewChirp'
-import Chirps from '../Chirps/Chirps'
+import ChirpList from '../Chirps/ChirpList'
 import LoadingFeed from '../Loading/LoadingFeed'
 import classes from './Home.module.css'
 
@@ -22,12 +22,10 @@ const Home = (props) => {
             setIsLoading(false)
         } catch (e) {
             setIsLoading(false)
-            console.log(e.message)
         }
     }
 
     useEffect(() => {
-        setIsLoading(true)
         document.title = 'Home / Chirpy'
         window.scrollTo(0, 0);
         if (props.chirps.length > 0) props.clearFeed()
@@ -50,15 +48,13 @@ const Home = (props) => {
                 isModal={false}
                 className={classes['home__new-chirp']}
             />
-            {props.chirps.length > 0
-                ? <Chirps
-                    chirps={props.chirps}
-                    onDeleteRechirp={props.onDeleteRechirp}
-                    onRechirp={props.onNewChirp}
-                    syncFeed={props.syncFeed}
-                    className={classes['home__chirps']}
-                />
-                : <p className={classes['home__chirps-none']}>No chirps available...</p>}
+            <ChirpList
+                chirps={props.chirps}
+                onDeleteRechirp={props.onDeleteRechirp}
+                onRechirp={props.onNewChirp}
+                syncFeed={props.syncFeed}
+                className={classes['home__chirps']}
+            />
         </>
     )
 }

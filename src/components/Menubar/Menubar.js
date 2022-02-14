@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import MainContext from '../../context/MainContext';
-import MenuItems from './MenuItems';
+import MenuItemList from './MenuItemList';
 import Button from '../UI/Button/Button';
 import { PATHS } from '../../utils/menu';
 import classes from './Menubar.module.css'
@@ -17,7 +17,7 @@ const Menubar = (props) => {
 
     return (
         <nav className={classes.menu}>
-            <MenuItems
+            <MenuItemList
                 paths={PATHS}
                 links={links}
                 className={classes.menu__item}

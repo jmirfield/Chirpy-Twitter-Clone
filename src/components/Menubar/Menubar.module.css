@@ -3,6 +3,7 @@
     flex-direction: column;
     padding-top: 1rem;
     height: 100%;
+    width: 70%;
 }
 
 .menu__logo {
@@ -47,5 +48,5 @@
     padding: 1rem 0 1rem 0;
     margin-top: 2rem;
     margin-bottom: 2rem;
-    width: 100%;
+    width: 75%;
 }

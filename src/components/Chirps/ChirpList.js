@@ -1,9 +1,13 @@
 import React from 'react'
 import Chirp from './Chirp'
+import classes from './ChirpList.module.css'
 
-const Chirps = ({ chirps, onDeleteRechirp, onRechirp, syncFeed, className }) => {
+const ChirpList = ({ chirps, onDeleteRechirp, onRechirp, syncFeed }) => {
+
+    if (!chirps || chirps.length === 0) return <p className={classes['chirps-none']}>No chirps available...</p>
+
     return (
-        <section className={className}>
+        <section className={classes.chirps}>
             {chirps.map(({
                 _id,
                 owner_username,
@@ -37,4 +41,4 @@ const Chirps = ({ chirps, onDeleteRechirp, onRechirp, syncFeed, className }) => 
     )
 }
 
-export default Chirps
+export default ChirpList

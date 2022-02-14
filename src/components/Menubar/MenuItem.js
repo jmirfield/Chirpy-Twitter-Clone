@@ -16,7 +16,14 @@ const MenuItem = (props) => {
                                 height='28px'
                                 fill='white'
                                 d={props.d || (isActive ? props.active : props.inactive)} />
-                            {props.label && <span>{`${props.label}`}</span>}
+                            {props.label &&
+                                <span
+                                    style={isActive
+                                        ? { fontWeight: 'bold' }
+                                        : { fontWeight: 'normal' }}
+                                >
+                                    {`${props.label}`}
+                                </span>}
                         </>
                     )
                 }} />

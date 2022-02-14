@@ -1,4 +1,16 @@
-.icon {
+.chirp__actions {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    padding-right: 2rem;
+}
+
+.chirp__actions button {
+    margin: 0;
+    padding: 0;
+}
+
+.chirp__actions-icon {
     display: flex;
     background-color: transparent;
     background-repeat: no-repeat;
@@ -9,38 +21,38 @@
     align-items: center;
 }
 
-.icon__main {
+.chirp__actions-icon__main {
     display: flex;
     padding: .5rem;
     border-radius: 5rem;
     justify-content: center;
 }
 
-.icon:hover .icon__reply {
+.chirp__actions-icon:hover .chirp__actions-icon__reply {
     background-color: rgba(29,155,240,0.1);
 }
 
-.icon:hover .icon__reply svg {
+.chirp__actions-icon:hover .chirp__actions-icon__reply svg {
     fill: #099bf5;
 }
 
-.icon:hover .icon__rechirp {
+.chirp__actions-icon:hover .chirp__actions-icon__rechirp {
     background-color: rgba(0,186,124,0.1);
 }
 
-.icon:hover .icon__rechirp svg {
+.chirp__actions-icon:hover .chirp__actions-icon__rechirp svg {
     fill: rgba(0,186,124);
 }
 
-.icon:hover .icon__like {
+.chirp__actions-icon:hover .icon__like {
     background-color: rgba(249,24,128,0.1);
 }
 
-.icon:hover .icon__like svg {
+.chirp__actions-icon:hover .icon__like svg {
     fill: rgb(249,24,128);
 }
 
-.icon__count {
+.chirp__actions-icon__count {
     display: flex;
     padding: .5rem;
     border-radius: 5rem;
@@ -49,3 +61,4 @@
     font-size: 1rem;
     color: rgb(101, 119, 134);
 }
+

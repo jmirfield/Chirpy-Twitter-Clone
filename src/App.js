@@ -7,7 +7,7 @@ import Home from './components/Home/Home';
 import MainLayout from './components/MainLayout/MainLayout';
 import GuestLayout from './components/GuestLayout/GuestLayout';
 import MainContext from './context/MainContext';
-import Loading from './components/Loading/Loading';
+import LoadingIcon from './components/Loading/LoadingIcon';
 import Profile from './components/Profile/Profile';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
@@ -60,7 +60,7 @@ function App() {
   if (ctx.isLoading) {
     return (
       <>
-        <Loading />
+        <LoadingIcon />
       </>
     )
   }

@@ -2,7 +2,7 @@ import React from 'react'
 import MenuItem from './MenuItem'
 import { LOGO } from '../../utils/icon';
 
-const MenuItems = (props) => {
+const MenuItemList = (props) => {
     return (
         <>
             <MenuItem 
@@ -29,4 +29,4 @@ const MenuItems = (props) => {
     )
 }
 
-export default MenuItems
+export default MenuItemList

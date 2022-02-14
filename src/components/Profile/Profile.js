@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom'
 import MainContext from '../../context/MainContext';
-import Chirps from '../Chirps/Chirps';
-import Icon from '../UI/Icon/Icon';
-import { BACK_BUTTON } from '../../utils/icon';
+import ChirpList from '../Chirps/ChirpList';
 import LoadingFeed from '../Loading/LoadingFeed';
 import classes from './Profile.module.css'
+import ProfileHeader from './ProfileHeader';
+import ProfileSummary from './ProfileSummary';
 
 const Profile = (props) => {
 
@@ -15,6 +15,8 @@ const Profile = (props) => {
     const myProfile = params.user === ctx.user
 
     const [isLoading, setIsLoading] = useState(true)
+    const [isFollow, setIsFollow] = useState(false)
+    const [error, setError] = useState(false)
 
     const getUserProfileFeed = async () => {
         try {
@@ -25,16 +27,19 @@ const Profile = (props) => {
                     'Authorization': `Bearer ${localStorage.jwt}`
                 }
             })
-            const { feed, likedChirps, retweetedChirps } = await response.json()
+            const { feed, likedChirps, retweetedChirps, isFollowing } = await response.json()
             props.onGetFeed(feed, likedChirps, retweetedChirps)
+            setIsFollow(isFollowing)
             setIsLoading(false)
         } catch (e) {
-            console.log(e.message)
+            setIsLoading(false)
+            setError(true)
         }
     }
 
     const goBackHandler = e => {
         e.preventDefault()
+        setIsLoading(true)
         navigate(-1)
     }
 
@@ -52,38 +57,30 @@ const Profile = (props) => {
         )
     }
 
+    if(error) {
+        return <span>User not found</span>
+    }
+
     return (
         <>
-            <header className={classes['profile__header']}>
-                <section className={classes['profile__header-back']}>
-                    <a href='#' onClick={goBackHandler}>
-                        <Icon width='18px' height='18px' fill='white' d={BACK_BUTTON.d} />
-                    </a>
-                </section>
-                <section className={classes['profile__header-main']}>
-                    <h3>{params.user}</h3>
-                    <span>
-                        {/* Will need to be fixed when feed gets pulled incrementally */}
-                        {`${props.chirps.length} chirps`}
-                    </span>
-                </section>
-            </header>
-            <section className={classes['profile__summary']}>
-                <section className={classes['profile__summary-banner']} />
-                <section className={classes['profile__summary-user']}>
-                    <section className={classes['profile__summary-picture']} />
-                </section>
-            </section>
-            {props.chirps.length > 0
-                ? <Chirps
-                    chirps={props.chirps}
-                    onDeleteRechirp={props.onDeleteRechirp}
-                    onRechirp={props.onNewChirp}
-                    syncFeed={props.syncFeed}
-                    className={classes['profile__chirps']}
-                />
-                : <p className={classes['profile__chirps-none']}>No chirps available...</p>
-            }
+            <ProfileHeader
+                user={params.user}
+                chirpCount={props.chirps.length}
+                onBackButton={goBackHandler}
+            />
+            <ProfileSummary 
+                myProfile={myProfile}
+                user={params.user}
+                isFollowing={isFollow}
+            />
+            <ChirpList
+                chirps={props.chirps}
+                onDeleteRechirp={props.onDeleteRechirp}
+                onRechirp={props.onNewChirp}
+                syncFeed={props.syncFeed}
+                className={classes['profile__chirps']}
+            />
+
         </>
     )
 };

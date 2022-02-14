@@ -144,11 +144,11 @@ const Chirp = ({
     const post_time = rechirp ? rechirp.original_time : timestamp
 
     return (
-        <>
+        <article>
             {rechirp && <span>Is rechirped by {`${user}`}</span>}
-            <article className={classes['chirp']} key={id}>
+            <section className={classes['chirp']} key={id}>
                 <Link to={`/${post_owner}`} className={classes['chirp__icon']} />
-                <div className={classes['chirp__main']}>
+                <section className={classes['chirp__main']}>
                     <section className={classes['chirp__main-header']}>
                         <Link to={`/${post_owner}`} className={classes['chirp__main-user']}>{post_owner}</Link>
                         <span>·</span>
@@ -159,18 +159,18 @@ const Chirp = ({
                             <p>{message}</p>
                         </Link>
                     </section>
-                    <section className={classes['chirp__main-actions']}>
-                        <ChirpIcons stats={
+                    <ChirpIcons
+                        stats={
                             [
                                 { count: comments, active: false, onClick: testHandler },
                                 { count: rechirpsCount, active: isChirpRechirped, onClick: onRechirpButtonHandler },
                                 { count: likesCount, active: isChirpLiked, onClick: onLikeButtonHandler }
                             ]
-                        } />
-                    </section>
-                </div>
-            </article>
-        </>
+                        }
+                    />
+                </section>
+            </section>
+        </article>
     )
 }
 

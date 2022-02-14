@@ -57,15 +57,3 @@
     overflow-wrap: break-word;
 }
 
-.chirp__main-actions {
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-    padding-right: 2rem;
-}
-
-.chirp__main-actions button {
-    margin: 0;
-    padding: 0;
-}
-

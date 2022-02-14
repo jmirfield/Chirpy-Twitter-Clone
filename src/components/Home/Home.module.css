@@ -4,24 +4,20 @@
     padding: 1rem 0 1rem 1rem;
     background-color: black;
     z-index: 2;
-    background: transparent;
-    backdrop-filter: blur(10px);
-
+    background-color: rgba(0, 0, 0, 0.8);
 }
+
+@supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
+    .home__header {
+        background: transparent;
+        backdrop-filter: blur(2px);
+    }
+}
+
 .home__header > h2 {
     margin: 0;
 }
 
 .home__new-chirp {
     border-bottom: 1px solid rgb(95, 108, 116);
-}
-
-.home__chirps-none {
-    margin-left: 1rem;
-}
-
-.home__chirps {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
 }
