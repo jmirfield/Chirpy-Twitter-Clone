@@ -132,7 +132,16 @@ const Chirp = ({
                         body: JSON.stringify({ _id: req })
                     })
                     const { likedChirps, retweetedChirps } = await response.json()
-                    syncFeed(likedChirps, retweetedChirps)
+                    dispatch({
+                        type: 'REMOVE',
+                        payload: {
+                            liked: likedChirps,
+                            rechirped: retweetedChirps,
+                            id: req,
+                            user: state.user
+                        }
+                    })
+                    setRechirpsCount(prev => prev - 1)
                 } else {
                     const response = await fetch("http://localhost:3001/chirps/rechirp/delete", {
                         method: 'DELETE', // *GET, POST, PUT, DELETE, etc.
@@ -143,10 +152,16 @@ const Chirp = ({
                         body: JSON.stringify({ _id: req })
                     })
                     const { likedChirps, retweetedChirps } = await response.json()
-                    syncFeed(likedChirps, retweetedChirps)
+                    dispatch({
+                        type: 'REMOVE',
+                        payload: {
+                            liked: likedChirps,
+                            rechirped: retweetedChirps,
+                            id: req,
+                            user: state.user
+                        }
+                    })
                 }
-                setRechirpsCount(prev => prev - 1)
-                onDeleteRechirp(req)
             } catch (e) {
                 console.log(e.message)
             }

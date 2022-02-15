@@ -30,12 +30,10 @@ const reducer = (state, action) => {
         case 'REMOVE':
             return {
                 ...state,
-                feed : state.feed.filter(chirp => {
+                feed: state.feed.filter(chirp => {
                     if (!chirp.rechirp) return true
-                    else {
-                      return chirp.rechirp.original_id !== id || state.user !== chirp.owner_username
-                    }
-                  })
+                    return chirp.rechirp.original_id !== action.payload.id || action.payload.user !== chirp.owner_username
+                })
             }
         case 'LIKE':
             return {
@@ -48,6 +46,7 @@ const reducer = (state, action) => {
             }
         case 'CHANGE_USER':
             return {
+                ...state,
                 feed: [],
                 isLoading: true
             }
@@ -59,6 +58,7 @@ const reducer = (state, action) => {
             }
     }
 }
+
 
 const syncFeed = (feed, likedChirps, retweetedChirps) => {
     return feed.map(chirp => {
@@ -77,6 +77,7 @@ const syncFeed = (feed, likedChirps, retweetedChirps) => {
 
 const useFeed = () => {
     const [state, dispatch] = useReducer(reducer, initialState)
+    console.log(state)
     return [state, dispatch]
 }
 
