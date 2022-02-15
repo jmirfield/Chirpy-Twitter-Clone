@@ -112,8 +112,8 @@ class ChirpController {
                 likedChirps: req.user.likedChirps,
                 retweetedChirps: req.user.retweetedChirps,
                 isFollowing,
+                followingCount: 1,
                 followerCount: 0,
-                followingCount: 1
             })
         } catch (e) {
             console.log(e)
