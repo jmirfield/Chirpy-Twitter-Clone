@@ -62,11 +62,7 @@ class ChirpController {
                 await chirp.save()
                 await Chirp.updateMany({ 'rechirp.original_id': chirp.rechirp.original_id }, { $inc: { rechirpsCount: 1 } })
             }
-            res.status(202).send({
-                chirp: chirp,
-                likedChirps: req.user.likedChirps,
-                retweetedChirps: req.user.retweetedChirps
-            })
+            res.status(202).send({chirp})
         } catch (e) {
             console.log(e)
             res.status(400).send()
@@ -89,10 +85,7 @@ class ChirpController {
                 await Chirp.findOneAndUpdate({ _id: req.body._id }, { $inc: { rechirpsCount: -1 } })
                 await Chirp.updateMany({ 'rechirp.original_id': req.body._id }, { $inc: { rechirpsCount: -1 } })
             }
-            res.status(202).send({
-                likedChirps: req.user.likedChirps,
-                retweetedChirps: req.user.retweetedChirps
-            })
+            res.status(202).send()
         } catch (e) {
             console.log(e)
             res.status(400).send()

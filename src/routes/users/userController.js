@@ -67,10 +67,7 @@ class UserController {
                 await Chirp.findOneAndUpdate({ _id: req.body._id }, { $inc: { likesCount: 1 } })
                 await Chirp.updateMany({ 'rechirp.original_id': req.body._id }, { $inc: { likesCount: 1 } })
             }
-            res.status(202).send({
-                likedChirps: req.user.likedChirps,
-                retweetedChirps: req.user.retweetedChirps
-            })
+            res.status(202).send()
         } catch (e) {
             console.log(e.message)
             res.status(400).send()
