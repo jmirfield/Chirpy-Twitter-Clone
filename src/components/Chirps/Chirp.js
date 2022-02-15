@@ -4,6 +4,8 @@ import ChirpIcons from './ChirpIcons'
 import { date } from '../../helpers/date'
 import MainContext from '../../context/MainContext'
 import classes from './Chirp.module.css'
+import Icon from '../UI/Icon/Icon'
+import { RECHIRP } from '../../utils/icon'
 
 const Chirp = ({
     id,
@@ -24,7 +26,7 @@ const Chirp = ({
         const req = !rechirp ? id : rechirp.original_id
         if (!isChirpLiked) {
             try {
-               await fetch("http://localhost:3001/users/like", {
+                await fetch("http://localhost:3001/users/like", {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -154,7 +156,12 @@ const Chirp = ({
 
     return (
         <article>
-            {rechirp && <span>Is rechirped by {`${user}`}</span>}
+            {rechirp &&
+                <section className={classes['rechirp']}>
+                    <Icon width='14px' height='14px' fill='rgb(101, 119, 134)' d={RECHIRP.d} />
+                    <Link to={`/${user}`}>{user === state.user ? 'You Rechirped' : `${user} Rechirped`}</Link>
+                </section>
+            }
             <section className={classes['chirp']} key={id}>
                 <Link to={`/${post_owner}`} className={classes['chirp__icon']} />
                 <section className={classes['chirp__main']}>

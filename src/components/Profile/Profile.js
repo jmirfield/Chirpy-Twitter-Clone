@@ -23,19 +23,28 @@ const reducer = (state, action) => {
                 followerCount: action.payload.followerCount,
                 followingCount: action.payload.followingCount
             }
+        case 'FOLLOW':
+            return {
+                ...state,
+                isFollow: true
+            }
+        case 'UNFOLLOW':
+            return {
+                ...state,
+                isFollow: false
+            }
         default:
             return state
     }
 }
 
-const Profile = (props) => {
+const Profile = () => {
     const params = useParams()
     const navigate = useNavigate()
     const { state } = useContext(MainContext)
     const myProfile = params.user === state.user
     const [profile, dispatch] = useReducer(reducer, initialState)
     const [{ feed, isLoading, error }, feedDispatch] = useFeed()
-
     const getUserProfileFeed = async () => {
         try {
             const response = await fetch(`http://localhost:3001/chirps/auth/${params.user}`, {
@@ -58,7 +67,8 @@ const Profile = (props) => {
                 payload: {
                     feed,
                     liked: likedChirps,
-                    rechirped: retweetedChirps
+                    rechirped: retweetedChirps,
+                    myProfile
                 }
             })
             dispatch({
@@ -107,11 +117,13 @@ const Profile = (props) => {
                 myProfile={myProfile}
                 user={params.user}
                 isFollowing={profile.isFollow}
+                followerCount={profile.followerCount}
+                followingCount={profile.followingCount}
+                dispatch={dispatch}
             />
             <ChirpList
                 chirps={feed}
                 dispatch={feedDispatch}
-                myProfile={myProfile}
             />
 
         </>

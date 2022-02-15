@@ -3,7 +3,7 @@
     box-sizing: border-box;
     border-bottom: 1px solid rgb(95, 108, 116);
     min-width: 35vw;
-    padding: 1rem;
+    padding: .5rem;
 }
 
 .chirp__icon {
@@ -39,10 +39,11 @@
 .chirp__main-user {
     text-decoration: none;
     color: white;
+    font-weight: bold;
 }
 
 .chirp__main-user:hover {
-    text-decoration: underline;
+    text-decoration: 1px underline;
 }
 
 .chirp__main-message {
@@ -57,3 +58,19 @@
     overflow-wrap: break-word;
 }
 
+.rechirp {
+    display: flex;
+    margin: .5rem 0 0 2.5rem;
+    align-items: center;
+}
+
+.rechirp > a {
+    text-decoration: none;
+    color: rgb(101, 119, 134);
+    font-size: 90%;
+    margin-left: 1rem;
+}
+
+.rechirp > a:hover {
+    text-decoration: underline;
+}

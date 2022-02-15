@@ -1,7 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import classes from './ProfileSummary.module.css'
 
 const ProfileSummary = (props) => {
+    const followHandler = () => {
+        console.log('follow')
+        props.dispatch({ type: 'FOLLOW' })
+    }
+    const unfollowHandler = () => {
+        console.log('unfollow')
+        props.dispatch({ type: 'UNFOLLOW' })
+    }
     return (
         <section className={classes['profile__summary']}>
             <section className={classes['profile__summary-banner']} />
@@ -9,8 +17,8 @@ const ProfileSummary = (props) => {
                 <section className={classes['profile__summary-user-controls']}>
                     {!props.myProfile
                         ? props.isFollowing
-                            ? <button>Following</button>
-                            : <button>Follow</button>
+                            ? <button onClick={unfollowHandler}>Following</button>
+                            : <button onClick={followHandler}>Follow</button>
                         : <button>Edit Profile</button>
                     }
                 </section>
@@ -21,7 +29,7 @@ const ProfileSummary = (props) => {
                     {`${props.followingCount} Following`}
                 </span>
                 <span>
-                {`${props.followingCount} Follower`}
+                    {`${props.followerCount} Follower`}
                 </span>
             </section>
             {/* <section className={classes['profile__summary-picture']} /> */}

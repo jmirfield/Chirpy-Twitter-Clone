@@ -3,6 +3,7 @@ import { useReducer } from 'react'
 const initialState = {
     feed: [],
     isLoading: true,
+    myProfile: undefined,
     error: null
 }
 
@@ -16,7 +17,8 @@ const reducer = (state, action) => {
                     action.payload.liked,
                     action.payload.rechirped
                 ),
-                isLoading: false
+                isLoading: false,
+                myProfile: action.payload.myProfile
             }
         case 'NEW_CHIRP':
             return {
@@ -24,13 +26,15 @@ const reducer = (state, action) => {
                 feed: [action.payload, ...state.feed]
             }
         case 'ADD_RECHIRP':
-            return {
-                ...state,
-                feed: syncRechirps(
-                    [action.payload.chirp, ...state.feed],
-                    action.payload.id,
-                    action.payload.rechirps
-                )
+            if(state.myProfile || state.myProfile === undefined) {
+                return {
+                    ...state,
+                    feed: syncRechirps(
+                        [action.payload.chirp, ...state.feed],
+                        action.payload.id,
+                        action.payload.rechirps
+                    )
+                }
             }
         case 'REMOVE_RECHIRP':
             const feed = state.feed.filter(chirp => {
