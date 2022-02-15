@@ -26,13 +26,14 @@ class UserController {
             await user.save()
             res.status(201).send({ user, token })
         } catch (e) {
+            console.log(e)
             res.status(400).send()
         }
     }
 
     authenticatePersistentLogin = async (req, res) => {
         try {
-            res.status(200).send({ username: req.user.username })
+            res.status(200).send({ username: req.user.username, id: req.user._id })
         } catch (e) {
             res.status(404).send()
         }
@@ -64,8 +65,14 @@ class UserController {
             req.user.likedChirps.addToSet(req.body._id)
             if (startingLength !== req.user.likedChirps.length) {
                 await req.user.save()
-                await Chirp.findOneAndUpdate({ _id: req.body._id }, { $inc: { likesCount: 1 } })
-                await Chirp.updateMany({ 'rechirp.original_id': req.body._id }, { $inc: { likesCount: 1 } })
+                await Chirp.findOneAndUpdate(
+                    { _id: req.body._id },
+                    { $inc: { likesCount: 1 } }
+                )
+                await Chirp.updateMany(
+                    { 'rechirp.original_id': req.body._id },
+                    { $inc: { likesCount: 1 } }
+                )
             }
             res.status(202).send()
         } catch (e) {
@@ -79,16 +86,18 @@ class UserController {
             if (!req.body._id) throw new Error('Cannot provide null value')
             const startingLength = req.user.likedChirps.length
             req.user.likedChirps.pull({ _id: req.body._id })
-            // console.log(req.user.likedChirps)
             if (startingLength !== req.user.likedChirps.length) {
                 await req.user.save()
-                await Chirp.findOneAndUpdate({ _id: req.body._id }, { $inc: { likesCount: -1 } })
-                await Chirp.updateMany({ 'rechirp.original_id': req.body._id }, { $inc: { likesCount: -1 } })
+                await Chirp.findOneAndUpdate(
+                    { _id: req.body._id },
+                    { $inc: { likesCount: -1 } }
+                )
+                await Chirp.updateMany(
+                    { 'rechirp.original_id': req.body._id },
+                    { $inc: { likesCount: -1 } }
+                )
             }
-            res.status(202).send({
-                likedChirps: req.user.likedChirps,
-                retweetedChirps: req.user.retweetedChirps
-            })
+            res.status(202).send()
         } catch (e) {
             console.log(e.message)
             res.status(400).send()

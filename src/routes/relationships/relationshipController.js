@@ -1,3 +1,4 @@
+const User = require('../users/userModel')
 const Relationship = require('./relationshipModel')
 
 class RelationshipController {
@@ -13,16 +14,42 @@ class RelationshipController {
     }
 
     createRelationship = async (req, res) => {
-        const relationship = new Relationship({
-            ...req.body,
-            user_id: req.user._id
-        })
         try {
+            const relationship = new Relationship({
+                following_id: req.body.id,
+                user_id: req.user._id
+            })
+            await User.findOneAndUpdate(
+                { _id: req.body.id },
+                { $inc: { followerCount: 1 } }
+            )
             await relationship.save()
+            req.user.followingCount++
+            await req.user.save()
             res.send()
-        } catch(e) {
+        } catch (e) {
             console.log(e)
-            res.status(400).send(e)
+            res.status(400).send()
+        }
+    }
+
+    deleteRelationship = async (req, res) => {
+        try {
+            await Relationship.findOneAndDelete({
+                $and: [
+                    { following_id: req.body.id },
+                    { user_id: req.user._id }
+                ]
+            })
+            await User.findOneAndUpdate(
+                { _id: req.body.id },
+                { $inc: { followerCount: -1 } }
+            )
+            req.user.followingCount--
+            await req.user.save()
+            res.send()
+        } catch (e) {
+            res.status(400).send()
         }
     }
 }

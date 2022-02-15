@@ -39,7 +39,15 @@ const UserSchema = new Schema({
     }],
     retweetedChirps: [{
         type: Schema.ObjectId
-    }]
+    }],
+    followerCount: {
+        type: Number,
+        required: true
+    },
+    followingCount: {
+        type: Number,
+        required: true
+    }
 }, {
     timestamps: true
 })

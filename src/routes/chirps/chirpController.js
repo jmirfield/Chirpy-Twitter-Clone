@@ -56,13 +56,19 @@ class ChirpController {
             req.user.retweetedChirps.addToSet(chirp.rechirp.original_id)
             if (startingLength !== req.user.retweetedChirps.length) {
                 await req.user.save()
-                const original = await Chirp.findOneAndUpdate({ _id: chirp.rechirp.original_id }, { $inc: { rechirpsCount: 1 } })
+                const original = await Chirp.findOneAndUpdate(
+                    { _id: chirp.rechirp.original_id },
+                    { $inc: { rechirpsCount: 1 } }
+                )
                 chirp.rechirpsCount = original.rechirpsCount
                 chirp.likesCount = original.likesCount
                 await chirp.save()
-                await Chirp.updateMany({ 'rechirp.original_id': chirp.rechirp.original_id }, { $inc: { rechirpsCount: 1 } })
+                await Chirp.updateMany(
+                    { 'rechirp.original_id': chirp.rechirp.original_id },
+                    { $inc: { rechirpsCount: 1 } }
+                )
             }
-            res.status(202).send({chirp})
+            res.status(202).send({ chirp })
         } catch (e) {
             console.log(e)
             res.status(400).send()
@@ -82,8 +88,14 @@ class ChirpController {
                         { 'rechirp.original_id': req.body._id }
                     ]
                 })
-                await Chirp.findOneAndUpdate({ _id: req.body._id }, { $inc: { rechirpsCount: -1 } })
-                await Chirp.updateMany({ 'rechirp.original_id': req.body._id }, { $inc: { rechirpsCount: -1 } })
+                await Chirp.findOneAndUpdate(
+                    { _id: req.body._id },
+                    { $inc: { rechirpsCount: -1 } }
+                )
+                await Chirp.updateMany(
+                    { 'rechirp.original_id': req.body._id },
+                    { $inc: { rechirpsCount: -1 } }
+                )
             }
             res.status(202).send()
         } catch (e) {
@@ -111,9 +123,10 @@ class ChirpController {
                 feed: chirps,
                 likedChirps: req.user.likedChirps,
                 retweetedChirps: req.user.retweetedChirps,
+                id: user._id,
                 isFollowing,
-                followingCount: 1,
-                followerCount: 0,
+                followingCount: user.followingCount,
+                followerCount: user.followerCount,
             })
         } catch (e) {
             console.log(e)
