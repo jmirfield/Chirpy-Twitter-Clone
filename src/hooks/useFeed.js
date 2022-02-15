@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react'
+import { useReducer } from 'react'
 
 const initialState = {
     feed: [],
@@ -18,30 +18,50 @@ const reducer = (state, action) => {
                 ),
                 isLoading: false
             }
-        case 'ADD':
+        case 'NEW_CHIRP':
             return {
                 ...state,
-                feed: syncFeed(
+                feed: [action.payload, ...state.feed]
+            }
+        case 'ADD_RECHIRP':
+            return {
+                ...state,
+                feed: syncRechirps(
                     [action.payload.chirp, ...state.feed],
-                    action.payload.liked,
-                    action.payload.rechirped
+                    action.payload.id,
+                    action.payload.rechirps
                 )
             }
-        case 'REMOVE':
+        case 'REMOVE_RECHIRP':
+            const feed = state.feed.filter(chirp => {
+                if (!chirp.rechirp) return true
+                return chirp.rechirp.original_id !== action.payload.id
+                    || action.payload.user !== chirp.owner_username
+            })
             return {
                 ...state,
-                feed: state.feed.filter(chirp => {
-                    if (!chirp.rechirp) return true
-                    return chirp.rechirp.original_id !== action.payload.id || action.payload.user !== chirp.owner_username
-                })
+                feed: syncRechirps(
+                    feed,
+                    action.payload.id,
+                    action.payload.rechirps
+                )
             }
         case 'LIKE':
             return {
                 ...state,
-                feed: syncFeed(
+                feed: syncLikes(
                     state.feed,
-                    action.payload.liked,
-                    action.payload.rechirped
+                    action.payload.id,
+                    action.payload.likes
+                )
+            }
+        case 'UNLIKE':
+            return {
+                ...state,
+                feed: syncLikes(
+                    state.feed,
+                    action.payload.id,
+                    action.payload.likes
                 )
             }
         case 'CHANGE_USER':
@@ -75,9 +95,44 @@ const syncFeed = (feed, likedChirps, retweetedChirps) => {
     })
 }
 
+const syncLikes = (feed, id, count) => {
+    return feed.map(chirp => {
+        if (chirp.rechirp) {
+            if (chirp.rechirp.original_id === id) {
+                chirp.isLiked = !chirp.isLiked
+                chirp.likesCount = count
+                return chirp
+            }
+        }
+        if (chirp._id === id) {
+            chirp.isLiked = !chirp.isLiked
+            chirp.likesCount = count
+            return chirp
+        }
+        return chirp
+    })
+}
+
+const syncRechirps = (feed, id, count) => {
+    return feed.map(chirp => {
+        if (chirp.rechirp) {
+            if (chirp.rechirp.original_id === id) {
+                chirp.isRechirped = !chirp.isRechirped
+                chirp.rechirpsCount = count
+                return chirp
+            }
+        }
+        if (chirp._id === id) {
+            chirp.isRechirped = !chirp.isRechirped
+            chirp.rechirpsCount = count
+            return chirp
+        }
+        return chirp
+    })
+}
+
 const useFeed = () => {
     const [state, dispatch] = useReducer(reducer, initialState)
-    console.log(state)
     return [state, dispatch]
 }
 

@@ -1,10 +1,8 @@
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
 import ChirpInput from '../UI/ChirpInput/ChirpInput'
-import MainContext from '../../context/MainContext'
 import classes from './NewChirp.module.css'
 
 const NewChirp = (props) => {
-    const { state } = useContext(MainContext)
     const [textInput, setTextInput] = useState('')
 
     const textChangeHandler = (e) => {
@@ -26,8 +24,12 @@ const NewChirp = (props) => {
                 body: JSON.stringify({ content })
             })
             const data = await response.json()
-            if (props.isModal) props.onClose()
-            props.onNewChirp({ ...data, username: state.user, isLiked: false })
+            if (props.isModal) {
+                props.onClose()
+                //Will need to be fixed to update feed on home and profile when using menubar chirp buton
+                return
+            }
+            props.onNewChirp({ ...data, isLiked: false, isRechirped: false })
         } catch (e) {
             console.log('Error with chirp request')
         }

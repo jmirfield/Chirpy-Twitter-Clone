@@ -1,6 +1,5 @@
 import React, { useEffect, useContext, useReducer } from 'react';
 import { useParams, useNavigate } from 'react-router-dom'
-
 import MainContext from '../../context/MainContext';
 import useFeed from '../../hooks/useFeed';
 import ChirpList from '../Chirps/ChirpList';
@@ -101,7 +100,7 @@ const Profile = (props) => {
         <>
             <ProfileHeader
                 user={params.user}
-                chirpCount={props.chirps.length}
+                chirpCount={feed.length}
                 onBackButton={goBackHandler}
             />
             <ProfileSummary
@@ -111,10 +110,8 @@ const Profile = (props) => {
             />
             <ChirpList
                 chirps={feed}
-                onDeleteRechirp={props.onDeleteRechirp}
-                onRechirp={props.onNewChirp}
-                syncFeed={props.syncFeed}
                 dispatch={feedDispatch}
+                myProfile={myProfile}
             />
 
         </>

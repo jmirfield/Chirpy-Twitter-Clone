@@ -15,60 +15,50 @@ const Chirp = ({
     isChirpLiked,
     timestamp,
     rechirp,
-    onDeleteRechirp,
-    onRechirp,
-    syncFeed,
     dispatch
 }) => {
 
     const { state } = useContext(MainContext)
-    const [likesCount, setLikesCount] = useState(likes)
-    const [rechirpsCount, setRechirpsCount] = useState(rechirps)
 
     const onLikeButtonHandler = async () => {
+        const req = !rechirp ? id : rechirp.original_id
         if (!isChirpLiked) {
             try {
-                const req = !rechirp ? id : rechirp.original_id
-                const response = await fetch("http://localhost:3001/users/like", {
-                    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+               await fetch("http://localhost:3001/users/like", {
+                    method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${localStorage.jwt}`
                     },
                     body: JSON.stringify({ _id: req })
                 })
-                const { likedChirps, retweetedChirps } = await response.json()
                 dispatch({
                     type: 'LIKE',
                     payload: {
-                        liked: likedChirps,
-                        rechirped: retweetedChirps
+                        id: req,
+                        likes: likes + 1
                     }
                 })
-                setLikesCount(prev => prev + 1)
             } catch (e) {
                 console.log(e.message)
             }
         } else {
             try {
-                const req = !rechirp ? id : rechirp.original_id
-                const response = await fetch("http://localhost:3001/users/unlike", {
-                    method: 'DELETE', // *GET, POST, PUT, DELETE, etc.
+                await fetch("http://localhost:3001/users/unlike", {
+                    method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${localStorage.jwt}`
                     },
                     body: JSON.stringify({ _id: req })
                 })
-                const { likedChirps, retweetedChirps } = await response.json()
                 dispatch({
-                    type: 'LIKE',
+                    type: 'UNLIKE',
                     payload: {
-                        liked: likedChirps,
-                        rechirped: retweetedChirps
+                        id: req,
+                        likes: likes - 1
                     }
                 })
-                setLikesCount(prev => prev - 1)
             } catch (e) {
                 console.log(e.message)
             }
@@ -94,28 +84,26 @@ const Chirp = ({
                     }
                 }
                 const response = await fetch("http://localhost:3001/chirps/rechirp", {
-                    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                    method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${localStorage.jwt}`
                     },
                     body: JSON.stringify(req)
                 })
-                const { chirp, likedChirps, retweetedChirps } = await response.json()
+                const { chirp } = await response.json()
                 dispatch({
-                    type: 'ADD',
+                    type: 'ADD_RECHIRP',
                     payload: {
                         chirp: {
                             ...chirp,
-                            username: state.user,
                             isLiked: isChirpLiked,
-                            isRechirped: true
+                            isRechirped: isChirpRechirped
                         },
-                        liked: likedChirps,
-                        rechirped: retweetedChirps
+                        id: req.rechirp.original_id,
+                        rechirps: rechirps + 1
                     }
                 })
-                setRechirpsCount(prev => prev + 1)
             } catch (e) {
                 console.log(e.message)
             }
@@ -123,7 +111,7 @@ const Chirp = ({
             try {
                 const req = !rechirp ? id : rechirp.original_id
                 if (!rechirp) {
-                    const response = await fetch("http://localhost:3001/chirps/rechirp/delete", {
+                    await fetch("http://localhost:3001/chirps/rechirp/delete", {
                         method: 'DELETE', // *GET, POST, PUT, DELETE, etc.
                         headers: {
                             'Content-Type': 'application/json',
@@ -131,37 +119,25 @@ const Chirp = ({
                         },
                         body: JSON.stringify({ _id: req })
                     })
-                    const { likedChirps, retweetedChirps } = await response.json()
-                    dispatch({
-                        type: 'REMOVE',
-                        payload: {
-                            liked: likedChirps,
-                            rechirped: retweetedChirps,
-                            id: req,
-                            user: state.user
-                        }
-                    })
-                    setRechirpsCount(prev => prev - 1)
                 } else {
-                    const response = await fetch("http://localhost:3001/chirps/rechirp/delete", {
+                    await fetch("http://localhost:3001/chirps/rechirp/delete", {
                         method: 'DELETE', // *GET, POST, PUT, DELETE, etc.
                         headers: {
                             'Content-Type': 'application/json',
                             'Authorization': `Bearer ${localStorage.jwt}`
                         },
                         body: JSON.stringify({ _id: req })
-                    })
-                    const { likedChirps, retweetedChirps } = await response.json()
-                    dispatch({
-                        type: 'REMOVE',
-                        payload: {
-                            liked: likedChirps,
-                            rechirped: retweetedChirps,
-                            id: req,
-                            user: state.user
-                        }
+
                     })
                 }
+                dispatch({
+                    type: 'REMOVE_RECHIRP',
+                    payload: {
+                        id: req,
+                        user: state.user,
+                        rechirps: rechirps - 1
+                    }
+                })
             } catch (e) {
                 console.log(e.message)
             }
@@ -196,8 +172,8 @@ const Chirp = ({
                         stats={
                             [
                                 { count: 0, active: false, onClick: testHandler },
-                                { count: rechirpsCount, active: isChirpRechirped, onClick: onRechirpButtonHandler },
-                                { count: likesCount, active: isChirpLiked, onClick: onLikeButtonHandler }
+                                { count: rechirps, active: isChirpRechirped, onClick: onRechirpButtonHandler },
+                                { count: likes, active: isChirpLiked, onClick: onLikeButtonHandler }
                             ]
                         }
                     />

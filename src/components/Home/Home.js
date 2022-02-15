@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
+import useFeed from '../../hooks/useFeed'
 import NewChirp from '../Chirps/NewChirp'
 import ChirpList from '../Chirps/ChirpList'
 import LoadingFeed from '../Loading/LoadingFeed'
 import classes from './Home.module.css'
 
-const Home = (props) => {
-
-    const [isLoading, setIsLoading] = useState(true)
-
+const Home = () => {
+    const [{ feed, isLoading }, feedDispatch] = useFeed()
     const getMainChirpFeed = async () => {
         try {
             const response = await fetch("http://localhost:3001/chirps/feed", {
@@ -17,18 +16,34 @@ const Home = (props) => {
                     'Authorization': `Bearer ${localStorage.jwt}`
                 }
             })
-            const { feed, likedChirps, retweetedChirps } = await response.json()
-            props.onGetFeed(feed, likedChirps, retweetedChirps)
-            setIsLoading(false)
+            const {
+                feed,
+                likedChirps,
+                retweetedChirps
+            } = await response.json()
+            feedDispatch({
+                type: 'INIT_SYNC',
+                payload: {
+                    feed,
+                    liked: likedChirps,
+                    rechirped: retweetedChirps
+                }
+            })
         } catch (e) {
-            setIsLoading(false)
+            feedDispatch({ type: 'ERROR' })
         }
+    }
+
+    const newChirpHandler = (chirp) => {
+        feedDispatch({
+            type: 'NEW_CHIRP',
+            payload: chirp
+        })
     }
 
     useEffect(() => {
         document.title = 'Home / Chirpy'
         window.scrollTo(0, 0);
-        if (props.chirps.length > 0) props.clearFeed()
         getMainChirpFeed()
     }, [])
 
@@ -44,15 +59,13 @@ const Home = (props) => {
                 <h2>Home</h2>
             </header>
             <NewChirp
-                onNewChirp={props.onNewChirp}
+                onNewChirp={newChirpHandler}
                 isModal={false}
                 className={classes['home__new-chirp']}
             />
             <ChirpList
-                chirps={props.chirps}
-                onDeleteRechirp={props.onDeleteRechirp}
-                onRechirp={props.onNewChirp}
-                syncFeed={props.syncFeed}
+                chirps={feed}
+                dispatch={feedDispatch}
             />
         </>
     )

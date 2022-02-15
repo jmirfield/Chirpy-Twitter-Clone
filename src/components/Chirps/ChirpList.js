@@ -2,7 +2,7 @@ import React from 'react'
 import Chirp from './Chirp'
 import classes from './ChirpList.module.css'
 
-const ChirpList = ({ chirps, onDeleteRechirp, onRechirp, syncFeed, dispatch = () => { } }) => {
+const ChirpList = ({ chirps, dispatch, myProfile }) => {
 
     if (!chirps || chirps.length === 0) return <p className={classes['chirps-none']}>No chirps available...</p>
     return (
@@ -30,9 +30,6 @@ const ChirpList = ({ chirps, onDeleteRechirp, onRechirp, syncFeed, dispatch = ()
                         isChirpLiked={isLiked}
                         timestamp={createdAt}
                         rechirp={rechirp}
-                        onDeleteRechirp={onDeleteRechirp}
-                        onRechirp={onRechirp}
-                        syncFeed={syncFeed}
                         dispatch={dispatch}
                     />
                 )
