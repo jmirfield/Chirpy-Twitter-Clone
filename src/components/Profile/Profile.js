@@ -19,6 +19,7 @@ const reducer = (state, action) => {
         case 'PROFILE_READ':
             return {
                 ...state,
+                id: action.payload.id,
                 isFollow: action.payload.isFollow,
                 followerCount: action.payload.followerCount,
                 followingCount: action.payload.followingCount
@@ -26,11 +27,13 @@ const reducer = (state, action) => {
         case 'FOLLOW':
             return {
                 ...state,
+                followerCount: state.followerCount + 1,
                 isFollow: true
             }
         case 'UNFOLLOW':
             return {
                 ...state,
+                followerCount: state.followerCount - 1,
                 isFollow: false
             }
         default:
@@ -58,6 +61,7 @@ const Profile = () => {
                 feed,
                 likedChirps,
                 retweetedChirps,
+                id,
                 isFollowing,
                 followingCount,
                 followerCount
@@ -74,6 +78,7 @@ const Profile = () => {
             dispatch({
                 type: 'PROFILE_READ',
                 payload: {
+                    id,
                     isFollow: isFollowing,
                     followingCount: followingCount || 0,
                     followerCount: followerCount || 0
@@ -116,6 +121,7 @@ const Profile = () => {
             <ProfileSummary
                 myProfile={myProfile}
                 user={params.user}
+                id={profile.id}
                 isFollowing={profile.isFollow}
                 followerCount={profile.followerCount}
                 followingCount={profile.followingCount}

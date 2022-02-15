@@ -8,7 +8,6 @@ import classes from './Signin.module.css'
 const SignIn = () => {
     const { state, dispatch } = useContext(MainContext)
     const navigate = useNavigate()
-    const [isFormValid, setIsFormValid] = useState(false)
 
     const onCloseHandler = () => {
         dispatch({ type: 'REMOVE_ERROR' })
@@ -35,6 +34,7 @@ const SignIn = () => {
                 type: 'ERROR',
                 payload: true
             })
+            console.log(e)
         }
     }
 

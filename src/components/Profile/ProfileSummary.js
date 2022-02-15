@@ -1,15 +1,47 @@
-import React, { useState } from 'react'
+import React from 'react'
 import classes from './ProfileSummary.module.css'
 
 const ProfileSummary = (props) => {
+    const unfollowRequest = async () => {
+        try {
+            await fetch(`http://localhost:3001/relationships/delete`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.jwt}`
+                },
+                body: JSON.stringify({ id: props.id })
+            })
+            props.dispatch({ type: 'UNFOLLOW' })
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    const followRequest = async () => {
+        try {
+            await fetch(`http://localhost:3001/relationships/new`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.jwt}`
+                },
+                body: JSON.stringify({ id: props.id })
+            })
+            props.dispatch({ type: 'FOLLOW' })
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
     const followHandler = () => {
-        console.log('follow')
-        props.dispatch({ type: 'FOLLOW' })
+        followRequest()
     }
-    const unfollowHandler = () => {
-        console.log('unfollow')
-        props.dispatch({ type: 'UNFOLLOW' })
+
+    const unfollowHandler = async () => {
+        unfollowRequest()
     }
+    
     return (
         <section className={classes['profile__summary']}>
             <section className={classes['profile__summary-banner']} />
