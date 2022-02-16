@@ -19,11 +19,11 @@ class RelationshipController {
                 following_id: req.body.id,
                 user_id: req.user._id
             })
+            await relationship.save()
             await User.findOneAndUpdate(
                 { _id: req.body.id },
                 { $inc: { followerCount: 1 } }
             )
-            await relationship.save()
             req.user.followingCount++
             await req.user.save()
             res.send()
