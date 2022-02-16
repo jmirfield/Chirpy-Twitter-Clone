@@ -35,12 +35,13 @@ class RelationshipController {
 
     deleteRelationship = async (req, res) => {
         try {
-            await Relationship.findOneAndDelete({
+            const relationship = await Relationship.findOneAndDelete({
                 $and: [
                     { following_id: req.body.id },
                     { user_id: req.user._id }
                 ]
             })
+            if(relationship === null)throw new Error('Could not find that user')
             await User.findOneAndUpdate(
                 { _id: req.body.id },
                 { $inc: { followerCount: -1 } }
@@ -49,6 +50,7 @@ class RelationshipController {
             await req.user.save()
             res.send()
         } catch (e) {
+            console.log(e)
             res.status(400).send()
         }
     }
