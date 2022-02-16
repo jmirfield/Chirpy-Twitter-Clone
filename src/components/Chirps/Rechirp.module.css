@@ -1,0 +1,16 @@
+.rechirp {
+    display: flex;
+    margin: 0 0 0 3.5rem;
+    align-items: center;
+}
+
+.rechirp > a {
+    text-decoration: none;
+    color: rgb(101, 119, 134);
+    font-size: 90%;
+    margin-left: .5rem;
+}
+
+.rechirp > a:hover {
+    text-decoration: underline;
+}

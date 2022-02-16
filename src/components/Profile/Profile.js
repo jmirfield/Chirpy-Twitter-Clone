@@ -1,17 +1,19 @@
 import React, { useEffect, useContext, useReducer } from 'react';
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate, Outlet } from 'react-router-dom'
 import MainContext from '../../context/MainContext';
-import useFeed from '../../hooks/useFeed';
-import ChirpList from '../Chirps/ChirpList';
 import LoadingFeed from '../Loading/LoadingFeed';
 import classes from './Profile.module.css'
 import ProfileHeader from './ProfileHeader';
 import ProfileSummary from './ProfileSummary';
 
 const initialState = {
+    id: '',
     isFollow: false,
     followerCount: 0,
-    followingCount: 0
+    followingCount: 0,
+    feedCount: 0,
+    isLoading: true,
+    error: false
 }
 
 const reducer = (state, action) => {
@@ -22,7 +24,9 @@ const reducer = (state, action) => {
                 id: action.payload.id,
                 isFollow: action.payload.isFollow,
                 followerCount: action.payload.followerCount,
-                followingCount: action.payload.followingCount
+                followingCount: action.payload.followingCount,
+                feedCount: action.payload.feedCount,
+                isLoading: false
             }
         case 'FOLLOW':
             return {
@@ -36,86 +40,74 @@ const reducer = (state, action) => {
                 followerCount: state.followerCount - 1,
                 isFollow: false
             }
+        case 'CHANGE_USER':
+            return {
+                ...state,
+                isLoading: true,
+                error: false
+            }
+        case 'ERROR':
+            return {
+                ...state,
+                isLoading: false,
+                error: true
+            }
         default:
             return state
     }
 }
 
 const Profile = () => {
+    const { state } = useContext(MainContext)
+    const [profile, dispatch] = useReducer(reducer, initialState)
     const params = useParams()
     const navigate = useNavigate()
-    const { state } = useContext(MainContext)
     const myProfile = params.user === state.user
-    const [profile, dispatch] = useReducer(reducer, initialState)
-    const [{ feed, isLoading, error }, feedDispatch] = useFeed()
-    const getUserProfileFeed = async () => {
-        try {
-            const response = await fetch(`http://localhost:3001/chirps/auth/${params.user}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.jwt}`
-                }
-            })
-            const {
-                feed,
-                likedChirps,
-                retweetedChirps,
-                id,
-                isFollowing,
-                followingCount,
-                followerCount
-            } = await response.json()
-            feedDispatch({
-                type: 'INIT_SYNC',
-                payload: {
-                    feed,
-                    liked: likedChirps,
-                    rechirped: retweetedChirps,
-                    myProfile
-                }
-            })
-            dispatch({
-                type: 'PROFILE_READ',
-                payload: {
-                    id,
-                    isFollow: isFollowing,
-                    followingCount: followingCount || 0,
-                    followerCount: followerCount || 0
-                }
-            })
-        } catch (e) {
-            feedDispatch({ type: 'ERROR' })
-        }
-    }
-
+    console.log(profile)
     const goBackHandler = e => {
         e.preventDefault()
         navigate(-1)
     }
 
     useEffect(() => {
-        feedDispatch({ type: 'CHANGE_USER' })
+        dispatch({ type: 'CHANGE_USER' })
         document.title = `@${params.user} / Chirpy`
         window.scrollTo(0, 0);
-        getUserProfileFeed()
     }, [params.user])
 
-    if (isLoading) {
+    if (profile.isLoading) {
         return (
-            <LoadingFeed />
+            <>
+                <LoadingFeed />
+                <Outlet context={{ dispatch }} />
+            </>
         )
     }
 
-    if (error) {
-        return <span>User not found</span>
+    if (profile.error) {
+        return (
+            <>
+                <ProfileHeader
+                    user='Profile'
+                    chirpCount={null}
+                    onBackButton={goBackHandler}
+                />
+                <ProfileSummary
+                    user={params.user}
+                    error={profile.error}
+                />
+                <h1 style={{ 'marginLeft': '1rem' }}>
+                    Profile does not exist
+                </h1>
+            </>
+        )
     }
 
     return (
         <>
             <ProfileHeader
                 user={params.user}
-                chirpCount={feed.length}
+                chirpCount={profile.feedCount}
                 onBackButton={goBackHandler}
             />
             <ProfileSummary
@@ -127,11 +119,7 @@ const Profile = () => {
                 followingCount={profile.followingCount}
                 dispatch={dispatch}
             />
-            <ChirpList
-                chirps={feed}
-                dispatch={feedDispatch}
-            />
-
+            <Outlet context={{ dispatch }} />
         </>
     )
 };

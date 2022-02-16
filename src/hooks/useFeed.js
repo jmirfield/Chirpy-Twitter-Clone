@@ -18,6 +18,7 @@ const reducer = (state, action) => {
                     action.payload.rechirped
                 ),
                 isLoading: false,
+                error: null,
                 myProfile: action.payload.myProfile
             }
         case 'NEW_CHIRP':
@@ -67,12 +68,6 @@ const reducer = (state, action) => {
                     action.payload.id,
                     action.payload.likes
                 )
-            }
-        case 'CHANGE_USER':
-            return {
-                ...state,
-                feed: [],
-                isLoading: true
             }
         case 'ERROR':
             return {

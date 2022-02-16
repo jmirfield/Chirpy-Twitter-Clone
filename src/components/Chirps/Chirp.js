@@ -1,11 +1,11 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
+import MainContext from '../../context/MainContext'
+import Rechirp from './Rechirp'
+import ProfileImage from '../UI/ProfileImage/ProfileImage'
 import ChirpIcons from './ChirpIcons'
 import { date } from '../../helpers/date'
-import MainContext from '../../context/MainContext'
 import classes from './Chirp.module.css'
-import Icon from '../UI/Icon/Icon'
-import { RECHIRP } from '../../utils/icon'
 
 const Chirp = ({
     id,
@@ -19,7 +19,6 @@ const Chirp = ({
     rechirp,
     dispatch
 }) => {
-
     const { state } = useContext(MainContext)
 
     const onLikeButtonHandler = async () => {
@@ -42,7 +41,7 @@ const Chirp = ({
                     }
                 })
             } catch (e) {
-                console.log(e.message)
+                console.log('Error with liking')
             }
         } else {
             try {
@@ -62,7 +61,7 @@ const Chirp = ({
                     }
                 })
             } catch (e) {
-                console.log(e.message)
+                console.log('Error with liking')
             }
         }
     }
@@ -107,31 +106,19 @@ const Chirp = ({
                     }
                 })
             } catch (e) {
-                console.log(e.message)
+                console.log('Error with rechirping')
             }
         } else {
             try {
                 const req = !rechirp ? id : rechirp.original_id
-                if (!rechirp) {
-                    await fetch("http://localhost:3001/chirps/rechirp/delete", {
-                        method: 'DELETE', // *GET, POST, PUT, DELETE, etc.
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${localStorage.jwt}`
-                        },
-                        body: JSON.stringify({ _id: req })
-                    })
-                } else {
-                    await fetch("http://localhost:3001/chirps/rechirp/delete", {
-                        method: 'DELETE', // *GET, POST, PUT, DELETE, etc.
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${localStorage.jwt}`
-                        },
-                        body: JSON.stringify({ _id: req })
-
-                    })
-                }
+                await fetch("http://localhost:3001/chirps/rechirp/delete", {
+                    method: 'DELETE', // *GET, POST, PUT, DELETE, etc.
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.jwt}`
+                    },
+                    body: JSON.stringify({ _id: req })
+                })
                 dispatch({
                     type: 'REMOVE_RECHIRP',
                     payload: {
@@ -141,7 +128,7 @@ const Chirp = ({
                     }
                 })
             } catch (e) {
-                console.log(e.message)
+                console.log('Error with rechirping')
             }
         }
     }
@@ -154,36 +141,50 @@ const Chirp = ({
     const post_id = rechirp ? rechirp.original_id : id
     const post_time = rechirp ? rechirp.original_time : timestamp
 
+    const chirpIconOptions = [
+        { count: 0, active: false, onClick: testHandler },
+        { count: rechirps, active: isChirpRechirped, onClick: onRechirpButtonHandler },
+        { count: likes, active: isChirpLiked, onClick: onLikeButtonHandler }
+    ]
+
     return (
-        <article>
-            {rechirp &&
-                <section className={classes['rechirp']}>
-                    <Icon width='14px' height='14px' fill='rgb(101, 119, 134)' d={RECHIRP.d} />
-                    <Link to={`/${user}`}>{user === state.user ? 'You Rechirped' : `${user} Rechirped`}</Link>
-                </section>
-            }
-            <section className={classes['chirp']} key={id}>
-                <Link to={`/${post_owner}`} className={classes['chirp__icon']} />
-                <section className={classes['chirp__main']}>
-                    <section className={classes['chirp__main-header']}>
-                        <Link to={`/${post_owner}`} className={classes['chirp__main-user']}>{post_owner}</Link>
-                        <span>·</span>
-                        <Link to={`/${post_owner}/status/${post_id}`} className={classes['chirp__main-timestamp']}>{date(post_time)}</Link>
-                    </section>
-                    <section>
-                        <Link to={`/${post_owner}/status/${post_id}`} className={classes['chirp__main-message']}>
-                            <p>{message}</p>
-                        </Link>
-                    </section>
-                    <ChirpIcons
-                        stats={
-                            [
-                                { count: 0, active: false, onClick: testHandler },
-                                { count: rechirps, active: isChirpRechirped, onClick: onRechirpButtonHandler },
-                                { count: likes, active: isChirpLiked, onClick: onLikeButtonHandler }
-                            ]
-                        }
+        <article className={classes['chirp']} key={id}>
+            {rechirp && <Rechirp user={user} />}
+            <section className={classes['chirp__main']}>
+                <Link to={`/${post_owner}`}>
+                    <ProfileImage
+                        className={classes['chirp__icon']}
+                        default={true}
                     />
+                </Link>
+                <section className={classes['chirp__body']}>
+                    <section className={classes['chirp__header']}>
+                        <section>
+                            <Link
+                                to={`/${post_owner}`}
+                                className={classes['chirp__user']}
+                            >
+                                {post_owner}
+                            </Link>
+                            <span>·</span>
+                            <Link
+                                to={`/${post_owner}/status/${post_id}`}
+                                className={classes['chirp__timestamp']}
+                            >
+                                {date(post_time)}
+                            </Link>
+                        </section>
+                    </section>
+                    <Link
+                        to={`/${post_owner}/status/${post_id}`}
+                        className={classes['chirp__message']}
+                    >
+                        <p>{message}</p>
+                    </Link>
+                    <ChirpIcons options={chirpIconOptions} />
+                </section>
+                <section className={classes.chirp__options}>
+                    <button>···</button>
                 </section>
             </section>
         </article>

@@ -10,6 +10,7 @@ import MainContext from './context/MainContext';
 import LoadingIcon from './components/Loading/LoadingIcon';
 import Profile from './components/Profile/Profile';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import ProfileFeed from './components/Profile/ProfileFeed';
 
 const App = () => {
   const { state } = useContext(MainContext)
@@ -48,9 +49,14 @@ const App = () => {
           <Route path='notifications' element={<p>NOTFICATIONS PAGE</p>} />
           <Route path='messages' element={<p>MESSAGES PAGE</p>} />
           <Route path='flow/bookmarks' element={<p>BOOKMARKS PAGE</p>} />
-          <Route path=':user' element={<Profile />} />
+          <Route path=':user' element={<Profile />} >
+            <Route path='' element={<ProfileFeed />} />
+            <Route path='likes' element={<h1>Likes</h1>} />
+          </Route>
           <Route path=':user/lists' element={<p>LISTS PLACEHOLDER</p>} />
           <Route path=':user/status/:chirpId' element={<p>CHIRP PLACEHOLDER</p>} />
+          <Route path=':user/following' element={<Profile />} />
+          <Route path=':user/follower' element={<Profile />} />
           <Route path='*' element={<Navigate replace to='/home' />} />
           <Route path='/' element={<Navigate replace to='/home' />} />
         </Route >

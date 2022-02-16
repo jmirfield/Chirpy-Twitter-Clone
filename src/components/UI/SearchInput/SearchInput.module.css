@@ -5,7 +5,8 @@
     padding: .5rem 2rem .5rem 1rem;
     align-items: center;
     margin: .25rem;
-    border-radius: 1rem;
+    border-radius: 3rem;
+    height: 2rem;
 }
 
 .active {
@@ -21,4 +22,5 @@
     margin-left: 1rem;
     color: white;
     width: 100%;
+    font-size: 1rem;
 }

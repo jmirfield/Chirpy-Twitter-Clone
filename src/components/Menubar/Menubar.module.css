@@ -6,6 +6,15 @@
     width: 70%;
 }
 
+.menu li {
+    list-style-type: none;
+}
+
+.menu ul {
+   margin: 0;
+   padding: 0;
+}
+
 .menu__logo {
     max-width: fit-content;
     padding: 1rem;
@@ -50,3 +59,4 @@
     margin-bottom: 2rem;
     width: 75%;
 }
+

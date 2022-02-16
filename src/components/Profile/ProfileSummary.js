@@ -1,4 +1,7 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
+import ProfileButton from '../UI/ProfileButton/ProfileButton'
+import ProfileImage from '../UI/ProfileImage/ProfileImage'
 import classes from './ProfileSummary.module.css'
 
 const ProfileSummary = (props) => {
@@ -41,30 +44,36 @@ const ProfileSummary = (props) => {
     const unfollowHandler = async () => {
         unfollowRequest()
     }
-    
+
     return (
         <section className={classes['profile__summary']}>
-            <section className={classes['profile__summary-banner']} />
-            <section className={classes['profile__summary-user']}>
-                <section className={classes['profile__summary-user-controls']}>
-                    {!props.myProfile
-                        ? props.isFollowing
-                            ? <button onClick={unfollowHandler}>Following</button>
-                            : <button onClick={followHandler}>Follow</button>
-                        : <button>Edit Profile</button>
-                    }
-                </section>
-                <span id={classes.user}>
-                    {props.user}
-                </span>
-                <span>
-                    {`${props.followingCount} Following`}
-                </span>
-                <span>
-                    {`${props.followerCount} Follower`}
-                </span>
+            <section className={classes['profile__banner']} />
+            <ProfileImage
+                className={classes['profile__picture']}
+                default={true}
+            />
+            <section className={classes['profile__user']}>
+                {<ProfileButton
+                    onFollow={followHandler}
+                    onUnfollow={unfollowHandler}
+                    isFollowing={props.isFollowing}
+                    myProfile={props.myProfile}
+                    error={props.error}
+                />}
+                <span id={classes.user}>{props.user}</span>
+                {!props.error &&
+                    <section className={classes['profile__follow']}>
+                        <Link to='following'>
+                            <span>{`${props.followingCount} `}</span>
+                            <span className={classes['profile__follow-desc']}>Following</span>
+                        </Link>
+                        <Link to='follower'>
+                            <span>{`${props.followerCount} `}</span>
+                            <span className={classes['profile__follow-desc']}>Followers</span>
+                        </Link>
+                    </section>
+                }
             </section>
-            {/* <section className={classes['profile__summary-picture']} /> */}
         </section>
     )
 }

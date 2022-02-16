@@ -1,9 +1,17 @@
 .chirp {
     display: flex;
+    flex-direction: column;
     box-sizing: border-box;
     border-bottom: 1px solid rgb(95, 108, 116);
     min-width: 35vw;
     padding: .5rem;
+}
+
+.chirp__main {
+    display: flex;
+    flex-grow: 1;
+    margin-left: 1rem;
+    overflow: hidden;
 }
 
 .chirp__icon {
@@ -11,66 +19,66 @@
     min-width: 50px;
     background-color: #bbb;
     border-radius: 50%;
+    margin-top: .25rem;
   }
 
-.chirp__main > section > span {
-    color: rgb(110, 118, 125);
-    margin-right: 2px;
-    padding: 0;
-}
-
-.chirp__main {
-    display: flex;
-    flex-direction: column;
+.chirp__body {
+    margin: .5rem 0 0 1rem;
     flex-grow: 1;
-    margin-left: 1rem;
-    overflow: hidden;
 }
 
-.chirp__main-timestamp {
+.chirp__header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.chirp__header span {
+    margin: 0 .25rem 0 .5rem;
+}
+
+.chirp__options button {
+    background-color: black;
+    color: rgb(101, 119, 134);
+    border: none;
+    padding: .5rem;
+    border-radius: 10rem;
+    font-weight: bold;
+}
+
+
+.chirp__options button:hover {
+    background-color: rgba(29,155,240,0.1);
+    color: #099bf5;
+}
+
+.chirp__timestamp {
     text-decoration: none;
     color: rgb(101, 119, 134);
 }
 
-.chirp__main-timestamp:hover {
+.chirp__timestamp:hover {
     text-decoration: underline;
 }
 
-.chirp__main-user {
+.chirp__user {
     text-decoration: none;
     color: white;
     font-weight: bold;
 }
 
-.chirp__main-user:hover {
+.chirp__user:hover {
     text-decoration: 1px underline;
 }
 
-.chirp__main-message {
+.chirp__message {
     text-decoration: none;
     color:white;
 }
 
-.chirp__main-message p {
+.chirp__message p {
     margin-bottom: .5rem;
     font-weight: normal;
     margin-left: 0;
     overflow-wrap: break-word;
 }
 
-.rechirp {
-    display: flex;
-    margin: .5rem 0 0 2.5rem;
-    align-items: center;
-}
-
-.rechirp > a {
-    text-decoration: none;
-    color: rgb(101, 119, 134);
-    font-size: 90%;
-    margin-left: 1rem;
-}
-
-.rechirp > a:hover {
-    text-decoration: underline;
-}

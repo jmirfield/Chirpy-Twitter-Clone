@@ -4,7 +4,7 @@ import { LOGO } from '../../utils/icon';
 
 const MenuItemList = (props) => {
     return (
-        <>
+        <li>
             <MenuItem 
                 key={'logo'}
                 link={'/'}
@@ -25,7 +25,7 @@ const MenuItemList = (props) => {
                     )
                 })
             }
-        </>
+        </li>
     )
 }
 

@@ -13,15 +13,15 @@ const ChirpIcons = (props) => {
         <section className={classes['chirp__actions']}>
             {Object.keys(CHIRP_ICONS).map((icon, idx) => {
                 return (
-                    <button className={classes['chirp__actions-icon']} key={idx} onClick={props.stats[idx].onClick}>
+                    <button className={classes['chirp__actions-icon']} key={idx} onClick={props.options[idx].onClick}>
                         <section className={`${classes[`chirp__actions-icon__${icon}`]} ${classes[`chirp__actions-icon__main`]}`}>
-                            {!props.stats[idx].active ?
+                            {!props.options[idx].active ?
                                 <Icon width='24px' height='24px' fill='rgb(101, 119, 134)' d={CHIRP_ICONS[icon]} /> :
                                 <Icon width='24px' height='24px' fill={`${activeColors[idx]}`} d={CHIRP_ICONS[icon]} />
                             }
                         </section>
                         <section className={classes['chirp__actions-icon__count']}>
-                            {props.stats[idx].count > 0 && <span>{props.stats[idx].count}</span>}
+                            {props.options[idx].count > 0 && <span>{props.options[idx].count}</span>}
                         </section>
                     </button>
                 )

@@ -1,6 +1,36 @@
-.button {
+.chirp__form {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.chirp__form textarea {
+    width: 100%;
+    background-color: black;
+    resize: none;
+    flex: 1;
+    padding: 1rem;
+    margin: 0;
+    color: white;
+    box-sizing: border-box;
+    outline: none;
+    border: none;
+    font-size: 20px;
+}
+
+.chirp__form-action {
+    display: flex;
+    justify-content: right;
     margin-top: 1rem;
-    float: right;
-    padding: .5rem 1rem .5rem 1rem;
+    margin-right: 1rem;
+    padding: .5rem 0 .5rem 1rem;
+    align-items: right;
+    border-top: 1px solid rgb(95, 108, 116);
+}
+
+.chirp__form-action button {
+    display: flex;
+    margin-top: .25rem;
     border-radius: 1rem;
+    padding: .5rem 1rem .5rem 1rem;
 }

@@ -4,7 +4,7 @@ import Icon from '../UI/Icon/Icon';
 
 const MenuItem = (props) => {
     return (
-        <div className={props.className}>
+        <ul className={props.className}>
             <NavLink
                 to={props.link}
                 end={true}
@@ -27,7 +27,7 @@ const MenuItem = (props) => {
                         </>
                     )
                 }} />
-        </div>
+        </ul>
     )
 }
 

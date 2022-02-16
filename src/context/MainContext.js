@@ -56,7 +56,6 @@ const reducer = (state, action) => {
 
 export const MainProvider = ({ children }) => {
     const [state, dispatch] = useReducer(reducer, initialState)
-    console.log(state)
     useEffect(() => {
         authPersistentLogin()
     }, [])

@@ -15,23 +15,4 @@
     border-radius: 50%;
 }
 
-.new-chirp__input {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-}
-
-.new-chirp__input textarea {
-    width: 100%;
-    background-color: black;
-    resize: none;
-    flex: 1;
-    padding: 1rem;
-    margin: 0;
-    color: white;
-    box-sizing: border-box;
-    outline: none;
-    border: none;
-    font-size: 20px;
-}
 

@@ -6,7 +6,7 @@ import Sidebar from '../Sidebar/Sidebar'
 import ChirpModal from './ChirpModal'
 import classes from './MainLayout.module.css'
 
-const MainLayout = (props) => {
+const MainLayout = () => {
     const [composeChirp, setComposeChirp] = useState(false)
     const { state } = useContext(MainContext)
 
