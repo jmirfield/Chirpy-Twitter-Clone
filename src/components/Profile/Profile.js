@@ -1,17 +1,17 @@
-import React, { useEffect, useContext, useReducer } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import { useParams, useNavigate, Outlet } from 'react-router-dom'
-import MainContext from '../../context/MainContext';
 import LoadingFeed from '../Loading/LoadingFeed';
-import classes from './Profile.module.css'
 import ProfileHeader from './ProfileHeader';
 import ProfileSummary from './ProfileSummary';
+import ProfileTabs from './ProfileTabs'
 
 const initialState = {
     id: '',
     isFollow: false,
     followerCount: 0,
     followingCount: 0,
-    feedCount: 0,
+    chirpCount: 0,
+    likes: [],
     isLoading: true,
     error: false
 }
@@ -25,7 +25,8 @@ const reducer = (state, action) => {
                 isFollow: action.payload.isFollow,
                 followerCount: action.payload.followerCount,
                 followingCount: action.payload.followingCount,
-                feedCount: action.payload.feedCount,
+                chirpCount: action.payload.chirpCount,
+                likes: action.payload.likes,
                 isLoading: false
             }
         case 'FOLLOW':
@@ -43,6 +44,12 @@ const reducer = (state, action) => {
         case 'CHANGE_USER':
             return {
                 ...state,
+                id: '',
+                isFollow: false,
+                followerCount: 0,
+                followingCount: 0,
+                chirpCount: 0,
+                likes: [],
                 isLoading: true,
                 error: false
             }
@@ -58,31 +65,58 @@ const reducer = (state, action) => {
 }
 
 const Profile = () => {
-    const { state } = useContext(MainContext)
     const [profile, dispatch] = useReducer(reducer, initialState)
     const params = useParams()
     const navigate = useNavigate()
-    const myProfile = params.user === state.user
-    console.log(profile)
+
     const goBackHandler = e => {
         e.preventDefault()
         navigate(-1)
     }
 
+    const getUserProfile = async () => {
+        try {
+            const response = await fetch(`http://localhost:3001/users/profile/${params.user}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.jwt}`
+                }
+            })
+            const {
+                id,
+                isFollowing,
+                followingCount,
+                followerCount,
+                chirpCount,
+                likes
+            } = await response.json()
+            dispatch({
+                type: 'PROFILE_READ',
+                payload: {
+                    id,
+                    isFollow: isFollowing,
+                    followingCount: followingCount || 0,
+                    followerCount: followerCount || 0,
+                    chirpCount: chirpCount,
+                    likes
+                }
+            })
+        } catch (e) {
+            console.log(e)
+            dispatch({ type: 'ERROR' })
+        }
+    }
+
+
     useEffect(() => {
-        dispatch({ type: 'CHANGE_USER' })
         document.title = `@${params.user} / Chirpy`
         window.scrollTo(0, 0);
+        getUserProfile()
+        return () => {
+            dispatch({ type: 'CHANGE_USER' })
+        }
     }, [params.user])
-
-    if (profile.isLoading) {
-        return (
-            <>
-                <LoadingFeed />
-                <Outlet context={{ dispatch }} />
-            </>
-        )
-    }
 
     if (profile.error) {
         return (
@@ -103,25 +137,29 @@ const Profile = () => {
         )
     }
 
+    if (profile.isLoading) {
+        return <LoadingFeed />
+    }
+
+
+
     return (
         <>
             <ProfileHeader
-                user={params.user}
-                chirpCount={profile.feedCount}
+                chirpCount={profile.chirpCount}
                 onBackButton={goBackHandler}
             />
             <ProfileSummary
-                myProfile={myProfile}
-                user={params.user}
                 id={profile.id}
                 isFollowing={profile.isFollow}
                 followerCount={profile.followerCount}
                 followingCount={profile.followingCount}
                 dispatch={dispatch}
             />
-            <Outlet context={{ dispatch }} />
+            <ProfileTabs />
+            <Outlet context={{ likes: profile.likes, dispatch }} />
         </>
     )
-};
 
+};
 export default Profile;

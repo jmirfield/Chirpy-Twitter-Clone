@@ -19,6 +19,7 @@ const Chirp = ({
     rechirp,
     dispatch
 }) => {
+
     const { state } = useContext(MainContext)
 
     const onLikeButtonHandler = async () => {

@@ -11,7 +11,7 @@ const Menubar = (props) => {
     const links = Object.keys(PATHS).map(path => {
         let link = path.toLowerCase()
         if (link === 'profile') link = `${props.username}`
-        if (link === 'lists') link = `${props.username}/lists`
+        if (link === 'lists') link = 'flow/lists'
         if (link === 'bookmarks') link = 'flow/bookmarks'
         return link
     })
@@ -19,7 +19,7 @@ const Menubar = (props) => {
     const logoutRequestHandler = async () => {
         try {
             await fetch("http://localhost:3001/users/logout", {
-                method: 'GET',
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${localStorage.jwt}`

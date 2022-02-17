@@ -1,9 +1,11 @@
 import React from 'react'
+import { useParams } from 'react-router-dom'
 import Icon from '../UI/Icon/Icon'
 import { BACK_BUTTON } from '../../utils/icon'
 import classes from './ProfileHeader.module.css'
 
 const ProfileHeader = (props) => {
+    const { user } = useParams()
     return (
         <header className={classes['profile__header']}>
             <section className={classes['profile__header-back']}>
@@ -12,7 +14,7 @@ const ProfileHeader = (props) => {
                 </a>
             </section>
             <section className={classes['profile__header-main']}>
-                <h3>{props.user}</h3>
+                <h3>{user}</h3>
                 <span>
                     {/* Will need to be fixed when feed gets pulled incrementally */}
                     {props.chirpCount !== null && `${props.chirpCount} chirps`}

@@ -1,0 +1,48 @@
+.profile-tabs {
+    display: flex;
+    justify-content: space-around;
+    border-bottom: 1px solid rgb(95, 108, 116);
+    height: 4rem;
+
+}
+
+.profile-tabs a {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    text-decoration: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-tabs a > span {
+    display: flex;
+    align-items: center;
+}
+
+.profile-tabs a:hover {
+    background-color: rgb(217,217,217, .1);
+}
+
+.tab {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+}
+
+.active {
+    color: white;
+    font-weight: bold;
+}
+
+.inactive {
+    color: rgb(110, 118, 125);
+}
+
+.active-tab {
+    height: 5px;
+    width: 30%;
+    background-color: rgb(29, 155, 240);
+    border-radius: 1rem;
+}

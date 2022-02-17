@@ -1,27 +1,27 @@
-import React, { useContext, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
-import MainContext from '../../context/MainContext'
+import React, { useEffect } from 'react'
+import { useParams, useOutletContext } from 'react-router-dom'
 import useFeed from '../../hooks/useFeed'
 import ChirpList from '../Chirps/ChirpList'
 
-const ProfileFeed = () => {
-    const { state } = useContext(MainContext)
+const ProfileLikes = () => {
     const [{ feed, isLoading, error }, feedDispatch] = useFeed()
     const params = useParams()
-    const myProfile = params.user === state.user
-    const getUserProfileFeed = async () => {
+    const { likes, dispatch } = useOutletContext()
+    const getUserLikes = async () => {
         try {
-            const response = await fetch(`http://localhost:3001/chirps/auth/${params.user}`, {
-                method: 'GET',
+            const response = await fetch(`http://localhost:3001/chirps/liked`, {
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${localStorage.jwt}`
-                }
+                },
+                body: JSON.stringify(likes)
             })
             const {
                 feed,
                 likedChirps,
                 retweetedChirps
+
             } = await response.json()
             feedDispatch({
                 type: 'INIT_SYNC',
@@ -29,7 +29,7 @@ const ProfileFeed = () => {
                     feed,
                     liked: likedChirps,
                     rechirped: retweetedChirps,
-                    myProfile
+                    isLikePage: true
                 }
             })
         } catch (e) {
@@ -39,7 +39,7 @@ const ProfileFeed = () => {
     }
 
     useEffect(() => {
-        getUserProfileFeed()
+        getUserLikes()
         return () => {
             feedDispatch({ type: 'RESET' })
         }
@@ -55,4 +55,4 @@ const ProfileFeed = () => {
     )
 }
 
-export default ProfileFeed
+export default ProfileLikes

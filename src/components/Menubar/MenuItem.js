@@ -7,7 +7,6 @@ const MenuItem = (props) => {
         <ul className={props.className}>
             <NavLink
                 to={props.link}
-                end={true}
                 children={({ isActive }) => {
                     return (
                         <>

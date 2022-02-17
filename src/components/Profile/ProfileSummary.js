@@ -1,10 +1,15 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useContext } from 'react'
+import { Link, useParams } from 'react-router-dom'
+import MainContext from '../../context/MainContext'
 import ProfileButton from '../UI/ProfileButton/ProfileButton'
 import ProfileImage from '../UI/ProfileImage/ProfileImage'
 import classes from './ProfileSummary.module.css'
 
 const ProfileSummary = (props) => {
+    const { state } = useContext(MainContext)
+    const { user } = useParams()
+    const myProfile = user === state.user
+
     const unfollowRequest = async () => {
         try {
             await fetch(`http://localhost:3001/relationships/delete`, {
@@ -57,10 +62,10 @@ const ProfileSummary = (props) => {
                     onFollow={followHandler}
                     onUnfollow={unfollowHandler}
                     isFollowing={props.isFollowing}
-                    myProfile={props.myProfile}
+                    myProfile={myProfile}
                     error={props.error}
                 />}
-                <span id={classes.user}>{props.user}</span>
+                <span id={classes.user}>{user}</span>
                 {!props.error &&
                     <section className={classes['profile__follow']}>
                         <Link to='following'>

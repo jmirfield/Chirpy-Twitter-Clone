@@ -29,9 +29,7 @@ const MainLayout = () => {
             <aside className={classes['layout__sidebar']}>
                 <Sidebar />
             </aside>
-            <aside className={classes['layout__new-chirp-modal']}>
-                {composeChirp && <ChirpModal onClose={onCloseNewChirpHandler} />}
-            </aside>
+            {composeChirp && <ChirpModal onClose={onCloseNewChirpHandler} />}
         </div>
     )
 }

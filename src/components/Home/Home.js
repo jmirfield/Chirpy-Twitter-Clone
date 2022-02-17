@@ -6,7 +6,8 @@ import LoadingFeed from '../Loading/LoadingFeed'
 import classes from './Home.module.css'
 
 const Home = () => {
-    const [{ feed, isLoading }, feedDispatch] = useFeed()
+    const [{ feed, isLoading, error }, feedDispatch] = useFeed()
+
     const getMainChirpFeed = async () => {
         try {
             const response = await fetch("http://localhost:3001/chirps/feed", {
@@ -47,12 +48,6 @@ const Home = () => {
         getMainChirpFeed()
     }, [])
 
-    if (isLoading) {
-        return (
-            <LoadingFeed />
-        )
-    }
-
     return (
         <>
             <header className={classes['home__header']}>
@@ -66,6 +61,8 @@ const Home = () => {
             <ChirpList
                 chirps={feed}
                 dispatch={feedDispatch}
+                error={error}
+                isLoading={isLoading}
             />
         </>
     )
