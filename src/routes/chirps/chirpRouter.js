@@ -8,5 +8,6 @@ router.post('/chirps/rechirp', auth, controller.addRechirp)
 router.delete('/chirps/rechirp/delete', auth, controller.deleteRechirp)
 router.get('/chirps/feed', auth, controller.getCurrentUserChirpFeed)
 router.get('/chirps/auth/:username', auth, controller.getUserChirps)
+router.post('/chirps/liked', auth, controller.getUserLikedChirps)
 
 module.exports = router

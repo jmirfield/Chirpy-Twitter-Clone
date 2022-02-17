@@ -12,6 +12,8 @@ class ChirpController {
                 likesCount: 0,
             })
             await chirp.save()
+            req.user.chirpCount++
+            await req.user.save()
             res.send(chirp)
         } catch (e) {
             console.log(e)
@@ -82,12 +84,13 @@ class ChirpController {
             req.user.retweetedChirps.pull({ _id: req.body._id })
             if (startingLength !== req.user.retweetedChirps.length) {
                 await req.user.save()
-                await Chirp.findOneAndDelete({
+                const chirp = await Chirp.findOneAndDelete({
                     $and: [
                         { owner_username: req.user.username },
                         { 'rechirp.original_id': req.body._id }
                     ]
                 })
+                if (!chirp) throw new Error('Could not find chirp')
                 await Chirp.findOneAndUpdate(
                     { _id: req.body._id },
                     { $inc: { rechirpsCount: -1 } }
@@ -113,24 +116,35 @@ class ChirpController {
                 sort: { createdAt: -1 },
                 lean: true
             })
-            const user = (req.user.username !== req.params.username)
-                ? await User.findOne({ username: req.params.username }).populate({ path: 'following' })
-                : req.user
-            if (user === null) throw new Error('User not found')
-            await req.user.populate({ path: 'following' })
-            const isFollowing = req.user.following.some(u => u.following_id.equals(user._id))
+
             res.send({
                 feed: chirps,
                 likedChirps: req.user.likedChirps,
-                retweetedChirps: req.user.retweetedChirps,
-                id: user._id,
-                isFollowing,
-                followingCount: user.followingCount,
-                followerCount: user.followerCount,
+                retweetedChirps: req.user.retweetedChirps
             })
         } catch (e) {
             console.log(e)
             res.status(404).send()
+        }
+    }
+
+    getUserLikedChirps = async (req, res) => {
+        try {
+            const chirps = await Chirp.find({
+                _id: {
+                    $in: req.body
+                }
+            }, null, {
+                sort: { createdAt: -1 },
+                lean: true
+            })
+            res.send({
+                feed: chirps,
+                likedChirps: req.user.likedChirps,
+                retweetedChirps: req.user.retweetedChirps
+            })
+        } catch (e) {
+
         }
     }
 

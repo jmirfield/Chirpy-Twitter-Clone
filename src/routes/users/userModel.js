@@ -47,7 +47,11 @@ const UserSchema = new Schema({
     followingCount: {
         type: Number,
         required: true
-    }
+    },
+    chirpCount: [{
+        type: Number,
+        required: true
+    }]
 }, {
     timestamps: true
 })
@@ -60,7 +64,7 @@ UserSchema.virtual('following', {
 
 //Checks for login using email and password
 UserSchema.statics.findByCredentials = async (username, password) => {
-    const user = await User.findOne({ "username": { $regex : new RegExp(username, "i") } })
+    const user = await User.findOne({ "username": { $regex: new RegExp(username, "i") } })
     if (!user) throw new Error('Unable to login')
     const isMatch = await bcrypt.compare(password, user.password)
     if (!isMatch) throw new Error('Unable to login')
@@ -96,10 +100,10 @@ UserSchema.pre('save', async function (next) {
 })
 
 //Deletes all Relationships and Chirps if User is removed
-UserSchema.pre('deleteOne', { document: true } , async function (next) {
+UserSchema.pre('deleteOne', { document: true }, async function (next) {
     await Relationship.deleteMany({ user_id: this._id })
     await Relationship.deleteMany({ following_id: this._id })
-    await Chirp.deleteMany({owner_id: this._id})
+    await Chirp.deleteMany({ owner_id: this._id })
     next()
 })
 

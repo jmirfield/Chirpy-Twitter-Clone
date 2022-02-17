@@ -58,6 +58,28 @@ class UserController {
             res.status(500).send()
         }
     }
+    getUser = async (req, res) => {
+        try {
+            
+            const user = (req.user.username !== req.params.username)
+                ? await User.findOne({ username: req.params.username }).populate({ path: 'following' })
+                : req.user
+            if (user === null) throw new Error('User not found')
+            await req.user.populate({ path: 'following' })
+            const isFollowing = req.user.following.some(u => u.following_id.equals(user._id))
+            res.send({
+                id: user._id,
+                isFollowing,
+                followingCount: user.followingCount,
+                followerCount: user.followerCount,
+                chirpCount: user.chirpCount,
+                likes: user.likedChirps
+            })
+        } catch (e) {
+            console.log(e)
+            res.status(404).send()
+        }
+    }
     likeChirp = async (req, res) => {
         try {
             if (!req.body._id) throw new Error('Cannot provide null value')

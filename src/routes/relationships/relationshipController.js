@@ -41,7 +41,7 @@ class RelationshipController {
                     { user_id: req.user._id }
                 ]
             })
-            if(relationship === null)throw new Error('Could not find that user')
+            if(!relationship)throw new Error('Could not find that user')
             await User.findOneAndUpdate(
                 { _id: req.body.id },
                 { $inc: { followerCount: -1 } }
