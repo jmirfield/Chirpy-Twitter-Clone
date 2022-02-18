@@ -1,7 +1,7 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
 import Icon from '../UI/Icon/Icon'
-import { BACK_BUTTON } from '../../utils/icon'
+import { BACK_BUTTON } from '../../constants/icon'
 import classes from './ProfileHeader.module.css'
 
 const ProfileHeader = (props) => {

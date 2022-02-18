@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import { SEARCH } from '../../../utils/icon'
+import { SEARCH } from '../../../constants/icon'
 import Icon from '../Icon/Icon'
 import classes from './SearchInput.module.css'
 
-const SearchInput = () => {
+const SearchInput = (props) => {
     const [isActive, setIsActive] = useState(false)
 
     const focusHandler = () => {
@@ -21,6 +21,8 @@ const SearchInput = () => {
                 placeholder='Search Chirpy'
                 onFocus={focusHandler}
                 onBlur={blurHandler}
+                onChange={props.onChange}
+                value={props.text}
             />
         </div>
     )

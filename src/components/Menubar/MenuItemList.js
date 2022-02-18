@@ -1,6 +1,6 @@
 import React from 'react'
 import MenuItem from './MenuItem'
-import { LOGO } from '../../utils/icon';
+import { LOGO } from '../../constants/icon';
 
 const MenuItemList = (props) => {
     return (

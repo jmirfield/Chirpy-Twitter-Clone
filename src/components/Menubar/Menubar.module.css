@@ -60,3 +60,7 @@
     width: 75%;
 }
 
+.menu__item-icon {
+    border-radius: 10rem;
+    height: 3rem;
+}

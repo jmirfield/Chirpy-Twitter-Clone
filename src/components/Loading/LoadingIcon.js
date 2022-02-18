@@ -1,6 +1,6 @@
 import React from 'react';
 import Icon from '../UI/Icon/Icon';
-import { LOGO } from '../../utils/icon';
+import { LOGO } from '../../constants/icon';
 import classes from './LoadingIcon.module.css'
 
 const LoadingIcon = () => {

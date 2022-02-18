@@ -1,6 +1,6 @@
 import React from 'react'
 import Icon from '../UI/Icon/Icon'
-import { CHIRP_ICONS } from '../../utils/icon'
+import { CHIRP_ICONS } from '../../constants/icon'
 import classes from './ChirpIcons.module.css'
 
 const ChirpIcons = (props) => {

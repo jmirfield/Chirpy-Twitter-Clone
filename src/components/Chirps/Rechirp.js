@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import MainContext from '../../context/MainContext'
 import Icon from '../UI/Icon/Icon'
-import { RECHIRP } from '../../utils/icon'
+import { RECHIRP } from '../../constants/icon'
 import classes from './Rechirp.module.css'
 
 const Rechirp = (props) => {

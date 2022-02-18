@@ -1,0 +1,28 @@
+.logout {
+    display: flex;
+    width: 75%;
+    border-radius: 10rem;
+    text-decoration: none;
+    border: none;
+    background-color: transparent;
+    margin: 0 0 2rem 0 !important;
+    padding: .5rem 0 .5rem 0 !important;
+}
+
+.logout__icon {
+    max-height: 3rem;
+    border-radius: 10rem;
+    margin-left: 1rem;
+}
+
+.logout > span {
+    display: flex;
+    font-size: 1rem;
+    font-weight: bold;
+    align-self: center;
+    padding: 0;
+}
+
+.logout:hover {
+    background-color: #272a2e;
+}
