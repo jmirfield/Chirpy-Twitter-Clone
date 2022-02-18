@@ -42,7 +42,7 @@ const Menubar = (props) => {
             />
             <section className={classes['menu__item-actions']}>
                 <Button onClick={props.onOpenModal}>Chirp</Button>
-                <MenubarLogout />
+                <MenubarLogout onClick={logoutRequestHandler}/>
             </section>
         </nav>
     )

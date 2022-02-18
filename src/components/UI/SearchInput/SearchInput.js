@@ -8,6 +8,7 @@ const SearchInput = (props) => {
 
     const focusHandler = () => {
         setIsActive(true)
+        props.onFocus()
     }
 
     const blurHandler = () => {

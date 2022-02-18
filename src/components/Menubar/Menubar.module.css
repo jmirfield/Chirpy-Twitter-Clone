@@ -38,13 +38,6 @@
     text-decoration: none;
   }
 
-.menu span {
-    font-size: 24px;
-    margin-left: 1rem;
-    color: white;
-    align-self: flex-end;
-}
-
 .menu__item-actions {
     display: flex;
     flex-direction: column;

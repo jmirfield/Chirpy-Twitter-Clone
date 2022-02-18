@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import MainContext from '../../context/MainContext'
 import Modal from '../UI/Modal/Modal'
@@ -34,7 +34,7 @@ const SignIn = () => {
                 type: 'ERROR',
                 payload: true
             })
-            console.log(e)
+            console.log('Error with logging in')
         }
     }
 

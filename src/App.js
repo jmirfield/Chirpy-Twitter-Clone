@@ -65,6 +65,7 @@ const App = () => {
           <Route path=':user/status/:chirpId' element={<p>CHIRP PLACEHOLDER</p>} />
           <Route path='*' element={<Navigate replace to='/home' />} />
           <Route path='/' element={<Navigate replace to='/home' />} />
+          <Route path='flow' element={<Navigate replace to='/home' />} />
         </Route >
       </Routes>
     </BrowserRouter>

@@ -38,8 +38,12 @@ const NewChirp = (props) => {
         resetTextHandler()
     }
 
+    const newChirpClass = props.className
+        ? `${props.className} ${classes['new-chirp']}`
+        : classes['new-chirp']
+
     return (
-        <section className={`${props.className} ${classes['new-chirp']}`}>
+        <section className={newChirpClass}>
             <ProfileImage
                 className={classes['new-chirp__icon']}
                 default={true}

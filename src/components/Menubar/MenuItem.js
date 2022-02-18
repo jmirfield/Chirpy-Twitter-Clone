@@ -1,6 +1,7 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import Icon from '../UI/Icon/Icon';
+import classes from './MenuItem.module.css'
 
 const MenuItem = (props) => {
     return (
@@ -20,6 +21,7 @@ const MenuItem = (props) => {
                                     style={isActive
                                         ? { fontWeight: 'bold' }
                                         : { fontWeight: 'normal' }}
+                                    className={classes['menu-item']}
                                 >
                                     {`${props.label}`}
                                 </span>}

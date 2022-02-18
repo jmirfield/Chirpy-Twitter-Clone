@@ -1,5 +1,6 @@
 .logout {
     display: flex;
+    height: 4rem;
     width: 75%;
     border-radius: 10rem;
     text-decoration: none;
@@ -9,8 +10,15 @@
     padding: .5rem 0 .5rem 0 !important;
 }
 
+.active {
+    justify-content: center;
+}
+
+.active > span {
+    margin: 0 !important;
+}
+
 .logout__icon {
-    max-height: 3rem;
     border-radius: 10rem;
     margin-left: 1rem;
 }
@@ -21,6 +29,8 @@
     font-weight: bold;
     align-self: center;
     padding: 0;
+    color: white;
+    margin-left: 1rem;
 }
 
 .logout:hover {

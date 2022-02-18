@@ -3,18 +3,26 @@ import SearchInput from '../UI/SearchInput/SearchInput'
 
 const Sidebar = () => {
   const [text, setText] = useState('')
+  const [openModal, setOpenModal] = useState(false)
+
   const searchChangeHandler = (e) => setText(e.target.value)
+  const openModalHandler = () => setOpenModal(true)
+
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      console.log(text)
     }, 500)
     return () => clearTimeout(timer)
   }, [text])
 
   return (
     <>
-      <SearchInput text={text} onChange={searchChangeHandler} />
+      <SearchInput
+        text={text}
+        onChange={searchChangeHandler}
+        onFocus={openModalHandler}
+      />
+      {openModal && <h1 />}
     </>
   )
 }
