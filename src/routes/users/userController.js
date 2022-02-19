@@ -58,7 +58,7 @@ class UserController {
             res.status(500).send()
         }
     }
-    getUser = async (req, res) => {
+    getUserProfile = async (req, res) => {
         try {
             
             const user = (req.user.username !== req.params.username)

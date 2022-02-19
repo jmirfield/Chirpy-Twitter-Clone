@@ -57,6 +57,7 @@ class ChirpController {
             const startingLength = req.user.retweetedChirps.length
             req.user.retweetedChirps.addToSet(chirp.rechirp.original_id)
             if (startingLength !== req.user.retweetedChirps.length) {
+                req.user.chirpCount++
                 await req.user.save()
                 const original = await Chirp.findOneAndUpdate(
                     { _id: chirp.rechirp.original_id },
@@ -83,6 +84,7 @@ class ChirpController {
             const startingLength = req.user.retweetedChirps.length
             req.user.retweetedChirps.pull({ _id: req.body._id })
             if (startingLength !== req.user.retweetedChirps.length) {
+                req.user.chirpCount--
                 await req.user.save()
                 const chirp = await Chirp.findOneAndDelete({
                     $and: [
