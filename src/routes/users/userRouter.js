@@ -9,8 +9,8 @@ router.get('/users/auth', auth, userController.authenticatePersistentLogin)
 router.get('/users/profile/:username', auth, userController.getUser)
 router.post('/users/logout', auth, userController.logout)
 router.post('/users/logoutAll', auth, userController.logoutAll)
-router.post('/users/like', auth, userController.likeChirp)
-router.delete('/users/unlike', auth, userController.unlikeChirp)
+router.patch('/users/like', auth, userController.likeChirp)
+router.patch('/users/unlike', auth, userController.unlikeChirp)
 router.delete('/users/delete', auth, userController.deleteUser)
 
 
