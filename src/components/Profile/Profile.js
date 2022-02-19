@@ -1,5 +1,6 @@
 import React, { useEffect, useReducer } from 'react';
 import { useParams, useNavigate, Outlet } from 'react-router-dom'
+import { request } from '../../api/request';
 import LoadingFeed from '../Loading/LoadingFeed';
 import ProfileHeader from './ProfileHeader';
 import ProfileSummary from './ProfileSummary';
@@ -76,13 +77,6 @@ const Profile = () => {
 
     const getUserProfile = async () => {
         try {
-            const response = await fetch(`http://localhost:3001/users/profile/${params.user}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.jwt}`
-                }
-            })
             const {
                 id,
                 isFollowing,
@@ -90,7 +84,7 @@ const Profile = () => {
                 followerCount,
                 chirpCount,
                 likes
-            } = await response.json()
+            } = await request.getUserProfile(params.user)
             dispatch({
                 type: 'PROFILE_READ',
                 payload: {
@@ -103,7 +97,6 @@ const Profile = () => {
                 }
             })
         } catch (e) {
-            console.log(e)
             dispatch({ type: 'ERROR' })
         }
     }

@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import MainContext from '../../context/MainContext'
+import { request } from '../../api/request.js'
 import ProfileButton from '../UI/ProfileButton/ProfileButton'
 import ProfileImage from '../UI/ProfileImage/ProfileImage'
 import classes from './ProfileSummary.module.css'
@@ -10,45 +11,24 @@ const ProfileSummary = (props) => {
     const { user } = useParams()
     const myProfile = user === state.user
 
-    const unfollowRequest = async () => {
+    const unfollowRequestHandler = async () => {
         try {
-            await fetch(`http://localhost:3001/relationships/delete`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.jwt}`
-                },
-                body: JSON.stringify({ id: props.id })
-            })
+            await request.unfollowUser(props.id)
             props.dispatch({ type: 'UNFOLLOW' })
         } catch (e) {
             console.log(e)
         }
     }
 
-    const followRequest = async () => {
+    const followRequestHandler = async () => {
         try {
-            await fetch(`http://localhost:3001/relationships/new`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.jwt}`
-                },
-                body: JSON.stringify({ id: props.id })
-            })
+            await request.followUser(props.id)
             props.dispatch({ type: 'FOLLOW' })
         } catch (e) {
             console.log(e)
         }
     }
 
-    const followHandler = () => {
-        followRequest()
-    }
-
-    const unfollowHandler = async () => {
-        unfollowRequest()
-    }
 
     return (
         <section className={classes['profile__summary']}>
@@ -59,8 +39,8 @@ const ProfileSummary = (props) => {
             />
             <section className={classes['profile__user']}>
                 {<ProfileButton
-                    onFollow={followHandler}
-                    onUnfollow={unfollowHandler}
+                    onFollow={followRequestHandler}
+                    onUnfollow={unfollowRequestHandler}
                     isFollowing={props.isFollowing}
                     myProfile={myProfile}
                     error={props.error}

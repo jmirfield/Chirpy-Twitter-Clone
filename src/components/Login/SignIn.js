@@ -1,6 +1,7 @@
-import React, { useState, useContext } from 'react'
+import React, { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import MainContext from '../../context/MainContext'
+import { request } from '../../api/request'
 import Modal from '../UI/Modal/Modal'
 import Button from '../UI/Button/Button'
 import classes from './Signin.module.css'
@@ -16,14 +17,7 @@ const SignIn = () => {
 
     const loginRequest = async (username, password) => {
         try {
-            const response = await fetch("http://localhost:3001/users/login", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ username, password })
-            })
-            const data = await response.json()
+            const data = await request.login({username, password})
             localStorage.setItem('jwt', data.token)
             dispatch({
                 type: 'LOGIN',

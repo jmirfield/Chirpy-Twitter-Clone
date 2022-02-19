@@ -10,7 +10,7 @@
 @supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
     .home__header {
         background: transparent;
-        backdrop-filter: blur(2px);
+        backdrop-filter: blur(15px);
     }
 }
 

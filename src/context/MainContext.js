@@ -1,4 +1,5 @@
 import React, { useEffect, useReducer } from 'react';
+import { request } from '../api/request';
 
 const MainContext = React.createContext({
     state: {},
@@ -63,44 +64,37 @@ export const MainProvider = ({ children }) => {
     const authPersistentLogin = async () => {
         if (localStorage.getItem('jwt') && !state.isLogged) {
             try {
-                const response = await fetch("http://localhost:3001/users/auth", {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${localStorage.jwt}`
-                    }
-                })
-                const data = await response.json()
-                if (data.error) {
-                    localStorage.removeItem('jwt')
-                    dispatch({ type: 'RESET' })
-                    return
-                }
-                dispatch({
-                    type: 'LOGIN',
-                    payload: data.username
-                })
-            } catch (e) {
-                dispatch({
-                    type: 'ERROR',
-                    payload: true
-                })
+                const data = await request.persistentLogin()
+            if (data.error) {
+                localStorage.removeItem('jwt')
+                dispatch({ type: 'RESET' })
+                return
             }
-        } else {
-            dispatch({ type: 'DONE_LOADING' })
+            dispatch({
+                type: 'LOGIN',
+                payload: data.username
+            })
+        } catch (e) {
+            dispatch({
+                type: 'ERROR',
+                payload: true
+            })
         }
+    } else {
+        dispatch({ type: 'DONE_LOADING' })
+}
     }
 
 
 
-    return (
-        <MainContext.Provider value={{
-            state,
-            dispatch
-        }}>
-            {children}
-        </MainContext.Provider>
-    )
+return (
+    <MainContext.Provider value={{
+        state,
+        dispatch
+    }}>
+        {children}
+    </MainContext.Provider>
+)
 }
 
 export default MainContext;

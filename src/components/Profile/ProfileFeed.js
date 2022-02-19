@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
+import { request } from '../../api/request'
 import MainContext from '../../context/MainContext'
 import useFeed from '../../hooks/useFeed'
 import ChirpList from '../Chirps/ChirpList'
@@ -11,18 +12,11 @@ const ProfileFeed = () => {
     const myProfile = params.user === state.user
     const getUserProfileFeed = async () => {
         try {
-            const response = await fetch(`http://localhost:3001/chirps/auth/${params.user}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.jwt}`
-                }
-            })
             const {
                 feed,
                 likedChirps,
                 retweetedChirps
-            } = await response.json()
+            } = await request.getUserProfileFeed(params.user)
             feedDispatch({
                 type: 'INIT_SYNC',
                 payload: {

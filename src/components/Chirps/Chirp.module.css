@@ -40,7 +40,7 @@
     background-color: black;
     color: rgb(101, 119, 134);
     border: none;
-    padding: .5rem;
+    padding: .3rem .4rem .3rem .4rem;
     border-radius: 10rem;
     font-weight: bold;
 }

@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
+import { request } from '../../api/request'
 import useFeed from '../../hooks/useFeed'
 import NewChirp from '../Chirps/NewChirp'
 import ChirpList from '../Chirps/ChirpList'
-import LoadingFeed from '../Loading/LoadingFeed'
 import classes from './Home.module.css'
 
 const Home = () => {
@@ -10,18 +10,11 @@ const Home = () => {
 
     const getMainChirpFeed = async () => {
         try {
-            const response = await fetch("http://localhost:3001/chirps/feed", {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.jwt}`
-                }
-            })
             const {
                 feed,
                 likedChirps,
                 retweetedChirps
-            } = await response.json()
+            } = await request.getMainFeed()
             feedDispatch({
                 type: 'INIT_SYNC',
                 payload: {

@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import MainContext from '../../context/MainContext'
+import { request } from '../../api/request'
 import Rechirp from './Rechirp'
 import ProfileImage from '../UI/ProfileImage/ProfileImage'
 import ChirpIcons from './ChirpIcons'
@@ -26,14 +27,7 @@ const Chirp = ({
         const req = !rechirp ? id : rechirp.original_id
         if (!isChirpLiked) {
             try {
-                await fetch("http://localhost:3001/users/like", {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${localStorage.jwt}`
-                    },
-                    body: JSON.stringify({ _id: req })
-                })
+                await request.likeChirp(req)
                 dispatch({
                     type: 'LIKE',
                     payload: {
@@ -46,14 +40,7 @@ const Chirp = ({
             }
         } else {
             try {
-                await fetch("http://localhost:3001/users/unlike", {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${localStorage.jwt}`
-                    },
-                    body: JSON.stringify({ _id: req })
-                })
+                await request.unLikeChirp(req)
                 dispatch({
                     type: 'UNLIKE',
                     payload: {
@@ -85,15 +72,7 @@ const Chirp = ({
                         original_time: rechirp.original_time
                     }
                 }
-                const response = await fetch("http://localhost:3001/chirps/rechirp", {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${localStorage.jwt}`
-                    },
-                    body: JSON.stringify(req)
-                })
-                const { chirp } = await response.json()
+                const { chirp } = await request.rechirp(req)
                 dispatch({
                     type: 'ADD_RECHIRP',
                     payload: {
@@ -112,14 +91,7 @@ const Chirp = ({
         } else {
             try {
                 const req = !rechirp ? id : rechirp.original_id
-                await fetch("http://localhost:3001/chirps/rechirp/delete", {
-                    method: 'DELETE', // *GET, POST, PUT, DELETE, etc.
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${localStorage.jwt}`
-                    },
-                    body: JSON.stringify({ _id: req })
-                })
+                await request.deleteRechirp(req)
                 dispatch({
                     type: 'REMOVE_RECHIRP',
                     payload: {
