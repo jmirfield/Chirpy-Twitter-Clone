@@ -19,6 +19,7 @@
 }
 
 .logout__icon {
+    height: 100%;
     border-radius: 10rem;
     margin-left: 1rem;
 }
