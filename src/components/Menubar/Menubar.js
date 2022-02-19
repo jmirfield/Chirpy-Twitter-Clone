@@ -1,13 +1,14 @@
 import React, { useContext } from 'react'
 import MainContext from '../../context/MainContext';
 import MenuItemList from './MenuItemList';
+import MenubarLogout from './MenubarLogout';
 import Button from '../UI/Button/Button';
-import { PATHS } from '../../utils/menu';
+import { PATHS } from '../../constants/menu';
 import classes from './Menubar.module.css'
 
 const Menubar = (props) => {
     const { dispatch } = useContext(MainContext)
-    
+
     const links = Object.keys(PATHS).map(path => {
         let link = path.toLowerCase()
         if (link === 'profile') link = `${props.username}`
@@ -41,7 +42,7 @@ const Menubar = (props) => {
             />
             <section className={classes['menu__item-actions']}>
                 <Button onClick={props.onOpenModal}>Chirp</Button>
-                <Button onClick={logoutRequestHandler}>Logout</Button>
+                <MenubarLogout onClick={logoutRequestHandler}/>
             </section>
         </nav>
     )

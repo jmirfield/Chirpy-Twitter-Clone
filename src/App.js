@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Login from './components/Login/Login';
 import SignIn from './components/Login/SignIn';
@@ -9,9 +9,10 @@ import GuestLayout from './components/GuestLayout/GuestLayout';
 import MainContext from './context/MainContext';
 import LoadingIcon from './components/Loading/LoadingIcon';
 import Profile from './components/Profile/Profile';
-import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import ProfileFeed from './components/Profile/ProfileFeed';
 import ProfileLikes from './components/Profile/ProfileLikes';
+import ProfileRelationships from './components/Profile/ProfileRelationships';
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 const App = () => {
   const { state } = useContext(MainContext)
@@ -55,12 +56,16 @@ const App = () => {
             <Route path='media' element={<h1>Media coming</h1>} />
             <Route path='likes' element={<ProfileLikes />} />
           </Route>
+          <Route path=':user/*' element={<ProfileRelationships />}>
+            <Route path='following' element={<h1>Following</h1>} />
+            <Route path='follower' element={<h1>Follower</h1>} />
+            <Route path='*' element={<Navigate replace to='' />} />
+          </Route>
           <Route path='flow/lists' element={<p>LISTS PLACEHOLDER</p>} />
           <Route path=':user/status/:chirpId' element={<p>CHIRP PLACEHOLDER</p>} />
-          <Route path=':user/following' element={<Profile />} />
-          <Route path=':user/follower' element={<Profile />} />
           <Route path='*' element={<Navigate replace to='/home' />} />
           <Route path='/' element={<Navigate replace to='/home' />} />
+          <Route path='flow' element={<Navigate replace to='/home' />} />
         </Route >
       </Routes>
     </BrowserRouter>

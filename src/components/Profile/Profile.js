@@ -1,6 +1,7 @@
 import React, { useEffect, useReducer } from 'react';
 import { useParams, useNavigate, Outlet } from 'react-router-dom'
 import { request } from '../../api/request';
+import { MAIN_TABS } from '../../constants/tab';
 import LoadingFeed from '../Loading/LoadingFeed';
 import ProfileHeader from './ProfileHeader';
 import ProfileSummary from './ProfileSummary';
@@ -134,8 +135,6 @@ const Profile = () => {
         return <LoadingFeed />
     }
 
-
-
     return (
         <>
             <ProfileHeader
@@ -149,7 +148,7 @@ const Profile = () => {
                 followingCount={profile.followingCount}
                 dispatch={dispatch}
             />
-            <ProfileTabs />
+            <ProfileTabs tabs={MAIN_TABS} />
             <Outlet context={{ likes: profile.likes, dispatch }} />
         </>
     )

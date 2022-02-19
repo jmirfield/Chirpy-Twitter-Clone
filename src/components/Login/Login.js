@@ -2,7 +2,7 @@ import React from 'react'
 import { Outlet } from 'react-router-dom'
 import LoginOptions from './LoginOptions'
 import Icon from '../UI/Icon/Icon'
-import { LOGO } from '../../utils/icon'
+import { LOGO } from '../../constants/icon'
 import classes from './Login.module.css'
 
 const Login = () => {

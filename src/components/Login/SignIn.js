@@ -28,7 +28,7 @@ const SignIn = () => {
                 type: 'ERROR',
                 payload: true
             })
-            console.log(e)
+            console.log('Error with logging in')
         }
     }
 
