@@ -8,7 +8,7 @@ import ChirpIcons from './ChirpIcons'
 import { date } from '../../utils/date'
 import classes from './Chirp.module.css'
 
-function Chirp({
+const Chirp = ({
     id,
     user,
     message,
@@ -19,7 +19,7 @@ function Chirp({
     timestamp,
     rechirp,
     dispatch
-}) {
+}) => {
 
     const { state } = useContext(AuthContext)
 

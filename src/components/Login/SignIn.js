@@ -2,7 +2,6 @@ import React, { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import AuthContext from '../../context/AuthContext'
 import { loginRequest } from '../../actions/auth'
-import { login } from '../../api/request'
 import Modal from '../UI/Modal/Modal'
 import Button from '../UI/Button/Button'
 import classes from './Signin.module.css'
@@ -15,23 +14,6 @@ const SignIn = () => {
         dispatch({ type: 'REMOVE_ERROR' })
         navigate('/')
     }
-
-    // const loginRequest = async (username, password) => {
-    //     try {
-    //         const data = await login({ username, password })
-    //         localStorage.setItem('jwt', data.token)
-    //         dispatch({
-    //             type: 'LOGIN',
-    //             payload: data.user.username
-    //         })
-    //     } catch (e) {
-    //         dispatch({
-    //             type: 'ERROR',
-    //             payload: true
-    //         })
-    //         console.log('Error with logging in')
-    //     }
-    // }
 
     const loginHandler = (e) => {
         e.preventDefault()

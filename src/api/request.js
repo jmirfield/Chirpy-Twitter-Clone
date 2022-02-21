@@ -3,6 +3,9 @@ import { API_URL } from "./constants"
 
 const API = axios.create({ baseURL: API_URL })
 API.defaults.headers.post['Content-Type'] = 'application/json'
+API.defaults.headers.delete['Content-Type'] = 'application/json'
+API.defaults.headers.patch['Content-Type'] = 'application/json'
+
 API.interceptors.request.use((req) => {
     if (localStorage.getItem('jwt')) {
         req.headers.common['Authorization'] = `Bearer ${localStorage.jwt}`
