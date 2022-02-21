@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import AuthContext from '../../context/AuthContext'
+import { loginRequest } from '../../actions/auth'
 import { login } from '../../api/request'
 import Modal from '../UI/Modal/Modal'
 import Button from '../UI/Button/Button'
@@ -15,27 +16,27 @@ const SignIn = () => {
         navigate('/')
     }
 
-    const loginRequest = async (username, password) => {
-        try {
-            const data = await login({username, password})
-            localStorage.setItem('jwt', data.token)
-            dispatch({
-                type: 'LOGIN',
-                payload: data.user.username
-            })
-        } catch (e) {
-            dispatch({
-                type: 'ERROR',
-                payload: true
-            })
-            console.log('Error with logging in')
-        }
-    }
+    // const loginRequest = async (username, password) => {
+    //     try {
+    //         const data = await login({ username, password })
+    //         localStorage.setItem('jwt', data.token)
+    //         dispatch({
+    //             type: 'LOGIN',
+    //             payload: data.user.username
+    //         })
+    //     } catch (e) {
+    //         dispatch({
+    //             type: 'ERROR',
+    //             payload: true
+    //         })
+    //         console.log('Error with logging in')
+    //     }
+    // }
 
     const loginHandler = (e) => {
         e.preventDefault()
         dispatch({ type: 'START_LOADING' })
-        loginRequest(e.target[0].value, e.target[1].value)
+        loginRequest(e.target[0].value, e.target[1].value, dispatch)
     }
 
     return (

@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import AuthContext from '../../context/AuthContext';
+import { logoutRequest } from '../../actions/auth';
 import MenuItemList from './MenuItemList';
 import MenubarLogout from './MenubarLogout';
 import Button from '../UI/Button/Button';
@@ -17,22 +18,6 @@ const Menubar = (props) => {
         return link
     })
 
-    const logoutRequestHandler = async () => {
-        try {
-            await fetch("http://localhost:3001/users/logout", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.jwt}`
-                }
-            })
-            localStorage.removeItem('jwt')
-            dispatch({ type: 'RESET' })
-        } catch (e) {
-            console.log('Error with logging out')
-        }
-    }
-
     return (
         <nav className={classes.menu}>
             <MenuItemList
@@ -42,7 +27,7 @@ const Menubar = (props) => {
             />
             <section className={classes['menu__item-actions']}>
                 <Button onClick={props.onOpenModal}>Chirp</Button>
-                <MenubarLogout onClick={logoutRequestHandler}/>
+                <MenubarLogout onClick={logoutRequest.bind(this, dispatch)} />
             </section>
         </nav>
     )

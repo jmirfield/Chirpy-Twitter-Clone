@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer } from 'react';
 import { useParams, useNavigate, Outlet } from 'react-router-dom'
 import { initialState, reducer } from '../../reducers/profileReducer';
-import { getUserProfile } from '../../api/request';
+import { getUserProfileRequest } from '../../actions/profile';
 import { MAIN_TABS } from '../../constants/tab';
 import LoadingFeed from '../Loading/LoadingFeed';
 import ProfileHeader from './ProfileHeader';
@@ -18,37 +18,10 @@ const Profile = () => {
         navigate(-1)
     }
 
-    const getUserProfileHandler = async () => {
-        try {
-            const {
-                id,
-                isFollowing,
-                followingCount,
-                followerCount,
-                chirpCount,
-                likes
-            } = await getUserProfile(params.user)
-            dispatch({
-                type: 'PROFILE_READ',
-                payload: {
-                    id,
-                    isFollow: isFollowing,
-                    followingCount: followingCount || 0,
-                    followerCount: followerCount || 0,
-                    chirpCount: chirpCount,
-                    likes
-                }
-            })
-        } catch (e) {
-            dispatch({ type: 'ERROR' })
-        }
-    }
-
-
     useEffect(() => {
         document.title = `@${params.user} / Chirpy`
         window.scrollTo(0, 0);
-        getUserProfileHandler()
+        getUserProfileRequest(params.user, dispatch)
         return () => {
             dispatch({ type: 'CHANGE_USER' })
         }

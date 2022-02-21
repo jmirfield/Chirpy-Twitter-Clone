@@ -9,11 +9,8 @@ import {
 
 export const getMainChirpFeed = async (dispatch) => {
     try {
-        const {
-            feed,
-            likedChirps,
-            retweetedChirps
-        } = await getMainFeed()
+        const { data } = await getMainFeed()
+        const { feed, likedChirps, retweetedChirps } = data
         dispatch({
             type: 'INIT_SYNC',
             payload: {
@@ -29,7 +26,7 @@ export const getMainChirpFeed = async (dispatch) => {
 
 export const newChirpRequest = async (content, onNewChirp, isModal, onClose) => {
     try {
-        const data = await newChirp(content)
+        const { data } = await newChirp({ content })
         if (isModal) {
             onClose()
             window.location.reload(false)
@@ -46,7 +43,7 @@ export const likeChirpRequest = async (dispatch, id, isChirpLiked, likes, rechir
     const req = !rechirp ? id : rechirp.original_id
     if (!isChirpLiked) {
         try {
-            await likeChirp(req)
+            await likeChirp({ _id: req })
             dispatch({
                 type: 'LIKE',
                 payload: {
@@ -59,7 +56,7 @@ export const likeChirpRequest = async (dispatch, id, isChirpLiked, likes, rechir
         }
     } else {
         try {
-            await unLikeChirp(req)
+            await unLikeChirp({ _id: req })
             dispatch({
                 type: 'UNLIKE',
                 payload: {
@@ -91,7 +88,8 @@ export const onRechirpRequest = async (dispatch, id, message, timestamp, isChirp
                     original_time: rechirp.original_time
                 }
             }
-            const { chirp } = await addRechirp(req)
+            const { data } = await addRechirp(req)
+            const { chirp } = data
             dispatch({
                 type: 'ADD_RECHIRP',
                 payload: {
@@ -110,7 +108,7 @@ export const onRechirpRequest = async (dispatch, id, message, timestamp, isChirp
     } else {
         try {
             const req = !rechirp ? id : rechirp.original_id
-            await deleteRechirp(req)
+            await deleteRechirp({ _id: req })
             dispatch({
                 type: 'REMOVE_RECHIRP',
                 payload: {

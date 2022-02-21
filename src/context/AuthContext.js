@@ -1,6 +1,6 @@
 import React, { useEffect, useReducer } from 'react';
 import { initialState, reducer } from '../reducers/authReducer';
-import { persistentLogin } from '../api/request';
+import { authPersistentLoginRequest } from '../actions/auth';
 
 const AuthContext = React.createContext({
     state: {},
@@ -10,44 +10,25 @@ const AuthContext = React.createContext({
 
 export const AuthProvider = ({ children }) => {
     const [state, dispatch] = useReducer(reducer, initialState)
+
     useEffect(() => {
-        authPersistentLogin()
+        if (localStorage.getItem('jwt') && !state.isLogged) {
+            authPersistentLoginRequest(dispatch)
+        } else {
+            dispatch({ type: 'DONE_LOADING' })
+        }
     }, [])
 
-    const authPersistentLogin = async () => {
-        if (localStorage.getItem('jwt') && !state.isLogged) {
-            try {
-                const data = await persistentLogin()
-            if (data.error) {
-                localStorage.removeItem('jwt')
-                dispatch({ type: 'RESET' })
-                return
-            }
-            dispatch({
-                type: 'LOGIN',
-                payload: data.username
-            })
-        } catch (e) {
-            dispatch({
-                type: 'ERROR',
-                payload: true
-            })
-        }
-    } else {
-        dispatch({ type: 'DONE_LOADING' })
-}
-    }
 
 
-
-return (
-    <AuthContext.Provider value={{
-        state,
-        dispatch
-    }}>
-        {children}
-    </AuthContext.Provider>
-)
+    return (
+        <AuthContext.Provider value={{
+            state,
+            dispatch
+        }}>
+            {children}
+        </AuthContext.Provider>
+    )
 }
 
 export default AuthContext;

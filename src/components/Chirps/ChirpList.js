@@ -12,7 +12,6 @@ const ChirpList = ({ chirps, dispatch, error, isLoading }) => {
             </div>
         )
     }
-
     if (!chirps || chirps.length === 0 || error) return <p className={classes['chirps-none']}>No chirps available...</p>
 
     return (

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import AuthContext from '../../context/AuthContext'
-import { unfollowUser, followUser } from '../../api/request.js'
+import { followRequest, unfollowRequest } from '../../actions/profile'
 import ProfileButton from '../UI/ProfileButton/ProfileButton'
 import ProfileImage from '../UI/ProfileImage/ProfileImage'
 import classes from './ProfileSummary.module.css'
@@ -10,25 +10,6 @@ const ProfileSummary = (props) => {
     const { state } = useContext(AuthContext)
     const { user } = useParams()
     const myProfile = user === state.user
-
-    const unfollowRequestHandler = async () => {
-        try {
-            await unfollowUser(props.id)
-            props.dispatch({ type: 'UNFOLLOW' })
-        } catch (e) {
-            console.log(e)
-        }
-    }
-
-    const followRequestHandler = async () => {
-        try {
-            await followUser(props.id)
-            props.dispatch({ type: 'FOLLOW' })
-        } catch (e) {
-            console.log(e)
-        }
-    }
-
 
     return (
         <section className={classes['profile__summary']}>
@@ -39,8 +20,8 @@ const ProfileSummary = (props) => {
             />
             <section className={classes['profile__user']}>
                 {<ProfileButton
-                    onFollow={followRequestHandler}
-                    onUnfollow={unfollowRequestHandler}
+                    onFollow={followRequest.bind(this, props.id, props.dispatch)}
+                    onUnfollow={unfollowRequest.bind(this, props.id, props.dispatch)}
                     isFollowing={props.isFollowing}
                     myProfile={myProfile}
                     error={props.error}
