@@ -64,6 +64,15 @@ export const unfollowUser = async (id) => {
         })
 }
 
+export const newChirp = async (content) => {
+    const response = await fetch(`${API_URL}chirps`, {
+        headers: AUTH_HEADER,
+        method: 'POST',
+        body: JSON.stringify({ content })
+    })
+    return await response.json()
+}
+
 export const likeChirp = async (id) => {
     await fetch(`${API_URL}users/like`,
         {

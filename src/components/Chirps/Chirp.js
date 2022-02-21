@@ -1,14 +1,14 @@
 import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import AuthContext from '../../context/AuthContext'
-import { likeChirp, unLikeChirp, addRechirp, deleteRechirp } from '../../api/request'
+import { likeChirpRequest, onRechirpRequest } from '../../actions/chirps'
 import Rechirp from './Rechirp'
 import ProfileImage from '../UI/ProfileImage/ProfileImage'
 import ChirpIcons from './ChirpIcons'
 import { date } from '../../utils/date'
 import classes from './Chirp.module.css'
 
-const Chirp = ({
+function Chirp({
     id,
     user,
     message,
@@ -19,92 +19,9 @@ const Chirp = ({
     timestamp,
     rechirp,
     dispatch
-}) => {
+}) {
 
     const { state } = useContext(AuthContext)
-
-    const onLikeButtonHandler = async () => {
-        const req = !rechirp ? id : rechirp.original_id
-        if (!isChirpLiked) {
-            try {
-                await likeChirp(req)
-                dispatch({
-                    type: 'LIKE',
-                    payload: {
-                        id: req,
-                        likes: likes + 1
-                    }
-                })
-            } catch (e) {
-                console.log('Error with liking')
-            }
-        } else {
-            try {
-                await unLikeChirp(req)
-                dispatch({
-                    type: 'UNLIKE',
-                    payload: {
-                        id: req,
-                        likes: likes - 1
-                    }
-                })
-            } catch (e) {
-                console.log('Error with liking')
-            }
-        }
-    }
-
-    const onRechirpButtonHandler = async () => {
-        if (!isChirpRechirped) {
-            try {
-                const req = !rechirp ? {
-                    content: message,
-                    rechirp: {
-                        original_id: id,
-                        original_owner: user,
-                        original_time: timestamp
-                    }
-                } : {
-                    content: message,
-                    rechirp: {
-                        original_id: rechirp.original_id,
-                        original_owner: rechirp.original_owner,
-                        original_time: rechirp.original_time
-                    }
-                }
-                const { chirp } = await addRechirp(req)
-                dispatch({
-                    type: 'ADD_RECHIRP',
-                    payload: {
-                        chirp: {
-                            ...chirp,
-                            isLiked: isChirpLiked,
-                            isRechirped: isChirpRechirped
-                        },
-                        id: req.rechirp.original_id,
-                        rechirps: rechirps + 1
-                    }
-                })
-            } catch (e) {
-                console.log('Error with rechirping')
-            }
-        } else {
-            try {
-                const req = !rechirp ? id : rechirp.original_id
-                await deleteRechirp(req)
-                dispatch({
-                    type: 'REMOVE_RECHIRP',
-                    payload: {
-                        id: req,
-                        user: state.user,
-                        rechirps: rechirps - 1
-                    }
-                })
-            } catch (e) {
-                console.log('Error with rechirping')
-            }
-        }
-    }
 
     const testHandler = () => {
         console.log('test')
@@ -114,10 +31,22 @@ const Chirp = ({
     const post_id = rechirp ? rechirp.original_id : id
     const post_time = rechirp ? rechirp.original_time : timestamp
 
-    const chirpIconOptions = [
-        { count: 0, active: false, onClick: testHandler },
-        { count: rechirps, active: isChirpRechirped, onClick: onRechirpButtonHandler },
-        { count: likes, active: isChirpLiked, onClick: onLikeButtonHandler }
+    const chirpOptions = [
+        {
+            count: 0,
+            active: false,
+            onClick: testHandler
+        },
+        {
+            count: rechirps,
+            active: isChirpRechirped,
+            onClick: onRechirpRequest.bind(this, dispatch, id, message, timestamp, isChirpRechirped, isChirpLiked, rechirps, rechirp, state.user)
+        },
+        {
+            count: likes,
+            active: isChirpLiked,
+            onClick: likeChirpRequest.bind(this, dispatch, id, isChirpLiked, likes, rechirp)
+        }
     ]
 
     return (
@@ -154,7 +83,7 @@ const Chirp = ({
                     >
                         <p>{message}</p>
                     </Link>
-                    <ChirpIcons options={chirpIconOptions} />
+                    <ChirpIcons options={chirpOptions} />
                 </section>
                 <section className={classes.chirp__options}>
                     <button>···</button>
