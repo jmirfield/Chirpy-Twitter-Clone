@@ -1,22 +1,22 @@
 import React, { useContext, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { request } from '../../api/request'
-import MainContext from '../../context/MainContext'
+import { getUserProfileFeed } from '../../api/request'
+import AuthContext from '../../context/AuthContext'
 import useFeed from '../../hooks/useFeed'
 import ChirpList from '../Chirps/ChirpList'
 
 const ProfileFeed = () => {
-    const { state } = useContext(MainContext)
+    const { state } = useContext(AuthContext)
     const [{ feed, isLoading, error }, feedDispatch] = useFeed()
     const params = useParams()
     const myProfile = params.user === state.user
-    const getUserProfileFeed = async () => {
+    const getUserProfileFeedHandler = async () => {
         try {
             const {
                 feed,
                 likedChirps,
                 retweetedChirps
-            } = await request.getUserProfileFeed(params.user)
+            } = await getUserProfileFeed(params.user)
             feedDispatch({
                 type: 'INIT_SYNC',
                 payload: {
@@ -33,7 +33,7 @@ const ProfileFeed = () => {
     }
 
     useEffect(() => {
-        getUserProfileFeed()
+        getUserProfileFeedHandler()
         return () => {
             feedDispatch({ type: 'RESET' })
         }

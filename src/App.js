@@ -6,7 +6,7 @@ import SignUp from './components/Login/SignUp';
 import Home from './components/Home/Home';
 import MainLayout from './components/MainLayout/MainLayout';
 import GuestLayout from './components/GuestLayout/GuestLayout';
-import MainContext from './context/MainContext';
+import AuthContext from './context/AuthContext';
 import LoadingIcon from './components/Loading/LoadingIcon';
 import Profile from './components/Profile/Profile';
 import ProfileFeed from './components/Profile/ProfileFeed';
@@ -15,7 +15,7 @@ import ProfileRelationships from './components/Profile/ProfileRelationships';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 const App = () => {
-  const { state } = useContext(MainContext)
+  const { state } = useContext(AuthContext)
 
   if (state.isLoading) {
     return (

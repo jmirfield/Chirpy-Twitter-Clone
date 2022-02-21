@@ -1,12 +1,12 @@
 import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
-import MainContext from '../../context/MainContext'
+import AuthContext from '../../context/AuthContext'
 import Icon from '../UI/Icon/Icon'
 import { RECHIRP } from '../../constants/icon'
 import classes from './Rechirp.module.css'
 
 const Rechirp = (props) => {
-    const { state } = useContext(MainContext)
+    const { state } = useContext(AuthContext)
     return (
         <section className={classes['rechirp']}>
             <Icon

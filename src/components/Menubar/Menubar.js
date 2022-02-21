@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import MainContext from '../../context/MainContext';
+import AuthContext from '../../context/AuthContext';
 import MenuItemList from './MenuItemList';
 import MenubarLogout from './MenubarLogout';
 import Button from '../UI/Button/Button';
@@ -7,7 +7,7 @@ import { PATHS } from '../../constants/menu';
 import classes from './Menubar.module.css'
 
 const Menubar = (props) => {
-    const { dispatch } = useContext(MainContext)
+    const { dispatch } = useContext(AuthContext)
 
     const links = Object.keys(PATHS).map(path => {
         let link = path.toLowerCase()

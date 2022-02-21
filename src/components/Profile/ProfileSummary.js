@@ -1,19 +1,19 @@
 import React, { useContext } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import MainContext from '../../context/MainContext'
-import { request } from '../../api/request.js'
+import AuthContext from '../../context/AuthContext'
+import { unfollowUser, followUser } from '../../api/request.js'
 import ProfileButton from '../UI/ProfileButton/ProfileButton'
 import ProfileImage from '../UI/ProfileImage/ProfileImage'
 import classes from './ProfileSummary.module.css'
 
 const ProfileSummary = (props) => {
-    const { state } = useContext(MainContext)
+    const { state } = useContext(AuthContext)
     const { user } = useParams()
     const myProfile = user === state.user
 
     const unfollowRequestHandler = async () => {
         try {
-            await request.unfollowUser(props.id)
+            await unfollowUser(props.id)
             props.dispatch({ type: 'UNFOLLOW' })
         } catch (e) {
             console.log(e)
@@ -22,7 +22,7 @@ const ProfileSummary = (props) => {
 
     const followRequestHandler = async () => {
         try {
-            await request.followUser(props.id)
+            await followUser(props.id)
             props.dispatch({ type: 'FOLLOW' })
         } catch (e) {
             console.log(e)

@@ -1,11 +1,11 @@
 import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
-import MainContext from '../../context/MainContext'
-import { request } from '../../api/request'
+import AuthContext from '../../context/AuthContext'
+import { likeChirp, unLikeChirp, addRechirp, deleteRechirp } from '../../api/request'
 import Rechirp from './Rechirp'
 import ProfileImage from '../UI/ProfileImage/ProfileImage'
 import ChirpIcons from './ChirpIcons'
-import { date } from '../../helpers/date'
+import { date } from '../../utils/date'
 import classes from './Chirp.module.css'
 
 const Chirp = ({
@@ -21,13 +21,13 @@ const Chirp = ({
     dispatch
 }) => {
 
-    const { state } = useContext(MainContext)
+    const { state } = useContext(AuthContext)
 
     const onLikeButtonHandler = async () => {
         const req = !rechirp ? id : rechirp.original_id
         if (!isChirpLiked) {
             try {
-                await request.likeChirp(req)
+                await likeChirp(req)
                 dispatch({
                     type: 'LIKE',
                     payload: {
@@ -40,7 +40,7 @@ const Chirp = ({
             }
         } else {
             try {
-                await request.unLikeChirp(req)
+                await unLikeChirp(req)
                 dispatch({
                     type: 'UNLIKE',
                     payload: {
@@ -72,7 +72,7 @@ const Chirp = ({
                         original_time: rechirp.original_time
                     }
                 }
-                const { chirp } = await request.rechirp(req)
+                const { chirp } = await addRechirp(req)
                 dispatch({
                     type: 'ADD_RECHIRP',
                     payload: {
@@ -91,7 +91,7 @@ const Chirp = ({
         } else {
             try {
                 const req = !rechirp ? id : rechirp.original_id
-                await request.deleteRechirp(req)
+                await deleteRechirp(req)
                 dispatch({
                     type: 'REMOVE_RECHIRP',
                     payload: {

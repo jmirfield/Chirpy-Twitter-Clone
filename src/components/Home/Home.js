@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { request } from '../../api/request'
+import { getMainFeed } from '../../api/request'
 import useFeed from '../../hooks/useFeed'
 import NewChirp from '../Chirps/NewChirp'
 import ChirpList from '../Chirps/ChirpList'
@@ -14,7 +14,7 @@ const Home = () => {
                 feed,
                 likedChirps,
                 retweetedChirps
-            } = await request.getMainFeed()
+            } = await getMainFeed()
             feedDispatch({
                 type: 'INIT_SYNC',
                 payload: {

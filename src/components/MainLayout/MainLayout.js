@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useContext } from 'react'
 import { Outlet } from 'react-router-dom'
-import MainContext from '../../context/MainContext'
+import AuthContext from '../../context/AuthContext'
 import Menubar from '../Menubar/Menubar'
 import Sidebar from '../Sidebar/Sidebar'
 import ChirpModal from './ChirpModal'
@@ -8,7 +8,7 @@ import classes from './MainLayout.module.css'
 
 const MainLayout = () => {
     const [composeChirp, setComposeChirp] = useState(false)
-    const { state } = useContext(MainContext)
+    const { state } = useContext(AuthContext)
 
     const onOpenNewChirpHandler = useCallback(() => {
         setComposeChirp(true)

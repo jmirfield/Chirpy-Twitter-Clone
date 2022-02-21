@@ -1,13 +1,13 @@
 import React, { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
-import MainContext from '../../context/MainContext'
-import { request } from '../../api/request'
+import AuthContext from '../../context/AuthContext'
+import { login } from '../../api/request'
 import Modal from '../UI/Modal/Modal'
 import Button from '../UI/Button/Button'
 import classes from './Signin.module.css'
 
 const SignIn = () => {
-    const { state, dispatch } = useContext(MainContext)
+    const { state, dispatch } = useContext(AuthContext)
     const navigate = useNavigate()
 
     const onCloseHandler = () => {
@@ -17,7 +17,7 @@ const SignIn = () => {
 
     const loginRequest = async (username, password) => {
         try {
-            const data = await request.login({username, password})
+            const data = await login({username, password})
             localStorage.setItem('jwt', data.token)
             dispatch({
                 type: 'LOGIN',

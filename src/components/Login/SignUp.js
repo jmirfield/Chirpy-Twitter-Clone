@@ -1,12 +1,12 @@
 import React, { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
-import MainContext from '../../context/MainContext'
+import AuthContext from '../../context/AuthContext'
 import Modal from '../UI/Modal/Modal'
 import Button from '../UI/Button/Button'
 import classes from './Signup.module.css'
 
 const SignUp = () => {
-    const ctx = useContext(MainContext)
+    const ctx = useContext(AuthContext)
     const navigate = useNavigate()
 
     const onCloseHandler = () => {

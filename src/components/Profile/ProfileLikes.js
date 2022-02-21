@@ -1,28 +1,20 @@
 import React, { useEffect } from 'react'
-import { useParams, useOutletContext } from 'react-router-dom'
+import { useOutletContext } from 'react-router-dom'
+import { getUserLikes } from '../../api/request'
 import useFeed from '../../hooks/useFeed'
 import ChirpList from '../Chirps/ChirpList'
 
 const ProfileLikes = () => {
     const [{ feed, isLoading, error }, feedDispatch] = useFeed()
-    const params = useParams()
-    const { likes, dispatch } = useOutletContext()
-    const getUserLikes = async () => {
+    const { likes } = useOutletContext()
+    const getUserLikesHandler = async () => {
         try {
-            const response = await fetch(`http://localhost:3001/chirps/liked`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.jwt}`
-                },
-                body: JSON.stringify(likes)
-            })
             const {
                 feed,
                 likedChirps,
                 retweetedChirps
 
-            } = await response.json()
+            } = await getUserLikes(likes)
             feedDispatch({
                 type: 'INIT_SYNC',
                 payload: {
@@ -39,7 +31,7 @@ const ProfileLikes = () => {
     }
 
     useEffect(() => {
-        getUserLikes()
+        getUserLikesHandler()
         return () => {
             feedDispatch({ type: 'RESET' })
         }

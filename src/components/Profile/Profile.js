@@ -1,70 +1,12 @@
 import React, { useEffect, useReducer } from 'react';
 import { useParams, useNavigate, Outlet } from 'react-router-dom'
-import { request } from '../../api/request';
+import { initialState, reducer } from '../../reducers/profileReducer';
+import { getUserProfile } from '../../api/request';
 import { MAIN_TABS } from '../../constants/tab';
 import LoadingFeed from '../Loading/LoadingFeed';
 import ProfileHeader from './ProfileHeader';
 import ProfileSummary from './ProfileSummary';
 import ProfileTabs from './ProfileTabs'
-
-const initialState = {
-    id: '',
-    isFollow: false,
-    followerCount: 0,
-    followingCount: 0,
-    chirpCount: 0,
-    likes: [],
-    isLoading: true,
-    error: false
-}
-
-const reducer = (state, action) => {
-    switch (action.type) {
-        case 'PROFILE_READ':
-            return {
-                ...state,
-                id: action.payload.id,
-                isFollow: action.payload.isFollow,
-                followerCount: action.payload.followerCount,
-                followingCount: action.payload.followingCount,
-                chirpCount: action.payload.chirpCount,
-                likes: action.payload.likes,
-                isLoading: false
-            }
-        case 'FOLLOW':
-            return {
-                ...state,
-                followerCount: state.followerCount + 1,
-                isFollow: true
-            }
-        case 'UNFOLLOW':
-            return {
-                ...state,
-                followerCount: state.followerCount - 1,
-                isFollow: false
-            }
-        case 'CHANGE_USER':
-            return {
-                ...state,
-                id: '',
-                isFollow: false,
-                followerCount: 0,
-                followingCount: 0,
-                chirpCount: 0,
-                likes: [],
-                isLoading: true,
-                error: false
-            }
-        case 'ERROR':
-            return {
-                ...state,
-                isLoading: false,
-                error: true
-            }
-        default:
-            return state
-    }
-}
 
 const Profile = () => {
     const [profile, dispatch] = useReducer(reducer, initialState)
@@ -76,7 +18,7 @@ const Profile = () => {
         navigate(-1)
     }
 
-    const getUserProfile = async () => {
+    const getUserProfileHandler = async () => {
         try {
             const {
                 id,
@@ -85,7 +27,7 @@ const Profile = () => {
                 followerCount,
                 chirpCount,
                 likes
-            } = await request.getUserProfile(params.user)
+            } = await getUserProfile(params.user)
             dispatch({
                 type: 'PROFILE_READ',
                 payload: {
@@ -106,7 +48,7 @@ const Profile = () => {
     useEffect(() => {
         document.title = `@${params.user} / Chirpy`
         window.scrollTo(0, 0);
-        getUserProfile()
+        getUserProfileHandler()
         return () => {
             dispatch({ type: 'CHANGE_USER' })
         }
