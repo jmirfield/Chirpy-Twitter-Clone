@@ -24,7 +24,7 @@ const MenubarLogout = (props) => {
                         default={true}
                         className={classes.logout__icon}
                     />
-                    <span>{state.user}</span> : <h2></h2>
+                    <span className={classes.logout__user}>{state.user}</span>
                 </>
                 : <span>Logout</span>
             }

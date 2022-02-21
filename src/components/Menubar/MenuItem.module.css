@@ -4,3 +4,9 @@
     color: white;
     align-self: flex-end;
 }
+
+@media (width < 920px) {
+    .menu-item {
+        display: none;
+    }
+}

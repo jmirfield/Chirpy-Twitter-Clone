@@ -57,3 +57,19 @@
     border-radius: 10rem;
     height: 3rem;
 }
+
+@media (width < 920px) {
+    .menu {
+        align-items: center;
+    }
+
+    .menu__item-actions {
+        align-items: center;
+        width: 45%;
+    }
+
+    .menu__item-actions > button {
+        width: 100%;
+        border-radius: 5rem;
+    }
+}
