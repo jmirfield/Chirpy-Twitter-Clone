@@ -3,7 +3,7 @@ import useFeed from '../../hooks/useFeed'
 import { getMainChirpFeed } from '../../actions/chirps'
 import NewChirp from '../Chirps/NewChirp'
 import ChirpList from '../Chirps/ChirpList'
-import classes from './Home.module.css'
+import styles from './Home.module.css'
 
 const Home = () => {
     const [{ feed, isLoading, error }, feedDispatch] = useFeed()
@@ -23,13 +23,13 @@ const Home = () => {
 
     return (
         <>
-            <header className={classes['home__header']}>
+            <header className={styles['home__header']}>
                 <h2>Home</h2>
             </header>
             <NewChirp
                 onNewChirp={newChirpHandler}
                 isModal={false}
-                className={classes['home__new-chirp']}
+                className={styles['home__new-chirp']}
             />
             <ChirpList
                 chirps={feed}

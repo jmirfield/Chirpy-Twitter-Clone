@@ -4,7 +4,7 @@ import AuthContext from '../../context/AuthContext'
 import Menubar from '../Menubar/Menubar'
 import Sidebar from '../Sidebar/Sidebar'
 import ChirpModal from './ChirpModal'
-import classes from './MainLayout.module.css'
+import styles from './MainLayout.module.css'
 
 const MainLayout = () => {
     const [composeChirp, setComposeChirp] = useState(false)
@@ -19,16 +19,12 @@ const MainLayout = () => {
     }, [])
 
     return (
-        <div className={classes['layout']}>
-            <header className={classes['layout__menubar']}>
-                <Menubar onOpenModal={onOpenNewChirpHandler} username={state.user} />
-            </header>
-            <main className={classes['layout__main']}>
+        <div className={styles['layout']}>
+            <Menubar onOpenModal={onOpenNewChirpHandler} username={state.user} />
+            <main className={styles['layout__main']}>
                 <Outlet />
             </main>
-            <aside className={classes['layout__sidebar']}>
-                <Sidebar />
-            </aside>
+            <Sidebar />
             {composeChirp && <ChirpModal onClose={onCloseNewChirpHandler} />}
         </div>
     )

@@ -4,7 +4,7 @@ import AuthContext from '../../context/AuthContext'
 import { loginRequest } from '../../actions/auth'
 import Modal from '../UI/Modal/Modal'
 import Button from '../UI/Button/Button'
-import classes from './Signin.module.css'
+import styles from './Signin.module.css'
 
 const SignIn = () => {
     const { state, dispatch } = useContext(AuthContext)
@@ -23,9 +23,9 @@ const SignIn = () => {
 
     return (
         <Modal onClick={onCloseHandler}>
-            <form name="signin-form" className={classes['signin-form']} onSubmit={loginHandler}>
-                {state.error && <p className={classes['signin-form__error']}>Incorrect username or password</p>}
-                <div className={classes['signin-form__control']}>
+            <form name="signin-form" className={styles['signin-form']} onSubmit={loginHandler}>
+                {state.error && <p className={styles['signin-form__error']}>Incorrect username or password</p>}
+                <div className={styles['signin-form__control']}>
                     <div>
                         <label htmlFor='username'>Username</label>
                         <input
@@ -46,7 +46,7 @@ const SignIn = () => {
                         />
                     </div>
                 </div>
-                <div className={classes['signin-form__action']}>
+                <div className={styles['signin-form__action']}>
                     <Button>Sign In</Button>
                     <Button type='button' onClick={onCloseHandler}>Cancel</Button>
                 </div>

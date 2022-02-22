@@ -1,0 +1,131 @@
+.menu {
+    display: flex;
+    position: fixed;
+    height: 100%;
+    width: 30%;
+    background-color: black;
+    justify-content: right;
+}
+
+.menu__nav {
+    display: flex;
+    flex-direction: column;
+    padding-top: 1rem;
+    height: 100%;
+    width: 70%;
+}
+
+.menu__list {
+    list-style-type: none;
+}
+
+.menu__item {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    align-self: flex-end;
+}
+
+.menu__item > a { 
+    display: flex;
+    padding: 1rem;
+    text-decoration: none;
+}
+
+.menu__item > a:hover {
+    background-color: #272a2e;
+    border-radius: 2rem;
+}
+
+.menu__label {
+    margin-left: 1rem;
+    font-size: 24px;
+    color: white;
+}
+
+.menu__actions {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: space-between;
+    width: 70%;
+}
+
+.menu__chirp {
+    border-radius: 2rem;
+    padding: 1rem 0 1rem 0;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    width: 100%;
+}
+
+.menu__logout {
+    display: flex;
+    height: 4rem;
+    border-radius: 10rem;
+    text-decoration: none;
+    border: none;
+    background-color: transparent;
+    margin: 0 0 2rem 0 !important;
+    padding: .5rem 0 .5rem 0 !important;
+    overflow: hidden;
+}
+
+.menu__logout:hover {
+    background-color: #272a2e;
+}
+
+.menu__icon {
+    height: 100%;
+    border-radius: 10rem;
+    margin-left: .5rem;
+}
+
+.menu__user {
+    display: flex;
+    font-size: 1rem;
+    font-weight: bold;
+    align-self: center;
+    padding: 0;
+    color: white;
+    margin-left: 1rem;
+}
+
+@media (width < 920px) {
+    .menu {
+        justify-content: center;
+        width: 20%;
+    }
+
+    .menu__list {
+        display:flex;
+        flex-direction: column;
+        align-self: center;
+    }
+
+    .menu__actions {
+        align-self: center;
+        width: fit-content;
+    }
+
+    .menu__item {
+        width: fit-content;
+    }
+
+    .menu__label {
+        display: none;
+    }
+
+    .menu__logout {
+        padding: .5rem !important;
+        justify-content: center;
+    }
+
+    .menu__icon {
+        margin: 0;
+    }
+
+    .menu__user {
+        display: none;
+    }
+}

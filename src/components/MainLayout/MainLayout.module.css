@@ -3,15 +3,6 @@
     min-height: 100vh;
 }
 
-.layout__menubar {
-    display: flex;
-    position: fixed;
-    height: 100%;
-    width: 30%;
-    background-color: black;
-    justify-content: right;
-}
-
 .layout__main {
     margin-left: 30%;
     border-right: 1px solid rgb(95, 108, 116);

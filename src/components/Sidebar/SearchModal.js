@@ -1,8 +1,16 @@
 import React from 'react'
+import Modal from '../UI/Modal/Modal'
+import styles from './styles.module.css'
 
-const SearchModal = () => {
+const SearchModal = (props) => {
   return (
-    <div>SearchModal</div>
+    <Modal
+      modalClass={styles.modal}
+      backdropClass={styles.backdrop}
+      onClick={props.onClose}
+    >
+      Test
+    </Modal>
   )
 }
 

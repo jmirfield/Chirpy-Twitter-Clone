@@ -1,0 +1,28 @@
+.sidebar {
+    position: fixed;
+    margin-left: 1rem;
+    width: 20%;
+    right: 9%;
+}
+
+.backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 20;
+}
+
+.modal {
+    position: fixed;
+    right: 9%;
+    top: 9%;
+    min-width: 17.5%;
+    background-color: black;
+    padding: 1rem;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    background-color: gray;
+    z-index: 30;
+}

@@ -1,24 +1,24 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import classes from './ProfileTabs.module.css'
+import styles from './ProfileTabs.module.css'
 
 const ProfileTabs = ({ tabs }) => {
 
   return (
-    <section className={classes['profile-tabs']}>
+    <section className={styles['profile-tabs']}>
       {tabs.map((tab, idx) => {
         return (<NavLink
           key={idx}
           end={true}
           to={tab.link}
-          className={({ isActive }) => isActive ? classes.active : classes.inactive}
+          className={({ isActive }) => isActive ? styles.active : styles.inactive}
           children={({ isActive }) => {
             return (
               <>
-                <div className={classes.tab}>
+                <div className={styles.tab}>
                   <span>{tab.name}</span>
                 </div>
-                <div className={isActive ? classes['active-tab'] : ''} />
+                <div className={isActive ? styles['active-tab'] : ''} />
               </>
 
             )

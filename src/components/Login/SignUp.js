@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import AuthContext from '../../context/AuthContext'
 import Modal from '../UI/Modal/Modal'
 import Button from '../UI/Button/Button'
-import classes from './Signup.module.css'
+import styles from './Signup.module.css'
 
 const SignUp = () => {
     const ctx = useContext(AuthContext)
@@ -20,8 +20,8 @@ const SignUp = () => {
 
     return (
         <Modal onClick={onCloseHandler}>
-            <form name="signup-form" className={classes['signup-form']} onSubmit={submitPlaceholder}>
-                <div className={classes['signup-form__control']}>
+            <form name="signup-form" className={styles['signup-form']} onSubmit={submitPlaceholder}>
+                <div className={styles['signup-form__control']}>
                     <div>
                         <label htmlFor='username'>Username</label>
                         <input
@@ -61,7 +61,7 @@ const SignUp = () => {
                         />
                     </div>
                 </div>
-                <div className={classes['signup-form__action']}>
+                <div className={styles['signup-form__action']}>
                     <Button>Sign Up</Button>
                     <Button type='button' onClick={onCloseHandler}>Cancel</Button>
                 </div>

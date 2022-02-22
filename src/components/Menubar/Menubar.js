@@ -1,15 +1,10 @@
-import React, { useContext } from 'react'
-import AuthContext from '../../context/AuthContext';
-import { logoutRequest } from '../../actions/auth';
-import MenuItemList from './MenuItemList';
-import MenubarLogout from './MenubarLogout';
-import Button from '../UI/Button/Button';
+import React from 'react'
+import { MenuItemList } from './MenuItems';
+import MenuActions from './MenuActions';
 import { PATHS } from '../../constants/menu';
-import classes from './Menubar.module.css'
+import styles from './styles.module.css'
 
 const Menubar = (props) => {
-    const { dispatch } = useContext(AuthContext)
-
     const links = Object.keys(PATHS).map(path => {
         let link = path.toLowerCase()
         if (link === 'profile') link = `${props.username}`
@@ -19,17 +14,17 @@ const Menubar = (props) => {
     })
 
     return (
-        <nav className={classes.menu}>
-            <MenuItemList
-                paths={PATHS}
-                links={links}
-                className={classes.menu__item}
-            />
-            <section className={classes['menu__item-actions']}>
-                <Button onClick={props.onOpenModal}>Chirp</Button>
-                <MenubarLogout onClick={logoutRequest.bind(this, dispatch)} />
-            </section>
-        </nav>
+        <header className={styles.menu}>
+            <nav className={styles.menu__nav}>
+                <MenuItemList
+                    paths={PATHS}
+                    links={links}
+                />
+                <MenuActions
+                    onOpenModal={props.onOpenModal}
+                />
+            </nav>
+        </header>
     )
 }
 

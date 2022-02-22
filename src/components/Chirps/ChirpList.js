@@ -1,7 +1,7 @@
 import React from 'react'
 import Chirp from './Chirp'
 import LoadingFeed from '../Loading/LoadingFeed'
-import classes from './ChirpList.module.css'
+import styles from './ChirpList.module.css'
 
 const ChirpList = ({ chirps, dispatch, error, isLoading }) => {
 
@@ -12,10 +12,10 @@ const ChirpList = ({ chirps, dispatch, error, isLoading }) => {
             </div>
         )
     }
-    if (!chirps || chirps.length === 0 || error) return <p className={classes['chirps-none']}>No chirps available...</p>
+    if (!chirps || chirps.length === 0 || error) return <p className={styles['chirps-none']}>No chirps available...</p>
 
     return (
-        <section className={classes.chirps}>
+        <section className={styles.chirps}>
             {chirps.map(({
                 _id,
                 owner_username,

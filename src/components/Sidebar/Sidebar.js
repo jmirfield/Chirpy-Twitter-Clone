@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import SearchInput from '../UI/SearchInput/SearchInput'
+import SearchModal from './SearchModal'
+import styles from './styles.module.css'
 
 const Sidebar = () => {
   const [text, setText] = useState('')
@@ -7,6 +9,7 @@ const Sidebar = () => {
 
   const searchChangeHandler = (e) => setText(e.target.value)
   const openModalHandler = () => setOpenModal(true)
+  const closeModalHandler = () => setOpenModal(false)
 
 
   useEffect(() => {
@@ -16,14 +19,14 @@ const Sidebar = () => {
   }, [text])
 
   return (
-    <>
+    <aside className={styles.sidebar}>
       <SearchInput
         text={text}
         onChange={searchChangeHandler}
         onFocus={openModalHandler}
       />
-      {openModal && <h1 />}
-    </>
+      {openModal && <SearchModal onClose={closeModalHandler} />}
+    </aside>
   )
 }
 

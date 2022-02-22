@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import TextareaAutosize from 'react-textarea-autosize'
 import Button from '../Button/Button'
-import classes from './ChirpInput.module.css'
+import styles from './ChirpInput.module.css'
 
 const ChirpInput = ({ text, onChange, onSubmit }) => {
 
@@ -13,11 +13,11 @@ const ChirpInput = ({ text, onChange, onSubmit }) => {
 
 
     const className = focus
-        ? `${classes['chirp__form-action--active']} ${classes['chirp__form-action']}`
-        : classes['chirp__form-action']
+        ? `${styles['chirp__form-action--active']} ${styles['chirp__form-action']}`
+        : styles['chirp__form-action']
 
     return (
-        <form onSubmit={onSubmit} className={classes.chirp__form}>
+        <form onSubmit={onSubmit} className={styles.chirp__form}>
             <TextareaAutosize
                 placeholder='Chirp chirp?'
                 value={text}

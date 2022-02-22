@@ -6,7 +6,7 @@ import Rechirp from './Rechirp'
 import ProfileImage from '../UI/ProfileImage/ProfileImage'
 import ChirpIcons from './ChirpIcons'
 import { date } from '../../utils/date'
-import classes from './Chirp.module.css'
+import styles from './Chirp.module.css'
 
 const Chirp = ({
     id,
@@ -50,28 +50,28 @@ const Chirp = ({
     ]
 
     return (
-        <article className={classes['chirp']} key={id}>
+        <article className={styles['chirp']} key={id}>
             {rechirp && <Rechirp user={user} />}
-            <section className={classes['chirp__main']}>
+            <section className={styles['chirp__main']}>
                 <Link to={`/${post_owner}`}>
                     <ProfileImage
-                        className={classes['chirp__icon']}
+                        className={styles['chirp__icon']}
                         default={true}
                     />
                 </Link>
-                <section className={classes['chirp__body']}>
-                    <section className={classes['chirp__header']}>
+                <section className={styles['chirp__body']}>
+                    <section className={styles['chirp__header']}>
                         <section>
                             <Link
                                 to={`/${post_owner}`}
-                                className={classes['chirp__user']}
+                                className={styles['chirp__user']}
                             >
                                 {post_owner}
                             </Link>
                             <span>·</span>
                             <Link
                                 to={`/${post_owner}/status/${post_id}`}
-                                className={classes['chirp__timestamp']}
+                                className={styles['chirp__timestamp']}
                             >
                                 {date(post_time)}
                             </Link>
@@ -79,13 +79,13 @@ const Chirp = ({
                     </section>
                     <Link
                         to={`/${post_owner}/status/${post_id}`}
-                        className={classes['chirp__message']}
+                        className={styles['chirp__message']}
                     >
                         <p>{message}</p>
                     </Link>
                     <ChirpIcons options={chirpOptions} />
                 </section>
-                <section className={classes.chirp__options}>
+                <section className={styles.chirp__options}>
                     <button>···</button>
                 </section>
             </section>

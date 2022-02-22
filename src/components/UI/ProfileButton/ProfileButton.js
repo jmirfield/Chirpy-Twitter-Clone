@@ -1,9 +1,9 @@
 import React from 'react'
-import classes from './ProfileButton.module.css'
+import styles from './ProfileButton.module.css'
 
 const ProfileButton = (props) => {
     return (
-        <section className={classes.controls}>
+        <section className={styles.controls}>
             {!props.error && (!props.myProfile
                 ? props.isFollowing
                     ? <button onClick={props.onUnfollow}>Following</button>
