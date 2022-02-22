@@ -23,12 +23,7 @@ class ChirpController {
 
     getCurrentUserChirpFeed = async (req, res) => {
         try {
-            await req.user.populate({
-                path: 'following',
-                populate: {
-                    path: 'user'
-                }
-            })
+            await req.user.populate({ path: 'following' })
             const followQuery = req.user.following.map(user => user.following_id)
             const chirps = await Chirp.find({
                 'owner_id': { $in: followQuery }

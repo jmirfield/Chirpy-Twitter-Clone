@@ -12,9 +12,15 @@ const RelationshipSchema = new Schema({
     }
 })
 
-RelationshipSchema.virtual('user', {
+RelationshipSchema.virtual('following', {
     ref: 'User',
     localField: 'following_id',
+    foreignField: '_id'
+})
+
+RelationshipSchema.virtual('follower', {
+    ref: 'User',
+    localField: 'user_id',
     foreignField: '_id'
 })
 

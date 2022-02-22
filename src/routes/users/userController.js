@@ -84,18 +84,35 @@ class UserController {
             res.status(404).send()
         }
     }
-    getUserFollowing = async (req, res) => {
+    getUserFollowings = async (req, res) => {
         try {
             const user = (req.user.username !== req.params.username)
                 ? await User.findOne({ username: req.params.username }).populate({ path: 'following' })
                 : req.user
             const relationships = await Relationship.find({ user_id: user._id })
-                .populate('user')
-            const following = relationships.filter(id => {
-                if (!id.user[0]) return false
+                .populate('following')
+            const followings = relationships.filter(id => {
+                if (!id.following[0]) return false
                 return !id.following_id.equals(id.user_id)
-            }).map(id => id.user[0].username)
-            res.send(following)
+            }).map(id => id.following[0].username)
+            res.send(followings)
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    getUserFollowers = async (req, res) => {
+        try {
+            const user = (req.user.username !== req.params.username)
+                ? await User.findOne({ username: req.params.username }).populate({ path: 'following' })
+                : req.user
+            const relationships = await Relationship.find({ following_id: user._id })
+                .populate('follower')
+            const followers = relationships.filter(id => {
+                if (!id.follower[0]) return false
+                return !id.following_id.equals(id.user_id)
+            }).map(id => id.follower[0].username)
+            res.send(followers)
         } catch (e) {
             console.log(e)
         }
