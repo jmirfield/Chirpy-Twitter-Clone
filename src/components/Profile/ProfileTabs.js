@@ -5,7 +5,7 @@ import styles from './styles.module.css'
 const ProfileTabs = ({ tabs }) => {
 
   return (
-    <section className={styles['profile-tabs']}>
+    <section className={styles.profile__tabs}>
       {tabs.map((tab, idx) => {
         return (<NavLink
           key={idx}
@@ -15,7 +15,7 @@ const ProfileTabs = ({ tabs }) => {
           children={({ isActive }) => {
             return (
               <>
-                <div className={styles.tab}>
+                <div className={styles.profile__tab}>
                   <span>{tab.name}</span>
                 </div>
                 <div className={isActive ? styles['active-tab'] : ''} />

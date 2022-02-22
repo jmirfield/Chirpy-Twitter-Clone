@@ -10,7 +10,7 @@ const ProfileList = (props) => {
                 return (
                     <ul key={idx} className={styles.profile__list}>
                         <Link to={`/${user}`}>
-                            <ProfileImage default={true} className={styles.profile__user__icon} />
+                            <ProfileImage className={styles.profile__user__icon} />
                             <span className={styles.profile__user}>{user}</span>
                         </Link>
                     </ul>

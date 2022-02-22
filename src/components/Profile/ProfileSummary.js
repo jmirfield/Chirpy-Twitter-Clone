@@ -1,7 +1,7 @@
-import React, { useContext } from 'react'
+import React, { useContext, useRef } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import AuthContext from '../../context/AuthContext'
-import { followRequest, unfollowRequest } from '../../actions/profile'
+import { followRequest, unfollowRequest, uploadImageRequest } from '../../actions/profile'
 import ProfileButton from '../UI/ProfileButton/ProfileButton'
 import ProfileImage from '../UI/ProfileImage/ProfileImage'
 import styles from './styles.module.css'
@@ -10,14 +10,35 @@ const ProfileSummary = (props) => {
     const { state } = useContext(AuthContext)
     const { user } = useParams()
     const myProfile = user === state.user
+    const inputFile = useRef(null)
+
+    const updateProfilePictureHandler = () => {
+        inputFile.current.click()
+    }
+
+    const onFileChange = (e) => {
+        e.preventDefault()
+        const data = new FormData()
+        data.append('image', e.target.files[0])
+        uploadImageRequest(data, (data) => {
+            console.log(data)
+        })
+    }
 
     return (
         <>
             <section className={styles['profile__banner']} />
             <ProfileImage
                 className={styles['profile__picture']}
-                default={true}
+                onClick={myProfile ? updateProfilePictureHandler : null}
             />
+            {myProfile && <input
+                type='file'
+                style={{ 'display': 'none' }}
+                ref={inputFile}
+                onChange={onFileChange}
+                accept='image/*'
+            />}
             <section className={styles['profile__details']}>
                 <ProfileButton
                     onFollow={followRequest.bind(this, props.id, props.dispatch)}

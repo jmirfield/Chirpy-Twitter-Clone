@@ -56,7 +56,6 @@ const Chirp = ({
                 <Link to={`/${post_owner}`}>
                     <ProfileImage
                         className={styles['chirp__icon']}
-                        default={true}
                     />
                 </Link>
                 <section className={styles['chirp__body']}>

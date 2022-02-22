@@ -23,7 +23,6 @@ const NewChirp = (props) => {
         <section className={newChirpClass}>
             <ProfileImage
                 className={styles['new-chirp__icon']}
-                default={true}
             />
             <ChirpInput
                 onSubmit={onSubmitChirpHandler}

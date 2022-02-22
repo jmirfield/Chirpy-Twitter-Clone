@@ -5,7 +5,8 @@ import {
     followUser,
     unfollowUser,
     getUserFollowings,
-    getUserFollowers
+    getUserFollowers,
+    uploadImage
 } from "../api/request"
 
 export const getUserProfileRequest = async (user, dispatch) => {
@@ -110,6 +111,15 @@ export const getUserFollowingsRequest = async (user, cb) => {
 export const getUserFollowersRequest = async (user, cb) => {
     try {
         const { data } = await getUserFollowers(user)
+        cb(data)
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+export const uploadImageRequest = async (img, cb) => {
+    try {
+        const { data } = await uploadImage(img)
         cb(data)
     } catch (e) {
         console.log(e)
