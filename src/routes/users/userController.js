@@ -1,6 +1,7 @@
 const User = require('./userModel')
 const Relationship = require('../relationships/relationshipModel')
 const Chirp = require('../chirps/chirpModel')
+const cloudinary = require('cloudinary').v2
 
 class UserController {
     createNewUser = async (req, res) => {
@@ -169,7 +170,23 @@ class UserController {
             await req.user.deleteOne()
             res.send(req.user)
         } catch (e) {
-            res.status(500).send(e)
+            res.status(500).send()
+        }
+    }
+
+    uploadPicture = async (req, res) => {
+        try {
+            cloudinary.uploader.upload(req.file, {
+                public_id: `profile/pic/${req.user._id}`
+            }, (error, result) => {
+                console.log(result)
+            })
+            // req.file.id = req.user._id.toString()
+            // req.file.type = 'profile/pic'
+            res.send()
+        } catch (e) {
+            console.log(e)
+            res.status(400).send()
         }
     }
 }

@@ -1,5 +1,7 @@
 const express = require('express')
 const router = new express.Router()
+const multer = require('multer')
+const upload = multer()
 const userController = require('./userController')
 const auth = require('../../middleware/auth')
 
@@ -14,6 +16,7 @@ router.post('/users/logoutAll', auth, userController.logoutAll)
 router.patch('/users/like', auth, userController.likeChirp)
 router.patch('/users/unlike', auth, userController.unlikeChirp)
 router.delete('/users/delete', auth, userController.deleteUser)
+router.patch('/users/profile/upload', auth, upload.single('image'), userController.uploadPicture)
 
 
 

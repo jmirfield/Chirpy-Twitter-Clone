@@ -28,6 +28,9 @@ const UserSchema = new Schema({
             if (val.toLowerCase().includes("password")) throw new Error("Password cannot contain 'password'")
         }
     },
+    image: {
+        type: String
+    },
     tokens: [{
         token: {
             type: String,
