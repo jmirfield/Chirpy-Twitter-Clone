@@ -1,4 +1,4 @@
-import { getUserProfile, getUserProfileFeed, getUserLikes, followUser, unfollowUser } from "../api/request"
+import { getUserProfile, getUserProfileFeed, getUserLikes, followUser, unfollowUser, getUserFollowing } from "../api/request"
 
 export const getUserProfileRequest = async (user, dispatch) => {
     try {
@@ -9,6 +9,7 @@ export const getUserProfileRequest = async (user, dispatch) => {
             followerCount,
             chirpCount,
             likes } = data
+        console.log(chirpCount)
         dispatch({
             type: 'PROFILE_READ',
             payload: {
@@ -84,6 +85,15 @@ export const unfollowRequest = async (id, dispatch) => {
     try {
         await unfollowUser({ id })
         dispatch({ type: 'UNFOLLOW' })
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+export const getUserFollowingRequest = async (user, cb) => {
+    try {
+        const { data } = await getUserFollowing(user)
+        cb(data)
     } catch (e) {
         console.log(e)
     }

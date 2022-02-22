@@ -12,6 +12,7 @@ import Profile from './components/Profile/Profile';
 import ProfileFeed from './components/Profile/ProfileFeed';
 import ProfileLikes from './components/Profile/ProfileLikes';
 import ProfileRelationships from './components/Profile/ProfileRelationships';
+import ProfileFollowing from './components/Profile/ProfileFollowing';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 const App = () => {
@@ -57,7 +58,7 @@ const App = () => {
             <Route path='likes' element={<ProfileLikes />} />
           </Route>
           <Route path=':user/*' element={<ProfileRelationships />}>
-            <Route path='following' element={<h1>Following</h1>} />
+            <Route path='following' element={<ProfileFollowing />} />
             <Route path='follower' element={<h1>Follower</h1>} />
             <Route path='*' element={<Navigate replace to='' />} />
           </Route>
