@@ -1,0 +1,99 @@
+[1mdiff --git a/src/routes/chirps/chirpController.js b/src/routes/chirps/chirpController.js[m
+[1mindex 4cef548..c675aa9 100644[m
+[1m--- a/src/routes/chirps/chirpController.js[m
+[1m+++ b/src/routes/chirps/chirpController.js[m
+[36m@@ -17,6 +17,7 @@[m [mclass ChirpController {[m
+             res.send(chirp)[m
+         } catch (e) {[m
+             res.status(400).send()[m
+[32m+[m[32m            console.log(e)[m
+         }[m
+     }[m
+ [m
+[36m@@ -117,7 +118,6 @@[m [mclass ChirpController {[m
+                 sort: { createdAt: -1 },[m
+                 lean: true[m
+             })[m
+[31m-[m
+             res.send({[m
+                 feed: chirps,[m
+                 likedChirps: req.user.likedChirps,[m
+[1mdiff --git a/src/routes/users/userController.js b/src/routes/users/userController.js[m
+[1mindex 427ec7d..f8d0522 100644[m
+[1m--- a/src/routes/users/userController.js[m
+[1m+++ b/src/routes/users/userController.js[m
+[36m@@ -5,7 +5,12 @@[m [mconst Chirp = require('../chirps/chirpModel')[m
+ class UserController {[m
+     createNewUser = async (req, res) => {[m
+         try {[m
+[31m-            const user = new User(req.body)[m
+[32m+[m[32m            const user = new User({[m
+[32m+[m[32m                ...req.body,[m
+[32m+[m[32m                followerCount: 0,[m
+[32m+[m[32m                followingCount: 0,[m
+[32m+[m[32m                chirpCount: 0[m
+[32m+[m[32m            })[m
+             const relationship = new Relationship({[m
+                 following_id: user._id,[m
+                 user_id: user._id[m
+[36m@@ -60,7 +65,6 @@[m [mclass UserController {[m
+     }[m
+     getUserProfile = async (req, res) => {[m
+         try {[m
+[31m-            [m
+             const user = (req.user.username !== req.params.username)[m
+                 ? await User.findOne({ username: req.params.username }).populate({ path: 'following' })[m
+                 : req.user[m
+[36m@@ -80,6 +84,23 @@[m [mclass UserController {[m
+             res.status(404).send()[m
+         }[m
+     }[m
+[32m+[m[32m    getUserFollowing = async (req, res) => {[m
+[32m+[m[32m        try {[m
+[32m+[m[32m            const user = (req.user.username !== req.params.username)[m
+[32m+[m[32m                ? await User.findOne({ username: req.params.username }).populate({ path: 'following' })[m
+[32m+[m[32m                : req.user[m
+[32m+[m[32m            const relationships = await Relationship.find({ user_id: user._id })[m
+[32m+[m[32m                .populate('user')[m
+[32m+[m[32m            const following = relationships.filter(id => {[m
+[32m+[m[32m                if (!id.user[0]) return false[m
+[32m+[m[32m                return !id.following_id.equals(id.user_id)[m
+[32m+[m[32m            }).map(id => id.user[0].username)[m
+[32m+[m[32m            res.send(following)[m
+[32m+[m[32m        } catch (e) {[m
+[32m+[m[32m            console.log(e)[m
+[32m+[m[32m        }[m
+[32m+[m[32m    }[m
+[32m+[m
+     likeChirp = async (req, res) => {[m
+         try {[m
+             if (!req.body._id) throw new Error('Cannot provide null value')[m
+[1mdiff --git a/src/routes/users/userModel.js b/src/routes/users/userModel.js[m
+[1mindex cb47b5c..27a0335 100644[m
+[1m--- a/src/routes/users/userModel.js[m
+[1m+++ b/src/routes/users/userModel.js[m
+[36m@@ -48,10 +48,10 @@[m [mconst UserSchema = new Schema({[m
+         type: Number,[m
+         required: true[m
+     },[m
+[31m-    chirpCount: [{[m
+[32m+[m[32m    chirpCount: {[m
+         type: Number,[m
+         required: true[m
+[31m-    }][m
+[32m+[m[32m    }[m
+ }, {[m
+     timestamps: true[m
+ })[m
+[1mdiff --git a/src/routes/users/userRouter.js b/src/routes/users/userRouter.js[m
+[1mindex 28c8e35..52eccbf 100644[m
+[1m--- a/src/routes/users/userRouter.js[m
+[1m+++ b/src/routes/users/userRouter.js[m
+[36m@@ -7,6 +7,7 @@[m [mrouter.post('/users', userController.createNewUser)[m
+ router.post('/users/login', userController.login)[m
+ router.get('/users/auth', auth, userController.authenticatePersistentLogin)[m
+ router.get('/users/profile/:username', auth, userController.getUserProfile)[m
+[32m+[m[32mrouter.get('/users/profile/following/:username', auth, userController.getUserFollowing)[m
+ router.post('/users/logout', auth, userController.logout)[m
+ router.post('/users/logoutAll', auth, userController.logoutAll)[m
+ router.patch('/users/like', auth, userController.likeChirp)[m

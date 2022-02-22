@@ -17,6 +17,7 @@ class ChirpController {
             res.send(chirp)
         } catch (e) {
             res.status(400).send()
+            console.log(e)
         }
     }
 
@@ -117,7 +118,6 @@ class ChirpController {
                 sort: { createdAt: -1 },
                 lean: true
             })
-
             res.send({
                 feed: chirps,
                 likedChirps: req.user.likedChirps,

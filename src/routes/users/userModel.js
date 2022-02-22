@@ -48,10 +48,10 @@ const UserSchema = new Schema({
         type: Number,
         required: true
     },
-    chirpCount: [{
+    chirpCount: {
         type: Number,
         required: true
-    }]
+    }
 }, {
     timestamps: true
 })

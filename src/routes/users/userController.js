@@ -5,7 +5,12 @@ const Chirp = require('../chirps/chirpModel')
 class UserController {
     createNewUser = async (req, res) => {
         try {
-            const user = new User(req.body)
+            const user = new User({
+                ...req.body,
+                followerCount: 0,
+                followingCount: 0,
+                chirpCount: 0
+            })
             const relationship = new Relationship({
                 following_id: user._id,
                 user_id: user._id
@@ -60,7 +65,6 @@ class UserController {
     }
     getUserProfile = async (req, res) => {
         try {
-            
             const user = (req.user.username !== req.params.username)
                 ? await User.findOne({ username: req.params.username }).populate({ path: 'following' })
                 : req.user
@@ -80,6 +84,23 @@ class UserController {
             res.status(404).send()
         }
     }
+    getUserFollowing = async (req, res) => {
+        try {
+            const user = (req.user.username !== req.params.username)
+                ? await User.findOne({ username: req.params.username }).populate({ path: 'following' })
+                : req.user
+            const relationships = await Relationship.find({ user_id: user._id })
+                .populate('user')
+            const following = relationships.filter(id => {
+                if (!id.user[0]) return false
+                return !id.following_id.equals(id.user_id)
+            }).map(id => id.user[0].username)
+            res.send(following)
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
     likeChirp = async (req, res) => {
         try {
             if (!req.body._id) throw new Error('Cannot provide null value')
