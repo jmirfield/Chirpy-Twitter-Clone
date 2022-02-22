@@ -1,6 +1,6 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import styles from './ProfileTabs.module.css'
+import styles from './styles.module.css'
 
 const ProfileTabs = ({ tabs }) => {
 

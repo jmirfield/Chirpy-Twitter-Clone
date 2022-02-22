@@ -12,7 +12,8 @@ import Profile from './components/Profile/Profile';
 import ProfileFeed from './components/Profile/ProfileFeed';
 import ProfileLikes from './components/Profile/ProfileLikes';
 import ProfileRelationships from './components/Profile/ProfileRelationships';
-import ProfileFollowing from './components/Profile/ProfileFollowing';
+import ProfileFollowings from './components/Profile/ProfileFollowing';
+import ProfileFollowers from './components/Profile/ProfileFollower';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 const App = () => {
@@ -58,8 +59,8 @@ const App = () => {
             <Route path='likes' element={<ProfileLikes />} />
           </Route>
           <Route path=':user/*' element={<ProfileRelationships />}>
-            <Route path='following' element={<ProfileFollowing />} />
-            <Route path='follower' element={<h1>Follower</h1>} />
+            <Route path='following' element={<ProfileFollowings />} />
+            <Route path='follower' element={<ProfileFollowers />} />
             <Route path='*' element={<Navigate replace to='' />} />
           </Route>
           <Route path='flow/lists' element={<p>LISTS PLACEHOLDER</p>} />
