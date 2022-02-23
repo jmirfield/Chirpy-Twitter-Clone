@@ -30,6 +30,9 @@ class ChirpController {
             }, null, {
                 sort: { createdAt: -1 },
                 lean: true
+            }).populate({
+                path: 'user',
+                select: 'image'
             })
             res.send({
                 feed: chirps,
@@ -112,6 +115,9 @@ class ChirpController {
             }, null, {
                 sort: { createdAt: -1 },
                 lean: true
+            }).populate({
+                path: 'user',
+                select: 'image'
             })
             res.send({
                 feed: chirps,
@@ -133,6 +139,9 @@ class ChirpController {
             }, null, {
                 sort: { createdAt: -1 },
                 lean: true
+            }).populate({
+                path: 'user',
+                select: 'image'
             })
             res.send({
                 feed: chirps,

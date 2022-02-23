@@ -32,6 +32,9 @@ const ChirpSchema = new Schema({
         },
         original_time: {
             type: String
+        },
+        original_image: {
+            type: String
         }
     }
 }, {
@@ -45,6 +48,12 @@ ChirpSchema.methods.toJSON = function () {
     delete chirpObj.__v
     return chirpObj
 }
+
+ChirpSchema.virtual('user', {
+    ref: 'User',
+    localField: 'owner_id',
+    foreignField: '_id'
+})
 
 const Chirp = mongoose.model('Chirp', ChirpSchema)
 

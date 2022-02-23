@@ -30,16 +30,15 @@ class UserController {
             const user = await User.findByCredentials(req.body.username, req.body.password)
             const token = await user.generateAuthToken()
             await user.save()
-            res.status(201).send({ user, token })
+            res.status(201).send({ user, token, pic: user.image })
         } catch (e) {
-            console.log(e)
             res.status(400).send()
         }
     }
 
     authenticatePersistentLogin = async (req, res) => {
         try {
-            res.status(200).send({ username: req.user.username, id: req.user._id })
+            res.status(200).send({ username: req.user.username, pic: req.user.image })
         } catch (e) {
             res.status(404).send()
         }
@@ -74,6 +73,7 @@ class UserController {
             const isFollowing = req.user.following.some(u => u.following_id.equals(user._id))
             res.send({
                 id: user._id,
+                pic: user.image || null,
                 isFollowing,
                 followingCount: user.followingCount,
                 followerCount: user.followerCount,
@@ -95,7 +95,9 @@ class UserController {
             const followings = relationships.filter(id => {
                 if (!id.following[0]) return false
                 return !id.following_id.equals(id.user_id)
-            }).map(id => id.following[0].username)
+            }).map(id => {
+                return { username: id.following[0].username, image: id.following[0].image }
+            })
             res.send(followings)
         } catch (e) {
             console.log(e)
@@ -112,7 +114,9 @@ class UserController {
             const followers = relationships.filter(id => {
                 if (!id.follower[0]) return false
                 return !id.following_id.equals(id.user_id)
-            }).map(id => id.follower[0].username)
+            }).map(id => {
+                return { username: id.follower[0].username, image: id.follower[0].image }
+            })
             res.send(followers)
         } catch (e) {
             console.log(e)
@@ -176,14 +180,15 @@ class UserController {
 
     uploadPicture = async (req, res) => {
         try {
-            cloudinary.uploader.upload(req.file, {
-                public_id: `profile/pic/${req.user._id}`
-            }, (error, result) => {
-                console.log(result)
-            })
-            // req.file.id = req.user._id.toString()
-            // req.file.type = 'profile/pic'
-            res.send()
+            cloudinary.uploader.upload_stream({
+                public_id: `profile/pic/${req.user._id}`,
+                invalidate: true
+            }, async (error, result) => {
+                if(error)throw new Error(error)
+                req.user.image = result.secure_url
+                await req.user.save()
+                res.send(result.secure_url)
+            }).end(req.file.buffer)
         } catch (e) {
             console.log(e)
             res.status(400).send()
