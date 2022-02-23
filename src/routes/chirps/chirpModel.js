@@ -23,6 +23,9 @@ const ChirpSchema = new Schema({
         type: Number,
         required: true
     },
+    imageURL: {
+        type: String
+    },
     rechirp: {
         original_id: {
             type: Schema.ObjectId

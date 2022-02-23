@@ -1,5 +1,6 @@
 const Chirp = require('./chirpModel')
 const User = require('../users/userModel')
+const cloudinary = require('cloudinary').v2
 
 class ChirpController {
     createChirp = async (req, res) => {
@@ -18,6 +19,29 @@ class ChirpController {
         } catch (e) {
             res.status(400).send()
             console.log(e)
+        }
+    }
+    createChirpWithImage = async (req, res) => {
+        try {
+            const chirp = new Chirp({
+                content: req.body.text || '**empty**',
+                owner_id: req.user._id,
+                owner_username: req.user.username,
+                rechirpsCount: 0,
+                likesCount: 0,
+            })
+            cloudinary.uploader.upload_stream({
+                public_id: `chirp/${chirp._id}`,
+                invalidate: true
+            }, async (error, result) => {
+                if (error) throw new Error(error)
+                chirp.imageURL = result.secure_url
+                await chirp.save()
+                res.send(chirp)
+            }).end(req.files[0].buffer)
+        } catch (e) {
+            console.log(e)
+            res.status(400).send()
         }
     }
 
