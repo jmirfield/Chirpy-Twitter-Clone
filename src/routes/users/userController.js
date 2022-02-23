@@ -182,7 +182,11 @@ class UserController {
         try {
             cloudinary.uploader.upload_stream({
                 public_id: `profile/pic/${req.user._id}`,
-                invalidate: true
+                invalidate: true,
+                transformation: {
+                    width: 200,
+                    height: 200
+                }
             }, async (error, result) => {
                 if(error)throw new Error(error)
                 req.user.image = result.secure_url
