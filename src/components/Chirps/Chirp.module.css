@@ -5,9 +5,7 @@
     border-bottom: 1px solid rgb(95, 108, 116);
     min-width: 35vw;
     padding: .5rem;
-    animation: slidein 2s;
-    z-index: -1;
-    overflow: hidden;
+    animation: slidein .5s;
 }
 
 @keyframes slidein {
@@ -15,6 +13,9 @@
         transform: translateY(-100%);
         opacity: 0;
     } 
+    30% {
+        opacity: 0;
+    }
     to {
         transform: translateY(0);
     }
@@ -29,6 +30,8 @@
 .chirp__icon {
     max-height: 50px;
     min-width: 50px;
+    min-height: 50px;
+    max-width: 50px;
     background-color: #bbb;
     border-radius: 50%;
     margin-top: .25rem;

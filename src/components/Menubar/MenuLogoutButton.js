@@ -14,6 +14,7 @@ const MenubarLogout = (props) => {
             <ProfileImage
                 default={true}
                 className={styles.menu__icon}
+                src={state.profileImage}
             />
             <span className={styles.menu__user}>{state.user}</span>
         </button>

@@ -1,5 +1,6 @@
 export const initialState = {
     user: '',
+    profileImage: null,
     error: null,
     isLoading: true,
     isLogged: false
@@ -10,7 +11,8 @@ export const reducer = (state, action) => {
         case 'LOGIN':
             return {
                 ...state,
-                user: action.payload,
+                user: action.payload.username,
+                profileImage: action.payload.profileImage,
                 isLoading: false,
                 isLogged: true
             }
@@ -38,9 +40,15 @@ export const reducer = (state, action) => {
         case 'RESET':
             return {
                 user: '',
+                profileImage: null,
                 error: null,
                 isLoading: false,
                 isLogged: false
+            }
+        case 'NEW_PROFILE_PIC':
+            return {
+                ...state,
+                profileImage: action.payload
             }
         default:
             return state

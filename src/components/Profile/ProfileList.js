@@ -9,9 +9,12 @@ const ProfileList = (props) => {
             {props.users.map((user, idx) => {
                 return (
                     <ul key={idx} className={styles.profile__item}>
-                        <Link to={`/${user}`}>
-                            <ProfileImage className={styles.profile__user__icon} />
-                            <span className={styles.profile__user}>{user}</span>
+                        <Link to={`/${user.username}`}>
+                            <ProfileImage
+                                className={styles.profile__user__icon}
+                                src={user.image}
+                            />
+                            <span className={styles.profile__user}>{user.username}</span>
                         </Link>
                     </ul>
                 )

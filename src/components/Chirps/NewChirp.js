@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { newChirpRequest } from '../../actions/chirps'
+import AuthContext from '../../context/AuthContext'
 import ChirpInput from '../UI/ChirpInput/ChirpInput'
 import ProfileImage from '../UI/ProfileImage/ProfileImage'
 import styles from './NewChirp.module.css'
@@ -8,6 +9,8 @@ const NewChirp = (props) => {
     const [textInput, setTextInput] = useState('')
     const textChangeHandler = (e) => setTextInput(e.target.value)
     const resetTextHandler = () => setTextInput('')
+
+    const { state } = useContext(AuthContext)
 
     const onSubmitChirpHandler = (e) => {
         e.preventDefault()
@@ -23,6 +26,7 @@ const NewChirp = (props) => {
         <section className={newChirpClass}>
             <ProfileImage
                 className={styles['new-chirp__icon']}
+                src={state.profileImage}
             />
             <ChirpInput
                 onSubmit={onSubmitChirpHandler}

@@ -1,13 +1,13 @@
 import React, { useContext, useRef } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import AuthContext from '../../context/AuthContext'
-import { followRequest, unfollowRequest, uploadImageRequest } from '../../actions/profile'
+import { followRequest, unfollowRequest, uploadProfileImageRequest } from '../../actions/profile'
 import ProfileButton from '../UI/ProfileButton/ProfileButton'
 import ProfileImage from '../UI/ProfileImage/ProfileImage'
 import styles from './styles.module.css'
 
 const ProfileSummary = (props) => {
-    const { state } = useContext(AuthContext)
+    const { state, dispatch } = useContext(AuthContext)
     const { user } = useParams()
     const myProfile = user === state.user
     const inputFile = useRef(null)
@@ -20,8 +20,8 @@ const ProfileSummary = (props) => {
         e.preventDefault()
         const data = new FormData()
         data.append('image', e.target.files[0])
-        uploadImageRequest(data, (data) => {
-            console.log(data)
+        uploadProfileImageRequest(data, (data) => {
+            dispatch({ type: 'NEW_PROFILE_PIC', payload: data })
         })
     }
 
@@ -31,6 +31,7 @@ const ProfileSummary = (props) => {
             <ProfileImage
                 className={styles['profile__picture']}
                 onClick={myProfile ? updateProfilePictureHandler : null}
+                src={myProfile ? state.profileImage : props.src}
             />
             {myProfile && <input
                 type='file'

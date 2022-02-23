@@ -70,7 +70,7 @@ export const likeChirpRequest = async (dispatch, id, isChirpLiked, likes, rechir
     }
 }
 
-export const onRechirpRequest = async (dispatch, id, message, timestamp, isChirpRechirped, isChirpLiked, rechirps, rechirp, user) => {
+export const onRechirpRequest = async (dispatch, id, message, timestamp, image, isChirpRechirped, isChirpLiked, rechirps, rechirp, user, client) => {
     if (!isChirpRechirped) {
         try {
             const req = !rechirp ? {
@@ -78,14 +78,16 @@ export const onRechirpRequest = async (dispatch, id, message, timestamp, isChirp
                 rechirp: {
                     original_id: id,
                     original_owner: user,
-                    original_time: timestamp
+                    original_time: timestamp,
+                    original_image: image
                 }
             } : {
                 content: message,
                 rechirp: {
                     original_id: rechirp.original_id,
                     original_owner: rechirp.original_owner,
-                    original_time: rechirp.original_time
+                    original_time: rechirp.original_time,
+                    original_image: rechirp.original_image
                 }
             }
             const { data } = await addRechirp(req)
@@ -95,6 +97,7 @@ export const onRechirpRequest = async (dispatch, id, message, timestamp, isChirp
                 payload: {
                     chirp: {
                         ...chirp,
+                        user: [{ image: chirp.rechirp.original_image }], //Need to find better solution
                         isLiked: isChirpLiked,
                         isRechirped: isChirpRechirped
                     },
@@ -113,7 +116,7 @@ export const onRechirpRequest = async (dispatch, id, message, timestamp, isChirp
                 type: 'REMOVE_RECHIRP',
                 payload: {
                     id: req,
-                    user: user,
+                    user: client,
                     rechirps: rechirps - 1
                 }
             })

@@ -6,7 +6,10 @@ export const loginRequest = async (username, password, dispatch) => {
         localStorage.setItem('jwt', data.token)
         dispatch({
             type: 'LOGIN',
-            payload: data.user.username
+            payload: {
+                username: data.user.username,
+                profileImage: data.pic
+            }
         })
     } catch (e) {
         dispatch({
@@ -22,7 +25,10 @@ export const authPersistentLoginRequest = async (dispatch) => {
         const { data } = await persistentLogin()
         dispatch({
             type: 'LOGIN',
-            payload: data.username
+            payload: { 
+                username: data.username,
+                profileImage: data.pic
+            }
         })
     } catch (e) {
         console.log('Error with logging in')

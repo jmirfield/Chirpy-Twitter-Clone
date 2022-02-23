@@ -79,6 +79,7 @@
     height: 100%;
     border-radius: 10rem;
     margin-left: .5rem;
+    max-width: 50px;
 }
 
 .menu__user {

@@ -18,9 +18,9 @@ const Chirp = ({
     isChirpLiked,
     timestamp,
     rechirp,
+    image,
     dispatch
 }) => {
-
     const { state } = useContext(AuthContext)
 
     const testHandler = () => {
@@ -40,7 +40,7 @@ const Chirp = ({
         {
             count: rechirps,
             active: isChirpRechirped,
-            onClick: onRechirpRequest.bind(this, dispatch, id, message, timestamp, isChirpRechirped, isChirpLiked, rechirps, rechirp, state.user)
+            onClick: onRechirpRequest.bind(this, dispatch, id, message, timestamp, image, isChirpRechirped, isChirpLiked, rechirps, rechirp, user, state.user)
         },
         {
             count: likes,
@@ -56,6 +56,7 @@ const Chirp = ({
                 <Link to={`/${post_owner}`}>
                     <ProfileImage
                         className={styles['chirp__icon']}
+                        src={image}
                     />
                 </Link>
                 <section className={styles['chirp__body']}>

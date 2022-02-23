@@ -49,7 +49,6 @@ const Profile = () => {
     if (profile.isLoading) {
         return <LoadingFeed />
     }
-
     return (
         <>
             <ProfileHeader
@@ -62,6 +61,7 @@ const Profile = () => {
                 followerCount={profile.followerCount}
                 followingCount={profile.followingCount}
                 dispatch={dispatch}
+                src={profile.pic}
             />
             <ProfileTabs tabs={MAIN_TABS} />
             <Outlet context={{ likes: profile.likes, dispatch }} />
