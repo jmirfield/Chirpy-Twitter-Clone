@@ -7,6 +7,8 @@ const Icon = (props) => {
             width={props.width}
             height={props.height}
             fill={props.fill}
+            className={props.className}
+            onClick={props.onClick}
         >
             <g>
                 {props.d.map((value) => (

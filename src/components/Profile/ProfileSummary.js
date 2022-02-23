@@ -10,13 +10,18 @@ const ProfileSummary = (props) => {
     const { state, dispatch } = useContext(AuthContext)
     const { user } = useParams()
     const myProfile = user === state.user
-    const inputFile = useRef(null)
+    const profilePicRef = useRef(null)
+    const profileBannerRef = useRef(null)
 
     const updateProfilePictureHandler = () => {
-        inputFile.current.click()
+        profilePicRef.current.click()
     }
 
-    const onFileChange = (e) => {
+    const updateProfileBannerHandler = () => {
+        profileBannerRef.current.click()
+    }
+
+    const profilePicHandler = (e) => {
         e.preventDefault()
         const data = new FormData()
         data.append('image', e.target.files[0])
@@ -25,9 +30,21 @@ const ProfileSummary = (props) => {
         })
     }
 
+    const profileBannerHandler = (e) => {
+        e.preventDefault()
+        console.log('click')
+    }
+
     return (
         <>
-            <section className={styles['profile__banner']} />
+            <img className={styles['profile__banner']} src='' onClick={myProfile ? updateProfileBannerHandler : null}/>
+            {myProfile && <input
+                type='file'
+                style={{ 'display': 'none' }}
+                ref={profileBannerRef}
+                onChange={profileBannerHandler}
+                accept='image/*'
+            /> }
             <ProfileImage
                 className={styles['profile__picture']}
                 onClick={myProfile ? updateProfilePictureHandler : null}
@@ -36,8 +53,8 @@ const ProfileSummary = (props) => {
             {myProfile && <input
                 type='file'
                 style={{ 'display': 'none' }}
-                ref={inputFile}
-                onChange={onFileChange}
+                ref={profilePicRef}
+                onChange={profilePicHandler}
                 accept='image/*'
             />}
             <section className={styles['profile__details']}>

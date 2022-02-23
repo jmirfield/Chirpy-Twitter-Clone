@@ -30,6 +30,8 @@
 
 .chirp__form-action--active {
     border-top: 1px solid rgb(95, 108, 116);
+    justify-content: space-between;
+    align-items: center;
 }
 
 .chirp__form-action button {
@@ -37,4 +39,8 @@
     margin-top: .25rem;
     border-radius: 1rem;
     padding: .5rem 1rem .5rem 1rem;
+}
+
+.image {
+    cursor: pointer;
 }

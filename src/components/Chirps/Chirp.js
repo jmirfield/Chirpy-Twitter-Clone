@@ -1,12 +1,13 @@
 import React, { useContext } from 'react'
-import { Link } from 'react-router-dom'
 import AuthContext from '../../context/AuthContext'
 import { likeChirpRequest, onRechirpRequest } from '../../actions/chirps'
 import Rechirp from './Rechirp'
-import ProfileImage from '../UI/ProfileImage/ProfileImage'
 import ChirpIcons from './ChirpIcons'
-import { date } from '../../utils/date'
-import styles from './Chirp.module.css'
+import ChirpHeader from './ChirpHeader'
+import ChirpMessage from './ChirpMessage'
+import ChirpImage from './ChirpImage'
+import styles from './styles.module.css'
+import ChirpOption from './ChirpOption'
 
 const Chirp = ({
     id,
@@ -53,41 +54,13 @@ const Chirp = ({
         <article className={styles['chirp']} key={id}>
             {rechirp && <Rechirp user={user} />}
             <section className={styles['chirp__main']}>
-                <Link to={`/${post_owner}`}>
-                    <ProfileImage
-                        className={styles['chirp__icon']}
-                        src={image}
-                    />
-                </Link>
+                <ChirpImage owner={post_owner} image={image} />
                 <section className={styles['chirp__body']}>
-                    <section className={styles['chirp__header']}>
-                        <section>
-                            <Link
-                                to={`/${post_owner}`}
-                                className={styles['chirp__user']}
-                            >
-                                {post_owner}
-                            </Link>
-                            <span>·</span>
-                            <Link
-                                to={`/${post_owner}/status/${post_id}`}
-                                className={styles['chirp__timestamp']}
-                            >
-                                {date(post_time)}
-                            </Link>
-                        </section>
-                    </section>
-                    <Link
-                        to={`/${post_owner}/status/${post_id}`}
-                        className={styles['chirp__message']}
-                    >
-                        <p>{message}</p>
-                    </Link>
+                    <ChirpHeader owner={post_owner} id={post_id} time={post_time} />
+                    <ChirpMessage owner={post_owner} id={id} message={message} />
                     <ChirpIcons options={chirpOptions} />
                 </section>
-                <section className={styles.chirp__options}>
-                    <button>···</button>
-                </section>
+                <ChirpOption />
             </section>
         </article>
     )
