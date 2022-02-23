@@ -20,6 +20,7 @@ const Chirp = ({
     timestamp,
     rechirp,
     image,
+    imageURL,
     dispatch
 }) => {
     const { state } = useContext(AuthContext)
@@ -41,7 +42,7 @@ const Chirp = ({
         {
             count: rechirps,
             active: isChirpRechirped,
-            onClick: onRechirpRequest.bind(this, dispatch, id, message, timestamp, image, isChirpRechirped, isChirpLiked, rechirps, rechirp, user, state.user)
+            onClick: onRechirpRequest.bind(this, dispatch, id, message, timestamp, imageURL, image, isChirpRechirped, isChirpLiked, rechirps, rechirp, user, state.user)
         },
         {
             count: likes,
@@ -57,7 +58,8 @@ const Chirp = ({
                 <ChirpImage owner={post_owner} image={image} />
                 <section className={styles['chirp__body']}>
                     <ChirpHeader owner={post_owner} id={post_id} time={post_time} />
-                    <ChirpMessage owner={post_owner} id={id} message={message} />
+                    {message !== '**empty**' && <ChirpMessage owner={post_owner} id={id} message={message} />}
+                    {imageURL && <img src={imageURL} className={styles['chirp__image']} />}
                     <ChirpIcons options={chirpOptions} />
                 </section>
                 <ChirpOption />

@@ -91,3 +91,11 @@
     background-color: rgba(29,155,240,0.1);
     color: #099bf5;
 }
+
+.chirp__image {
+    max-width: 500px;
+    min-width: 500px;
+    border-radius: 3rem;
+    scale: 90%;
+    transform: translateX(-9%);
+}

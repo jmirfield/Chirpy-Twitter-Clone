@@ -35,7 +35,7 @@ const ChirpInput = ({ text, image, onChange, onImage, onCancel, onSubmit }) => {
             {image && (
                 <>
                     <Icon d={CANCEL.d} height='24px' width='24px' fill='white' className={styles['staged-cancel']} onClick={onCancel}/>
-                    <img className={styles.staged} src={image} />
+                    <img className={styles.staged} src={image.blob} />
                 </>
             )}
             <section className={className}>

@@ -26,6 +26,7 @@ const ChirpList = ({ chirps, dispatch, error, isLoading }) => {
                 likesCount,
                 isLiked,
                 createdAt,
+                imageURL = null,
                 user = null,
                 rechirp = null
             }) => {
@@ -43,6 +44,7 @@ const ChirpList = ({ chirps, dispatch, error, isLoading }) => {
                         isChirpLiked={isLiked}
                         timestamp={createdAt}
                         rechirp={rechirp}
+                        imageURL={imageURL}
                         image={!user ? state.profileImage : image}
                         dispatch={dispatch}
                     />

@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react'
-import { newChirpRequest } from '../../actions/chirps'
+import { newChirpRequest, newChirpRequestWithImage  } from '../../actions/chirps'
 import AuthContext from '../../context/AuthContext'
 import ChirpInput from '../UI/ChirpInput/ChirpInput'
 import ProfileImage from '../UI/ProfileImage/ProfileImage'
@@ -9,22 +9,30 @@ const NewChirp = (props) => {
     const [textInput, setTextInput] = useState('')
     const [image, setImage] = useState(null)
     const textChangeHandler = (e) => setTextInput(e.target.value)
-    const resetTextHandler = () => setTextInput('')
+    const resetHandler = () => {
+        setTextInput('')
+        setImage(null)
+    }
 
     const { state } = useContext(AuthContext)
 
     const stageImageHandler = (e) => {
         e.preventDefault()
-        setImage(URL.createObjectURL(e.target.files[0]))
+        setImage({ blob: URL.createObjectURL(e.target.files[0]), data: e.target.files[0] })
     }
 
     const cancelStagedImageHandler = () => setImage(null)
 
     const onSubmitChirpHandler = (e) => {
         e.preventDefault()
-        console.log(image)
-        if (textInput.trim().length > 0) newChirpRequest(textInput, props.onNewChirp, props.isModal, props.onClose)
-        resetTextHandler()
+        if (textInput.trim().length > 0 && !image) newChirpRequest(textInput, props.onNewChirp, props.isModal, props.onClose)
+        if (image) {
+            const data = new FormData()
+            data.append('text', textInput)
+            data.append('image', image.data)
+            newChirpRequestWithImage(data, props.onNewChirp, props.isModal, props.onClose)
+        }
+        resetHandler()
     }
 
     const newChirpClass = props.className

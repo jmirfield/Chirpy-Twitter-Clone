@@ -19,6 +19,7 @@ export const logout = () => API.post('users/logout')
 
 export const getMainFeed = () => API.get('chirps/feed')
 export const newChirp = (content) => API.post('chirps', content)
+export const newChirpWithImage = (content) => API.post('chirps/image', content, { headers: { 'Content-Type': content.type } })
 export const likeChirp = (id) => API.patch('users/like', id)
 export const unLikeChirp = (id) => API.patch('users/unlike', id)
 export const addRechirp = (req) => API.post('chirps/rechirp', req)
