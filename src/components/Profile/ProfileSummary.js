@@ -1,7 +1,7 @@
-import React, { useContext, useRef } from 'react'
+import React, { useContext, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import AuthContext from '../../context/AuthContext'
-import { followRequest, unfollowRequest, uploadProfileImageRequest } from '../../actions/profile'
+import { followRequest, unfollowRequest, uploadProfileImageRequest, uploadProfileBannerRequest } from '../../actions/profile'
 import ProfileButton from '../UI/ProfileButton/ProfileButton'
 import ProfileImage from '../UI/ProfileImage/ProfileImage'
 import styles from './styles.module.css'
@@ -12,6 +12,7 @@ const ProfileSummary = (props) => {
     const myProfile = user === state.user
     const profilePicRef = useRef(null)
     const profileBannerRef = useRef(null)
+    const [banner, setBanner] = useState(props.banner || null)
 
     const updateProfilePictureHandler = () => {
         profilePicRef.current.click()
@@ -32,23 +33,27 @@ const ProfileSummary = (props) => {
 
     const profileBannerHandler = (e) => {
         e.preventDefault()
-        console.log('click')
+        const data = new FormData()
+        data.append('image', e.target.files[0])
+        uploadProfileBannerRequest(data, (data) => {
+            setBanner(data)
+        })
     }
 
     return (
         <>
-            <img className={styles['profile__banner']} src='' onClick={myProfile ? updateProfileBannerHandler : null}/>
+            <img className={styles['profile__banner']} src={banner} onClick={myProfile ? updateProfileBannerHandler : null} />
             {myProfile && <input
                 type='file'
                 style={{ 'display': 'none' }}
                 ref={profileBannerRef}
                 onChange={profileBannerHandler}
                 accept='image/*'
-            /> }
+            />}
             <ProfileImage
                 className={styles['profile__picture']}
                 onClick={myProfile ? updateProfilePictureHandler : null}
-                src={myProfile ? state.profileImage : props.src}
+                src={myProfile ? state.profileImage : props.pic}
             />
             {myProfile && <input
                 type='file'
