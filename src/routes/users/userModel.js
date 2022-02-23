@@ -31,6 +31,9 @@ const UserSchema = new Schema({
     image: {
         type: String
     },
+    banner: {
+        type: String
+    },
     tokens: [{
         token: {
             type: String,

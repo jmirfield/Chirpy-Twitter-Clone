@@ -69,11 +69,12 @@ class UserController {
                 ? await User.findOne({ username: req.params.username }).populate({ path: 'following' })
                 : req.user
             if (user === null) throw new Error('User not found')
-            await req.user.populate({ path: 'following' })
+            await req.user.populate({ path: 'following'})
             const isFollowing = req.user.following.some(u => u.following_id.equals(user._id))
             res.send({
                 id: user._id,
                 pic: user.image || null,
+                banner: user.banner || null,
                 isFollowing,
                 followingCount: user.followingCount,
                 followerCount: user.followerCount,
@@ -190,6 +191,27 @@ class UserController {
             }, async (error, result) => {
                 if(error)throw new Error(error)
                 req.user.image = result.secure_url
+                await req.user.save()
+                res.send(result.secure_url)
+            }).end(req.file.buffer)
+        } catch (e) {
+            console.log(e)
+            res.status(400).send()
+        }
+    }
+
+    uploadBanner = async (req, res) => {
+        try {
+            cloudinary.uploader.upload_stream({
+                public_id: `profile/banner/${req.user._id}`,
+                invalidate: true,
+                transformation: {
+                    width: 600,
+                    height: 200
+                }
+            }, async (error, result) => {
+                if(error)throw new Error(error)
+                req.user.banner = result.secure_url
                 await req.user.save()
                 res.send(result.secure_url)
             }).end(req.file.buffer)
