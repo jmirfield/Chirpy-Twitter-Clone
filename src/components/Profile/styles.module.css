@@ -98,12 +98,18 @@
     font-size: 1.5rem;
 }
 
-.profile__list > a {
+.profile__list {
+    list-style: none;
+}
+
+.profile__item > a {
     display: flex;
     text-decoration: none;
     color: white;
     align-items: center;
 }
+
+
 
 .profile__user__icon {
     height: 3rem;

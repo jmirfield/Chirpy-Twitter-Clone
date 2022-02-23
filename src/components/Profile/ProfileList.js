@@ -5,10 +5,10 @@ import styles from './styles.module.css'
 
 const ProfileList = (props) => {
     return (
-        <li>
+        <li className={styles.profile__list}>
             {props.users.map((user, idx) => {
                 return (
-                    <ul key={idx} className={styles.profile__list}>
+                    <ul key={idx} className={styles.profile__item}>
                         <Link to={`/${user}`}>
                             <ProfileImage className={styles.profile__user__icon} />
                             <span className={styles.profile__user}>{user}</span>

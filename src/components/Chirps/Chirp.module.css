@@ -5,8 +5,20 @@
     border-bottom: 1px solid rgb(95, 108, 116);
     min-width: 35vw;
     padding: .5rem;
+    animation: slidein 2s;
+    z-index: -1;
+    overflow: hidden;
 }
 
+@keyframes slidein {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    } 
+    to {
+        transform: translateY(0);
+    }
+}
 .chirp__main {
     display: flex;
     flex-grow: 1;
@@ -81,4 +93,3 @@
     margin-left: 0;
     overflow-wrap: break-word;
 }
-
