@@ -8,7 +8,7 @@ const ProfileButton = (props) => {
                 ? props.isFollowing
                     ? <button onClick={props.onUnfollow}>Following</button>
                     : <button onClick={props.onFollow}>Follow</button>
-                : <button>Edit Profile</button>
+                : <></>//<button>Edit Profile</button>
             )}
         </section>
     )

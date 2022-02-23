@@ -59,9 +59,10 @@
 
 .profile__picture {
     position: absolute;
-    transform: translateX(25%) translateY(-50%);
+    transform: translateX(-425%) translateY(85%);
     max-height: 120px;
     max-width: 120px;
+    min-height: 120px;
     background-color: #bbb;
     border-radius: 50%;
     z-index: 2;
@@ -115,6 +116,10 @@
     height: 3rem;
     margin-right: 1rem;
     border-radius: 5rem;
+    max-width: 50px;
+    min-width: 50px;
+    max-height: 50px;
+    min-height: 50px;
 }
 
 .profile__user {

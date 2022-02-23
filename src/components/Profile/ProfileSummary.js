@@ -1,42 +1,65 @@
-import React, { useContext, useRef } from 'react'
+import React, { useContext, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import AuthContext from '../../context/AuthContext'
-import { followRequest, unfollowRequest, uploadImageRequest } from '../../actions/profile'
+import { followRequest, unfollowRequest, uploadProfileImageRequest, uploadProfileBannerRequest } from '../../actions/profile'
 import ProfileButton from '../UI/ProfileButton/ProfileButton'
 import ProfileImage from '../UI/ProfileImage/ProfileImage'
 import styles from './styles.module.css'
 
 const ProfileSummary = (props) => {
-    const { state } = useContext(AuthContext)
+    const { state, dispatch } = useContext(AuthContext)
     const { user } = useParams()
     const myProfile = user === state.user
-    const inputFile = useRef(null)
+    const profilePicRef = useRef(null)
+    const profileBannerRef = useRef(null)
+    const [banner, setBanner] = useState(props.banner || null)
 
     const updateProfilePictureHandler = () => {
-        inputFile.current.click()
+        profilePicRef.current.click()
     }
 
-    const onFileChange = (e) => {
+    const updateProfileBannerHandler = () => {
+        profileBannerRef.current.click()
+    }
+
+    const profilePicHandler = (e) => {
         e.preventDefault()
         const data = new FormData()
         data.append('image', e.target.files[0])
-        uploadImageRequest(data, (data) => {
-            console.log(data)
+        uploadProfileImageRequest(data, (data) => {
+            dispatch({ type: 'NEW_PROFILE_PIC', payload: data })
+        })
+    }
+
+    const profileBannerHandler = (e) => {
+        e.preventDefault()
+        const data = new FormData()
+        data.append('image', e.target.files[0])
+        uploadProfileBannerRequest(data, (data) => {
+            setBanner(data)
         })
     }
 
     return (
         <>
-            <section className={styles['profile__banner']} />
+            <img className={styles['profile__banner']} src={banner} onClick={myProfile ? updateProfileBannerHandler : null} />
+            {myProfile && <input
+                type='file'
+                style={{ 'display': 'none' }}
+                ref={profileBannerRef}
+                onChange={profileBannerHandler}
+                accept='image/*'
+            />}
             <ProfileImage
                 className={styles['profile__picture']}
                 onClick={myProfile ? updateProfilePictureHandler : null}
+                src={myProfile ? state.profileImage : props.pic}
             />
             {myProfile && <input
                 type='file'
                 style={{ 'display': 'none' }}
-                ref={inputFile}
-                onChange={onFileChange}
+                ref={profilePicRef}
+                onChange={profilePicHandler}
                 accept='image/*'
             />}
             <section className={styles['profile__details']}>

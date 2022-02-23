@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Chirp from './Chirp'
 import LoadingFeed from '../Loading/LoadingFeed'
 import styles from './ChirpList.module.css'
+import AuthContext from '../../context/AuthContext'
 
 const ChirpList = ({ chirps, dispatch, error, isLoading }) => {
+    const { state } = useContext(AuthContext)
 
     if (isLoading) {
         return (
@@ -13,7 +15,6 @@ const ChirpList = ({ chirps, dispatch, error, isLoading }) => {
         )
     }
     if (!chirps || chirps.length === 0 || error) return <p className={styles['chirps-none']}>No chirps available...</p>
-
     return (
         <section className={styles.chirps}>
             {chirps.map(({
@@ -25,8 +26,12 @@ const ChirpList = ({ chirps, dispatch, error, isLoading }) => {
                 likesCount,
                 isLiked,
                 createdAt,
+                imageURL = null,
+                user = null,
                 rechirp = null
             }) => {
+                let image;
+                if(user)image = !rechirp ? user[0].image : rechirp.original_image
                 return (
                     <Chirp
                         key={_id}
@@ -39,6 +44,8 @@ const ChirpList = ({ chirps, dispatch, error, isLoading }) => {
                         isChirpLiked={isLiked}
                         timestamp={createdAt}
                         rechirp={rechirp}
+                        imageURL={imageURL}
+                        image={!user ? state.profileImage : image}
                         dispatch={dispatch}
                     />
                 )

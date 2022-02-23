@@ -6,13 +6,16 @@ import {
     unfollowUser,
     getUserFollowings,
     getUserFollowers,
-    uploadImage
+    uploadImage,
+    uploadBanner
 } from "../api/request"
 
 export const getUserProfileRequest = async (user, dispatch) => {
     try {
         const { data } = await getUserProfile(user)
         const { id,
+            pic,
+            banner,
             isFollowing,
             followingCount,
             followerCount,
@@ -22,6 +25,8 @@ export const getUserProfileRequest = async (user, dispatch) => {
             type: 'PROFILE_READ',
             payload: {
                 id,
+                pic,
+                banner,
                 isFollow: isFollowing,
                 followingCount: followingCount || 0,
                 followerCount: followerCount || 0,
@@ -117,9 +122,18 @@ export const getUserFollowersRequest = async (user, cb) => {
     }
 }
 
-export const uploadImageRequest = async (img, cb) => {
+export const uploadProfileImageRequest = async (img, cb) => {
     try {
         const { data } = await uploadImage(img)
+        cb(data)
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+export const uploadProfileBannerRequest = async (img, cb) => {
+    try {
+        const { data } = await uploadBanner(img)
         cb(data)
     } catch (e) {
         console.log(e)

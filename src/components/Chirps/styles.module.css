@@ -6,8 +6,6 @@
     min-width: 35vw;
     padding: .5rem;
     animation: slidein .5s;
-    z-index: -1;
-    overflow: hidden;
 }
 
 @keyframes slidein {
@@ -15,10 +13,9 @@
         transform: translateY(-100%);
         opacity: 0;
     } 
-    50% {
+    30% {
         opacity: 0;
     }
-
     to {
         transform: translateY(0);
     }
@@ -30,26 +27,54 @@
     overflow: hidden;
 }
 
-.chirp__icon {
-    max-height: 50px;
-    min-width: 50px;
-    background-color: #bbb;
-    border-radius: 50%;
-    margin-top: .25rem;
-  }
-
 .chirp__body {
     margin: .5rem 0 0 1rem;
     flex-grow: 1;
 }
 
-.chirp__header {
-    display: flex;
-    justify-content: space-between;
+.chirp__icon {
+    max-height: 50px;
+    min-width: 50px;
+    min-height: 50px;
+    max-width: 50px;
+    background-color: #bbb;
+    border-radius: 50%;
+    margin-top: .25rem;
+  }
+
+.chirp__header > span {
+    margin: 0 .25rem 0 .5rem;
 }
 
-.chirp__header span {
-    margin: 0 .25rem 0 .5rem;
+.chirp__user {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+
+.chirp__user:hover {
+    text-decoration: 1px underline;
+}
+
+.chirp__timestamp {
+    text-decoration: none;
+    color: rgb(101, 119, 134);
+}
+
+.chirp__timestamp:hover {
+    text-decoration: underline;
+}
+
+.chirp__message {
+    text-decoration: none;
+    color:white;
+}
+
+.chirp__message > p {
+    margin-bottom: .5rem;
+    font-weight: normal;
+    margin-left: 0;
+    overflow-wrap: break-word;
 }
 
 .chirp__options button {
@@ -67,33 +92,10 @@
     color: #099bf5;
 }
 
-.chirp__timestamp {
-    text-decoration: none;
-    color: rgb(101, 119, 134);
-}
-
-.chirp__timestamp:hover {
-    text-decoration: underline;
-}
-
-.chirp__user {
-    text-decoration: none;
-    color: white;
-    font-weight: bold;
-}
-
-.chirp__user:hover {
-    text-decoration: 1px underline;
-}
-
-.chirp__message {
-    text-decoration: none;
-    color:white;
-}
-
-.chirp__message p {
-    margin-bottom: .5rem;
-    font-weight: normal;
-    margin-left: 0;
-    overflow-wrap: break-word;
+.chirp__image {
+    max-width: 500px;
+    min-width: 500px;
+    border-radius: 3rem;
+    scale: 90%;
+    transform: translateX(-9%);
 }

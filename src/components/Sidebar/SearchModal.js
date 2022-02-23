@@ -9,7 +9,9 @@ const SearchModal = (props) => {
       backdropClass={styles.backdrop}
       onClick={props.onClose}
     >
-      Test
+      <p>
+        Try searching for people, topics, or keywords
+      </p>
     </Modal>
   )
 }
