@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom'
 import AuthContext from '../../context/AuthContext'
 import Icon from '../UI/Icon/Icon'
 import { RECHIRP } from '../../constants/icon'
-import styles from './Rechirp.module.css'
+import styles from './styles.module.css'
 
-const Rechirp = (props) => {
+const ChirpRechirpHeader = (props) => {
     const { state } = useContext(AuthContext)
     return (
-        <section className={styles['rechirp']}>
+        <section className={styles['chirp__rechirp']}>
             <Icon
                 width='14px'
                 height='14px'
@@ -26,4 +26,4 @@ const Rechirp = (props) => {
     )
 }
 
-export default Rechirp
+export default ChirpRechirpHeader

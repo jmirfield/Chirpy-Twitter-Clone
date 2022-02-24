@@ -25,7 +25,11 @@ const Sidebar = () => {
         onChange={searchChangeHandler}
         onFocus={openModalHandler}
       />
-      {openModal && <SearchModal onClose={closeModalHandler} />}
+      {openModal &&
+        <SearchModal
+          onClose={closeModalHandler}
+        />
+      }
     </aside>
   )
 }

@@ -2,7 +2,7 @@ import React, { useContext, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import AuthContext from '../../context/AuthContext'
 import { followRequest, unfollowRequest, uploadProfileImageRequest, uploadProfileBannerRequest } from '../../actions/profile'
-import ProfileButton from '../UI/ProfileButton/ProfileButton'
+import FollowButton from '../UI/FollowButton/FollowButton'
 import ProfileImage from '../UI/ProfileImage/ProfileImage'
 import styles from './styles.module.css'
 
@@ -63,7 +63,7 @@ const ProfileSummary = (props) => {
                 accept='image/*'
             />}
             <section className={styles['profile__details']}>
-                <ProfileButton
+                <FollowButton
                     onFollow={followRequest.bind(this, props.id, props.dispatch)}
                     onUnfollow={unfollowRequest.bind(this, props.id, props.dispatch)}
                     isFollowing={props.isFollowing}

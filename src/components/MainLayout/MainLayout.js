@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useContext } from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useResolvedPath } from 'react-router-dom'
 import AuthContext from '../../context/AuthContext'
 import Menubar from '../Menubar/Menubar'
 import Sidebar from '../Sidebar/Sidebar'
@@ -8,6 +8,7 @@ import styles from './MainLayout.module.css'
 
 const MainLayout = () => {
     const [composeChirp, setComposeChirp] = useState(false)
+    const [onExplore, setOnExplore] = useState(false)
     const { state } = useContext(AuthContext)
 
     const onOpenNewChirpHandler = useCallback(() => {
@@ -23,9 +24,9 @@ const MainLayout = () => {
         <div className={styles['layout']}>
             <Menubar onOpenModal={onOpenNewChirpHandler} username={state.user} />
             <main className={styles['layout__main']}>
-                <Outlet />
+                <Outlet context={{ setOnExplore }} />
             </main>
-            <Sidebar />
+            {!onExplore && <Sidebar />}
             {composeChirp && <ChirpModal onClose={onCloseNewChirpHandler} />}
         </div>
     )

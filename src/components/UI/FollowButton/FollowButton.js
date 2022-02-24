@@ -1,7 +1,7 @@
 import React from 'react'
-import styles from './ProfileButton.module.css'
+import styles from './FollowButton.module.css'
 
-const ProfileButton = (props) => {
+const FollowButton = (props) => {
     return (
         <section className={styles.controls}>
             {!props.error && (!props.myProfile
@@ -14,4 +14,4 @@ const ProfileButton = (props) => {
     )
 }
 
-export default ProfileButton
+export default FollowButton

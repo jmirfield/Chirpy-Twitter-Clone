@@ -28,7 +28,7 @@ const ChirpInput = ({ text, image, onChange, onImage, onCancel, onSubmit }) => {
                 value={text}
                 onChange={onChange}
                 onFocus={focusHandler}
-                minRows={2}
+                minRows={1}
                 maxRows={4}
 
             />

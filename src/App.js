@@ -15,6 +15,8 @@ import ProfileRelationships from './components/Profile/ProfileRelationships';
 import ProfileFollowings from './components/Profile/ProfileFollowing';
 import ProfileFollowers from './components/Profile/ProfileFollower';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import ProfileMedia from './components/Profile/ProfileMedia';
+import Explore from './components/Explore/Explore';
 
 const App = () => {
   const { state } = useContext(AuthContext)
@@ -49,13 +51,13 @@ const App = () => {
       <Routes>
         <Route path='/' element={<MainLayout />} >
           <Route path='home' element={<Home />} />
-          <Route path='explore' element={<p>EXPLORE PAGE</p>} />
+          <Route path='explore' element={<Explore />} />
           <Route path='notifications' element={<p>NOTFICATIONS PAGE</p>} />
           <Route path='messages' element={<p>MESSAGES PAGE</p>} />
           <Route path='flow/bookmarks' element={<p>BOOKMARKS PAGE</p>} />
           <Route path=':user' element={<Profile />} >
             <Route path='' element={<ProfileFeed />} />
-            <Route path='media' element={<h1>Media coming</h1>} />
+            <Route path='media' element={<ProfileMedia />} />
             <Route path='likes' element={<ProfileLikes />} />
           </Route>
           <Route path=':user/*' element={<ProfileRelationships />}>

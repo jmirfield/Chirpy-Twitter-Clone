@@ -1,21 +1,17 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { getUserProfileFeedRequest } from '../../actions/profile'
-import AuthContext from '../../context/AuthContext'
+import { getUserProfileMediaRequest } from '../../actions/profile'
 import useFeed from '../../hooks/useFeed'
 import ChirpList from '../Chirps/ChirpList'
 
-const ProfileFeed = () => {
-    const { state } = useContext(AuthContext)
+const ProfileMedia = () => {
     const [{ feed, isLoading, error }, feedDispatch] = useFeed()
     const params = useParams()
-    const myProfile = params.user === state.user
 
     useEffect(() => {
-        getUserProfileFeedRequest(params.user, feedDispatch, myProfile)
+        getUserProfileMediaRequest(params.user, feedDispatch)
         return () => {
-            feedDispatch({ type: 'RESET' })
-            
+            feedDispatch({type: 'RESET'})
         }
     }, [])
 
@@ -29,4 +25,4 @@ const ProfileFeed = () => {
     )
 }
 
-export default ProfileFeed
+export default ProfileMedia

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import AuthContext from '../../context/AuthContext'
 import { likeChirpRequest, onRechirpRequest } from '../../actions/chirps'
-import Rechirp from './Rechirp'
+import ChirpRechirpHeader from './ChirpRechirpHeader'
 import ChirpIcons from './ChirpIcons'
 import ChirpHeader from './ChirpHeader'
 import ChirpMessage from './ChirpMessage'
@@ -37,7 +37,7 @@ const Chirp = (props) => {
 
     return (
         <article className={styles['chirp']} key={props.id}>
-            {props.rechirp && <Rechirp user={props.user} />}
+            {props.rechirp && <ChirpRechirpHeader user={props.user} />}
             <section className={styles['chirp__main']}>
                 <ChirpPostIcon owner={post_owner} image={props.image} />
                 <section className={styles['chirp__body']}>

@@ -1,6 +1,7 @@
 import {
     getUserProfile,
     getUserProfileFeed,
+    getUserMedia,
     getUserLikes,
     followUser,
     unfollowUser,
@@ -54,6 +55,28 @@ export const getUserProfileFeedRequest = async (user, dispatch, myProfile) => {
                 liked: likedChirps,
                 rechirped: retweetedChirps,
                 myProfile
+            }
+        })
+    } catch (e) {
+        console.log(e)
+        dispatch({ type: 'ERROR' })
+    }
+}
+
+export const getUserProfileMediaRequest = async (user, dispatch) => {
+    try {
+        const { data } = await getUserMedia(user)
+        const {
+            feed,
+            likedChirps,
+            retweetedChirps
+        } = data
+        dispatch({
+            type: 'INIT_SYNC',
+            payload: {
+                feed,
+                liked: likedChirps,
+                rechirped: retweetedChirps
             }
         })
     } catch (e) {

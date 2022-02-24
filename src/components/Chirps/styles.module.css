@@ -20,6 +20,24 @@
         transform: translateY(0);
     }
 }
+
+.chirp__rechirp {
+    display: flex;
+    margin: 0 0 0 3.5rem;
+    align-items: center;
+}
+
+.chirp__rechirp > a {
+    text-decoration: none;
+    color: rgb(101, 119, 134);
+    font-size: 90%;
+    margin-left: .5rem;
+}
+
+.chirp__rechirp > a:hover {
+    text-decoration: underline;
+}
+
 .chirp__main {
     display: flex;
     flex-grow: 1;
