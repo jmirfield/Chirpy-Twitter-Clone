@@ -52,6 +52,20 @@
     fill: rgb(249,24,128);
 }
 
+.chirp__actions-icon:active {
+    animation: bigsmall 1s;
+}
+
+@keyframes bigsmall {
+    from {
+        transform: scale(110%);
+    }
+    to {
+        transform: scale(100%);
+    }
+    
+}
+
 .chirp__actions-icon__count {
     display: flex;
     padding: .5rem;

@@ -48,7 +48,7 @@
     flex-direction: column;
     flex-grow: 1;
     justify-content: space-between;
-    width: 70%;
+    width: 90%;
 }
 
 .menu__chirp {
@@ -106,7 +106,12 @@
 
     .menu__actions {
         align-self: center;
+        align-items: center;
         width: fit-content;
+    }
+
+    .menu__chirp {
+        width: 50px;
     }
 
     .menu__item {
