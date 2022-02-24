@@ -27,7 +27,7 @@ export const getMainChirpFeed = async (dispatch) => {
 
 export const newChirpRequest = async (content, onNewChirp, isModal, onClose) => {
     try {
-        const { data } = await newChirp({ content })
+        const { data } = await newChirp({ content, imageURL: '' })
         if (isModal) {
             onClose()
             window.location.reload(false)
@@ -55,7 +55,7 @@ export const newChirpRequestWithImage = async (content, onNewChirp, isModal, onC
     }
 }
 
-export const likeChirpRequest = async (dispatch, id, isChirpLiked, likes, rechirp) => {
+export const likeChirpRequest = async ({dispatch, id, isChirpLiked, likes, rechirp}) => {
     const req = !rechirp ? id : rechirp.original_id
     if (!isChirpLiked) {
         try {
@@ -86,7 +86,7 @@ export const likeChirpRequest = async (dispatch, id, isChirpLiked, likes, rechir
     }
 }
 
-export const onRechirpRequest = async (dispatch, id, message, timestamp, imageURL = null, image, isChirpRechirped, isChirpLiked, rechirps, rechirp, user, client) => {
+export const onRechirpRequest = async ({dispatch, id, message, timestamp, imageURL = null, image, isChirpRechirped, isChirpLiked, rechirps, rechirp, user}, client) => {
     if (!isChirpRechirped) {
         try {
             const req = !rechirp ? {
@@ -113,7 +113,7 @@ export const onRechirpRequest = async (dispatch, id, message, timestamp, imageUR
                 payload: {
                     chirp: {
                         ...chirp,
-                        user: [{ image: chirp.rechirp.original_image }], //Need to find better solution
+                        user: chirp.rechirp.original_image, //Need to find better solution
                         isLiked: isChirpLiked,
                         isRechirped: isChirpRechirped
                     },

@@ -1,9 +1,8 @@
 .sidebar {
     position: fixed;
     margin-left: 1rem;
-    width: 25%;
-    right: 4%;
-    z-index: 6;
+    width: 20%;
+    right: 9%;
 }
 
 .backdrop {
@@ -17,9 +16,9 @@
 
 .modal {
     position: fixed;
-    right: 4%;
+    width: 20%;
+    right: 9%;
     top: 5%;
-    width: 25%;
     min-height: 5rem;
     background-color: black;
     border-radius: 8px;
@@ -29,7 +28,7 @@
     box-shadow: 0 0 3px white;
 }
 
-@media (width < 920px) {
+@media (width < 1075px) {
     .sidebar {
         display: none;
     }

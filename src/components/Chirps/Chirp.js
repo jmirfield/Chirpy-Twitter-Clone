@@ -5,61 +5,45 @@ import Rechirp from './Rechirp'
 import ChirpIcons from './ChirpIcons'
 import ChirpHeader from './ChirpHeader'
 import ChirpMessage from './ChirpMessage'
-import ChirpImage from './ChirpImage'
+import ChirpPostIcon from './ChirpPostIcon'
 import styles from './styles.module.css'
 import ChirpOption from './ChirpOption'
+import ChirpImage from './ChirpImage'
 
-const Chirp = ({
-    id,
-    user,
-    message,
-    rechirps,
-    isChirpRechirped,
-    likes,
-    isChirpLiked,
-    timestamp,
-    rechirp,
-    image,
-    imageURL,
-    dispatch
-}) => {
+const Chirp = (props) => {
     const { state } = useContext(AuthContext)
 
-    const testHandler = () => {
-        console.log('test')
-    }
-
-    const post_owner = rechirp ? rechirp.original_owner : user
-    const post_id = rechirp ? rechirp.original_id : id
-    const post_time = rechirp ? rechirp.original_time : timestamp
+    const post_owner = props.rechirp ? props.rechirp.original_owner : props.user
+    const post_id = props.rechirp ? props.rechirp.original_id : props.id
+    const post_time = props.rechirp ? props.rechirp.original_time : props.timestamp
 
     const chirpOptions = [
         {
             count: 0,
             active: false,
-            onClick: testHandler
+            onClick: () => console.log('reply')
         },
         {
-            count: rechirps,
-            active: isChirpRechirped,
-            onClick: onRechirpRequest.bind(this, dispatch, id, message, timestamp, imageURL, image, isChirpRechirped, isChirpLiked, rechirps, rechirp, user, state.user)
+            count: props.rechirps,
+            active: props.isChirpRechirped,
+            onClick: onRechirpRequest.bind(this, props, state.user)
         },
         {
-            count: likes,
-            active: isChirpLiked,
-            onClick: likeChirpRequest.bind(this, dispatch, id, isChirpLiked, likes, rechirp)
+            count: props.likes,
+            active: props.isChirpLiked,
+            onClick: likeChirpRequest.bind(this, props)
         }
     ]
 
     return (
-        <article className={styles['chirp']} key={id}>
-            {rechirp && <Rechirp user={user} />}
+        <article className={styles['chirp']} key={props.id}>
+            {props.rechirp && <Rechirp user={props.user} />}
             <section className={styles['chirp__main']}>
-                <ChirpImage owner={post_owner} image={image} />
+                <ChirpPostIcon owner={post_owner} image={props.image} />
                 <section className={styles['chirp__body']}>
                     <ChirpHeader owner={post_owner} id={post_id} time={post_time} />
-                    {message !== '**empty**' && <ChirpMessage owner={post_owner} id={id} message={message} />}
-                    {imageURL && <img src={imageURL} className={styles['chirp__image']} />}
+                    {props.message !== '**empty**' && <ChirpMessage owner={post_owner} id={props.id} message={props.message} />}
+                    {props.imageURL && <ChirpImage  owner={post_owner} id={props.id} imageURL={props.imageURL}/>}
                     <ChirpIcons options={chirpOptions} />
                 </section>
                 <ChirpOption />

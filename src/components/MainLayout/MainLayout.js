@@ -18,6 +18,7 @@ const MainLayout = () => {
         setComposeChirp(false)
     }, [])
 
+
     return (
         <div className={styles['layout']}>
             <Menubar onOpenModal={onOpenNewChirpHandler} username={state.user} />

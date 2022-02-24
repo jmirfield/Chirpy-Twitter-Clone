@@ -14,7 +14,9 @@ const ChirpList = ({ chirps, dispatch, error, isLoading }) => {
             </div>
         )
     }
+
     if (!chirps || chirps.length === 0 || error) return <p className={styles['chirps-none']}>No chirps available...</p>
+
     return (
         <section className={styles.chirps}>
             {chirps.map(({
@@ -31,7 +33,7 @@ const ChirpList = ({ chirps, dispatch, error, isLoading }) => {
                 rechirp = null
             }) => {
                 let image;
-                if(user)image = !rechirp ? user[0].image : rechirp.original_image
+                if(user)image = !rechirp ? user : rechirp.original_image
                 return (
                     <Chirp
                         key={_id}
