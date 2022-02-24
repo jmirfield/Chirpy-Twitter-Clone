@@ -10,7 +10,8 @@ router.post('/chirps/image', auth, upload.any(), controller.createChirpWithImage
 router.post('/chirps/rechirp', auth, controller.addRechirp)
 router.delete('/chirps/rechirp/delete', auth, controller.deleteRechirp)
 router.get('/chirps/feed', auth, controller.getCurrentUserChirpFeed)
-router.get('/chirps/auth/:username', auth, controller.getUserChirps)
-router.post('/chirps/liked', auth, controller.getUserLikedChirps)
+router.get('/chirps/profile/auth/:username', auth, controller.getUserChirps)
+router.get('/chirps/profile/media/:username', auth, controller.getUserMedia)
+router.post('/chirps/profile/likes', auth, controller.getUserLikedChirps)
 
 module.exports = router

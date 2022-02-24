@@ -1,5 +1,4 @@
 const Chirp = require('./chirpModel')
-const User = require('../users/userModel')
 const cloudinary = require('cloudinary').v2
 
 class ChirpController {
@@ -151,6 +150,31 @@ class ChirpController {
         } catch (e) {
             console.log(e)
             res.status(404).send()
+        }
+    }
+
+    getUserMedia = async (req, res) => {
+        try {
+            const chirps = (await Chirp.find({
+                $and: [
+                    { 'owner_username': req.params.username },
+                    { 'rechirp': { '$exists': false } },
+                    { 'imageURL': { '$ne': '' }, }
+                ]
+            }, null, {
+                sort: { createdAt: -1 },
+                lean: true
+            }).populate({
+                path: 'user',
+                select: 'image'
+            })).map(chirp => ({ ...chirp, user: chirp.user[0].image }))
+            res.send({
+                feed: chirps,
+                likedChirps: req.user.likedChirps,
+                retweetedChirps: req.user.retweetedChirps
+            })
+        } catch (e) {
+            res.status(400).send()
         }
     }
 

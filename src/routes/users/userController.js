@@ -69,7 +69,7 @@ class UserController {
                 ? await User.findOne({ username: req.params.username }).populate({ path: 'following' })
                 : req.user
             if (user === null) throw new Error('User not found')
-            await req.user.populate({ path: 'following'})
+            await req.user.populate({ path: 'following' })
             const isFollowing = req.user.following.some(u => u.following_id.equals(user._id))
             res.send({
                 id: user._id,
@@ -92,7 +92,7 @@ class UserController {
                 ? await User.findOne({ username: req.params.username }).populate({ path: 'following' })
                 : req.user
             const relationships = await Relationship.find({ user_id: user._id })
-                .populate('following')
+                .populate({ path: 'following', select: ['username', 'image'] })
             const followings = relationships.filter(id => {
                 if (!id.following[0]) return false
                 return !id.following_id.equals(id.user_id)
@@ -111,7 +111,7 @@ class UserController {
                 ? await User.findOne({ username: req.params.username }).populate({ path: 'following' })
                 : req.user
             const relationships = await Relationship.find({ following_id: user._id })
-                .populate('follower')
+                .populate({path: 'follower', select: ['username', 'image']})
             const followers = relationships.filter(id => {
                 if (!id.follower[0]) return false
                 return !id.following_id.equals(id.user_id)
@@ -189,7 +189,7 @@ class UserController {
                     height: 200
                 }
             }, async (error, result) => {
-                if(error)throw new Error(error)
+                if (error) throw new Error(error)
                 req.user.image = result.secure_url
                 await req.user.save()
                 res.send(result.secure_url)
@@ -210,7 +210,7 @@ class UserController {
                     height: 200
                 }
             }, async (error, result) => {
-                if(error)throw new Error(error)
+                if (error) throw new Error(error)
                 req.user.banner = result.secure_url
                 await req.user.save()
                 res.send(result.secure_url)
