@@ -19,6 +19,7 @@ const NewChirp = (props) => {
     const stageImageHandler = (e) => {
         e.preventDefault()
         setImage({ blob: URL.createObjectURL(e.target.files[0]), data: e.target.files[0] })
+        e.target.value=''
     }
 
     const cancelStagedImageHandler = () => setImage(null)

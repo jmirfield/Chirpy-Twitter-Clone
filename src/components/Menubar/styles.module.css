@@ -61,6 +61,7 @@
 
 .menu__logout {
     display: flex;
+    align-items: center;
     height: 4rem;
     border-radius: 10rem;
     text-decoration: none;
@@ -79,7 +80,9 @@
     height: 100%;
     border-radius: 10rem;
     margin-left: .5rem;
-    max-width: 50px;
+    max-width: 55px;
+    min-width: 55px;
+    max-height: 55px;
 }
 
 .menu__user {
