@@ -17,3 +17,17 @@
     background-color: #0b3874;
     color: rgb(106, 98, 98)
 }
+
+.button:active {
+    animation: bigsmall .5s;
+}
+
+@keyframes bigsmall {
+    from {
+        transform: scale(110%);
+    }
+    to {
+        transform: scale(100%);
+    }
+    
+}

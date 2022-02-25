@@ -21,3 +21,9 @@
     transform:scaleY(1) scaleX(1);
     transform:translateX(-50%);
   }
+
+  @media (height < 720px) {
+    .modal {
+      max-width: 20rem;
+    }
+  }

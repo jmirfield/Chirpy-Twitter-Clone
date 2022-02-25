@@ -30,6 +30,7 @@
     display: flex;
     padding: 1rem;
     text-decoration: none;
+    align-items: center;
 }
 
 .menu__item > a:hover {
@@ -136,5 +137,40 @@
 
     .menu__user {
         display: none;
+    }
+}
+
+@media (height < 720px) {
+
+    .menu__nav {
+        width: 50%;
+    }
+
+    .menu__item > a { 
+        padding: .5rem;
+    }
+
+    .menu__chirp {
+        display: flex;
+        max-height: 2rem;
+        max-width: 7rem;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .menu__actions {
+        display: flex;
+        align-items: flex-start !important;
+    }
+
+    .menu__label {
+        margin-left: 1rem;
+        font-size: 14px;
+        color: white;
+    }
+
+    .menu__logout > span{
+        font-size: 12px !important;
+        padding-right: 1rem;
     }
 }
