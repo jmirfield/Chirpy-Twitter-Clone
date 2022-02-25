@@ -14,7 +14,7 @@
         opacity: 0;
     } 
     30% {
-        opacity: 0;
+        opacity: 20%;
     }
     to {
         transform: translateY(0);

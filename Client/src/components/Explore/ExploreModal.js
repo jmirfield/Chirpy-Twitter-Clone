@@ -1,5 +1,6 @@
 import React from 'react'
 import Modal from '../UI/Modal/Modal'
+import ProfileList from '../Profile/ProfileList'
 import styles from './styles.module.css'
 
 const ExploreModal = (props) => {
@@ -9,9 +10,10 @@ const ExploreModal = (props) => {
       backdropClass={styles.backdrop}
       onClick={props.onClose}
     >
-      <p>
-        Try searching for people, topics, or keywords
-      </p>
+      {props.users.length === 0
+        ? <p>Try searching for people, topics, or keywords</p>
+        : <ProfileList users={props.users} />
+      }
     </Modal>
   )
 }

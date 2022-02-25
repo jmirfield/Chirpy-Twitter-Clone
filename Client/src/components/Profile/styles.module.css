@@ -104,6 +104,15 @@
     list-style: none;
 }
 
+.profile__item {
+    margin: 0;
+    padding: 1rem;
+}
+
+.profile__item:hover {
+    background-color: #272a2e;
+}
+
 .profile__item > a {
     display: flex;
     text-decoration: none;

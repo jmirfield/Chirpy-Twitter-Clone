@@ -8,7 +8,8 @@ import {
     getUserFollowings,
     getUserFollowers,
     uploadImage,
-    uploadBanner
+    uploadBanner,
+    getListOfUsers
 } from "../api/request"
 
 export const getUserProfileRequest = async (user, dispatch) => {
@@ -157,6 +158,15 @@ export const uploadProfileImageRequest = async (img, cb) => {
 export const uploadProfileBannerRequest = async (img, cb) => {
     try {
         const { data } = await uploadBanner(img)
+        cb(data)
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+export const getListOfUsersRequest = async (search, cb) => {
+    try {
+        const { data } = await getListOfUsers(search)
         cb(data)
     } catch (e) {
         console.log(e)
