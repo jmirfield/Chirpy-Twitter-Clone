@@ -111,7 +111,7 @@ class UserController {
                 ? await User.findOne({ username: req.params.username }).populate({ path: 'following' })
                 : req.user
             const relationships = await Relationship.find({ following_id: user._id })
-                .populate({path: 'follower', select: ['username', 'image']})
+                .populate({ path: 'follower', select: ['username', 'image'] })
             const followers = relationships.filter(id => {
                 if (!id.follower[0]) return false
                 return !id.following_id.equals(id.user_id)
@@ -215,6 +215,25 @@ class UserController {
                 await req.user.save()
                 res.send(result.secure_url)
             }).end(req.file.buffer)
+        } catch (e) {
+            console.log(e)
+            res.status(400).send()
+        }
+    }
+
+    getListOfUsers = async (req, res) => {
+        try {
+            const users = await User.find({
+                $and:
+                    [
+                        { 'username': { '$regex': new RegExp(req.params.username, 'i') } },
+                        { 'username': { '$ne': req.user.username } }
+                    ]
+            }, null, {
+                limit: 5,
+                lean: true
+            }).select(['username', 'image'])
+            res.send(users)
         } catch (e) {
             console.log(e)
             res.status(400).send()
