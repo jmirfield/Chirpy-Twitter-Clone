@@ -33,6 +33,7 @@ class UserController {
             res.status(201).send({ user, token, pic: user.image })
         } catch (e) {
             res.status(400).send()
+            console.log(e)
         }
     }
 
@@ -93,12 +94,15 @@ class UserController {
                 : req.user
             const relationships = await Relationship.find({ user_id: user._id })
                 .populate({ path: 'following', select: ['username', 'image'] })
+            await req.user.populate({ path: 'following' })
             const followings = relationships.filter(id => {
                 if (!id.following[0]) return false
                 return !id.following_id.equals(id.user_id)
             }).map(id => {
-                return { username: id.following[0].username, image: id.following[0].image }
+                const isFollowing = req.user.following.some(u => u.following_id.equals(id.following[0]._id))
+                return { username: id.following[0].username, image: id.following[0].image, isFollowing, id: id.following_id }
             })
+
             res.send(followings)
         } catch (e) {
             console.log(e)
@@ -112,11 +116,13 @@ class UserController {
                 : req.user
             const relationships = await Relationship.find({ following_id: user._id })
                 .populate({ path: 'follower', select: ['username', 'image'] })
+            await req.user.populate({ path: 'following' })
             const followers = relationships.filter(id => {
                 if (!id.follower[0]) return false
                 return !id.following_id.equals(id.user_id)
             }).map(id => {
-                return { username: id.follower[0].username, image: id.follower[0].image }
+                const isFollowing = req.user.following.some(u => u.following_id.equals(id.follower[0]._id))
+                return { username: id.follower[0].username, image: id.follower[0].image, isFollowing, id: id.user_id }
             })
             res.send(followers)
         } catch (e) {
@@ -223,7 +229,8 @@ class UserController {
 
     getListOfUsers = async (req, res) => {
         try {
-            const users = await User.find({
+            await req.user.populate({ path: 'following' })
+            const users = (await User.find({
                 $and:
                     [
                         { 'username': { '$regex': new RegExp(req.params.username, 'i') } },
@@ -232,7 +239,10 @@ class UserController {
             }, null, {
                 limit: 5,
                 lean: true
-            }).select(['username', 'image'])
+            }).select(['username', 'image'])).map(user => {
+                const isFollowing = req.user.following.some(u => u.following_id.equals(user._id))
+                return { username: user.username, image: user.image, isFollowing, id: user._id }
+            })
             res.send(users)
         } catch (e) {
             console.log(e)
