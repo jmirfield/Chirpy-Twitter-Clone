@@ -1,11 +1,16 @@
+/**
+ * Converts date string into string representing time since post was created relative to now
+ * @param  {String} time Date string of when post was created
+ * @return {String}      Formatted string representing time since post was created
+ */
 export const date = (time) => {
-    //Gets number of milliseconds since epoch
+    //Converts present time into epoch time format in milliseconds
     const now = Math.floor(new Date().getTime())
 
-    //Gets chirp post timestamp in milliseconds since epoch
+    //Converts post time into epoch time format in milliseconds
     const postTime = Math.floor(new Date(time).getTime())
 
-    //Difference provides when post was created relative to now in seconds
+    //Calculates difference between now and post creation time in seconds
     const difference = (now/1000) - (postTime/1000)
 
     //If less than 60 seconds
