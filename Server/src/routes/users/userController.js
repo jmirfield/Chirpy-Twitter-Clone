@@ -142,7 +142,7 @@ class UserController {
                     { $inc: { likesCount: 1 } }
                 )
                 await Chirp.updateMany(
-                    { 'rechirp.original_id': req.body._id },
+                    { 'rechirp': req.body._id },
                     { $inc: { likesCount: 1 } }
                 )
             }
@@ -165,7 +165,7 @@ class UserController {
                     { $inc: { likesCount: -1 } }
                 )
                 await Chirp.updateMany(
-                    { 'rechirp.original_id': req.body._id },
+                    { 'rechirp': req.body._id },
                     { $inc: { likesCount: -1 } }
                 )
             }

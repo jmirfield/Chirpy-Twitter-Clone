@@ -2,12 +2,9 @@ const mongoose = require('mongoose')
 const { Schema } = mongoose
 
 const ChirpSchema = new Schema({
-    owner_id: {
+    owner: {
         type: Schema.ObjectId,
-        required: true
-    },
-    owner_username: {
-        type: String,
+        ref: 'User',
         required: true
     },
     content: {
@@ -27,18 +24,8 @@ const ChirpSchema = new Schema({
         type: String
     },
     rechirp: {
-        original_id: {
-            type: Schema.ObjectId
-        },
-        original_owner: {
-
-        },
-        original_time: {
-            type: String
-        },
-        original_image: {
-            type: String
-        }
+        type: Schema.ObjectId,
+        ref: 'Chirp'
     }
 }, {
     timestamps: true
@@ -46,7 +33,6 @@ const ChirpSchema = new Schema({
 
 ChirpSchema.methods.toJSON = function () {
     const chirpObj = this.toObject()
-    delete chirpObj.ownerId
     delete chirpObj.updatedAt
     delete chirpObj.__v
     return chirpObj

@@ -6,8 +6,7 @@ class ChirpController {
         try {
             const chirp = new Chirp({
                 ...req.body,
-                owner_id: req.user._id,
-                owner_username: req.user.username,
+                owner: req.user._id,
                 rechirpsCount: 0,
                 likesCount: 0,
             })
@@ -24,8 +23,7 @@ class ChirpController {
         try {
             const chirp = new Chirp({
                 content: req.body.text || '**empty**',
-                owner_id: req.user._id,
-                owner_username: req.user.username,
+                owner: req.user._id,
                 rechirpsCount: 0,
                 likesCount: 0,
             })
@@ -49,14 +47,23 @@ class ChirpController {
             await req.user.populate({ path: 'following' })
             const followQuery = req.user.following.map(user => user.following_id)
             const chirps = (await Chirp.find({
-                'owner_id': { $in: followQuery }
+                'owner': { $in: followQuery }
             }, null, {
                 sort: { createdAt: -1 },
-                lean: true
-            }).populate({
-                path: 'user',
-                select: 'image'
-            })).map(chirp => ({ ...chirp, user: chirp.user[0].image }))
+            }).populate([
+                {
+                    path: 'owner',
+                    select: ['image', 'username']
+                },
+                {
+                    path: 'rechirp',
+                    select: ['createdAt'],
+                    populate: {
+                        path: 'owner',
+                        select: ['image', 'username']
+                    }
+                }
+            ]))
             res.send({
                 feed: chirps,
                 likedChirps: req.user.likedChirps,
@@ -72,27 +79,37 @@ class ChirpController {
         try {
             const chirp = new Chirp({
                 ...req.body,
-                owner_id: req.user._id,
-                owner_username: req.user.username,
+                owner: req.user._id,
             })
             const startingLength = req.user.retweetedChirps.length
-            req.user.retweetedChirps.addToSet(chirp.rechirp.original_id)
+            req.user.retweetedChirps.addToSet(chirp.rechirp)
             if (startingLength !== req.user.retweetedChirps.length) {
                 const original = await Chirp.findOneAndUpdate(
-                    { _id: chirp.rechirp.original_id },
+                    { _id: chirp.rechirp },
                     { $inc: { rechirpsCount: 1 } }
                 )
                 chirp.rechirpsCount = original.rechirpsCount
                 chirp.likesCount = original.likesCount
                 await chirp.save()
+                // await chirp.populate([
+                //     {
+                //         path: 'rechirp',
+                //         select: ['createdAt'],
+                //         populate: {
+                //             path: 'owner',
+                //             select: ['image', 'username']
+                //         }
+                //     }
+                // ])
+                console.log(chirp)
                 req.user.chirpCount++
                 await req.user.save()
                 await Chirp.updateMany(
-                    { 'rechirp.original_id': chirp.rechirp.original_id },
+                    { 'rechirp': chirp.rechirp },
                     { $inc: { rechirpsCount: 1 } }
                 )
             }
-            res.status(202).send({ chirp })
+            res.status(202).send(chirp)
         } catch (e) {
             console.log(e)
             res.status(400).send()
@@ -107,8 +124,8 @@ class ChirpController {
             if (startingLength !== req.user.retweetedChirps.length) {
                 const chirp = await Chirp.findOneAndDelete({
                     $and: [
-                        { owner_username: req.user.username },
-                        { 'rechirp.original_id': req.body._id }
+                        { owner: req.user._id },
+                        { 'rechirp': req.body._id }
                     ]
                 })
                 if (!chirp) throw new Error('Could not find chirp')
@@ -119,7 +136,7 @@ class ChirpController {
                 req.user.chirpCount--
                 await req.user.save()
                 await Chirp.updateMany(
-                    { 'rechirp.original_id': req.body._id },
+                    { 'rechirp': req.body._id },
                     { $inc: { rechirpsCount: -1 } }
                 )
             }
