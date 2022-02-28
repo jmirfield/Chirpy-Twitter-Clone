@@ -1,5 +1,5 @@
 export const initialState = {
-    id: '',
+    _id: '',
     pic: null,
     banner: null,
     isFollow: false,
@@ -16,7 +16,7 @@ export const reducer = (state, action) => {
         case 'PROFILE_READ':
             return {
                 ...state,
-                id: action.payload.id,
+                _id: action.payload._id,
                 pic: action.payload.pic,
                 banner: action.payload.banner,
                 isFollow: action.payload.isFollow,
@@ -41,7 +41,7 @@ export const reducer = (state, action) => {
         case 'CHANGE_USER':
             return {
                 ...state,
-                id: '',
+                _id: '',
                 isFollow: false,
                 followerCount: 0,
                 followingCount: 0,

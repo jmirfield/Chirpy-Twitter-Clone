@@ -13,9 +13,10 @@ import ChirpImage from './ChirpImage'
 const Chirp = (props) => {
     const { state } = useContext(AuthContext)
 
-    const post_owner = props.rechirp ? props.rechirp.original_owner : props.user
-    const post_id = props.rechirp ? props.rechirp.original_id : props.id
-    const post_time = props.rechirp ? props.rechirp.original_time : props.timestamp
+    const post_owner = props.rechirp ? props.rechirp.owner.username : props.owner.username
+    const post_id = props.rechirp ? props.rechirp._id : props._id
+    const post_time = props.rechirp ? props.rechirp.createdAt : props.createdAt
+    const post_icon = props.rechirp ? props.rechirp.owner.image : props.owner.image
 
     const chirpOptions = [
         {
@@ -24,26 +25,26 @@ const Chirp = (props) => {
             onClick: () => console.log('reply')
         },
         {
-            count: props.rechirps,
-            active: props.isChirpRechirped,
+            count: props.rechirpsCount,
+            active: props.isRechirped,
             onClick: onRechirpRequest.bind(this, props, state.user)
         },
         {
-            count: props.likes,
-            active: props.isChirpLiked,
+            count: props.likesCount,
+            active: props.isLiked,
             onClick: likeChirpRequest.bind(this, props)
         }
     ]
 
     return (
-        <article className={styles['chirp']} key={props.id}>
-            {props.rechirp && <ChirpRechirpHeader user={props.user} />}
+        <article className={styles['chirp']} key={props._id}>
+            {props.rechirp && <ChirpRechirpHeader user={props.owner.username} />}
             <section className={styles['chirp__main']}>
-                <ChirpPostIcon owner={post_owner} image={props.image} />
+                <ChirpPostIcon owner={post_owner} image={post_icon} />
                 <section className={styles['chirp__body']}>
                     <ChirpHeader owner={post_owner} id={post_id} time={post_time} />
-                    {props.message !== '**empty**' && <ChirpMessage owner={post_owner} id={props.id} message={props.message} />}
-                    {props.imageURL && <ChirpImage  owner={post_owner} id={props.id} imageURL={props.imageURL}/>}
+                    {props.content !== '**empty**' && <ChirpMessage owner={post_owner} id={post_id} message={props.content} />}
+                    {props.imageURL && <ChirpImage  owner={post_owner} id={post_id} imageURL={props.imageURL}/>}
                     <ChirpIcons options={chirpOptions} />
                 </section>
                 <ChirpOption />

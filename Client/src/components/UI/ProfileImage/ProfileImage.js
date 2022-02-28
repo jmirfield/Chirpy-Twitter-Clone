@@ -10,6 +10,7 @@ const ProfileImage = (props) => {
             src={src}
             className={profileClass}
             onClick={props.onClick}
+            style={props.style}
         />
     )
 }

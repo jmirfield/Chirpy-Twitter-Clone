@@ -55,16 +55,16 @@ export const newChirpRequestWithImage = async (content, onNewChirp, isModal, onC
     }
 }
 
-export const likeChirpRequest = async ({dispatch, id, isChirpLiked, likes, rechirp}) => {
-    const req = !rechirp ? id : rechirp.original_id
-    if (!isChirpLiked) {
+export const likeChirpRequest = async ({ dispatch, _id, isLiked, likesCount, rechirp }) => {
+    const req = !rechirp ? _id : rechirp._id
+    if (!isLiked) {
         try {
             await likeChirp({ _id: req })
             dispatch({
                 type: 'LIKE',
                 payload: {
                     id: req,
-                    likes: likes + 1
+                    likesCount: likesCount + 1
                 }
             })
         } catch (e) {
@@ -77,7 +77,7 @@ export const likeChirpRequest = async ({dispatch, id, isChirpLiked, likes, rechi
                 type: 'UNLIKE',
                 payload: {
                     id: req,
-                    likes: likes - 1
+                    likesCount: likesCount - 1
                 }
             })
         } catch (e) {
@@ -86,54 +86,52 @@ export const likeChirpRequest = async ({dispatch, id, isChirpLiked, likes, rechi
     }
 }
 
-export const onRechirpRequest = async ({dispatch, id, message, timestamp, imageURL = null, image, isChirpRechirped, isChirpLiked, rechirps, rechirp, user}, client) => {
-    if (!isChirpRechirped) {
+export const onRechirpRequest = async (chirp, client) => {
+    const {
+        isLiked,
+        isRechirped,
+        rechirpsCount,
+        rechirp,
+        content,
+        dispatch,
+        imageURL = ''
+    } = chirp
+    if (!isRechirped) {
         try {
-            const req = !rechirp ? {
-                content: message,
-                rechirp: {
-                    original_id: id,
-                    original_owner: user,
-                    original_time: timestamp,
-                    original_image: image
-                }
-            } : {
-                content: message,
-                rechirp: {
-                    original_id: rechirp.original_id,
-                    original_owner: rechirp.original_owner,
-                    original_time: rechirp.original_time,
-                    original_image: rechirp.original_image
-                }
-            }
-            const { data } = await addRechirp({...req, imageURL})
-            const { chirp } = data
+            const createdAt = !rechirp ? chirp.createdAt : chirp.rechirp.createdAt
+            const _id = !rechirp ? chirp._id : chirp.rechirp._id
+            const owner = !rechirp ? chirp.owner : chirp.rechirp.owner
+            const req = { content, imageURL, rechirp: _id }
+            const { data } = await addRechirp(req)
+
             dispatch({
                 type: 'ADD_RECHIRP',
                 payload: {
                     chirp: {
-                        ...chirp,
-                        user: chirp.rechirp.original_image, //Need to find better solution
-                        isLiked: isChirpLiked,
-                        isRechirped: isChirpRechirped
+                        ...data,
+                        owner: { username: client },
+                        rechirp: { createdAt, owner, _id },
+                        isLiked,
+                        isRechirped
                     },
-                    id: req.rechirp.original_id,
-                    rechirps: rechirps + 1
+                    id: data.rechirp,
+                    rechirpsCount: rechirpsCount + 1
                 }
             })
         } catch (e) {
             console.log('Error with rechirping')
+            console.log(e)
         }
     } else {
         try {
-            const req = !rechirp ? id : rechirp.original_id
+            const req = !rechirp ? _id : rechirp._id
             await deleteRechirp({ _id: req })
             dispatch({
                 type: 'REMOVE_RECHIRP',
                 payload: {
                     id: req,
                     user: client,
-                    rechirps: rechirps - 1
+                    rechirpsCount: rechirpsCount - 1
                 }
             })
         } catch (e) {

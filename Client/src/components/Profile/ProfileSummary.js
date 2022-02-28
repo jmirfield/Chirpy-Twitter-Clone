@@ -42,7 +42,12 @@ const ProfileSummary = (props) => {
 
     return (
         <>
-            <img className={styles['profile__banner']} src={banner} onClick={myProfile ? updateProfileBannerHandler : null} />
+            <img
+                className={styles['profile__banner']}
+                src={banner}
+                onClick={myProfile ? updateProfileBannerHandler : null}
+                style={myProfile ? {cursor: 'pointer'} : null}
+            />
             {myProfile && <input
                 type='file'
                 style={{ 'display': 'none' }}
@@ -54,6 +59,7 @@ const ProfileSummary = (props) => {
                 className={styles['profile__picture']}
                 onClick={myProfile ? updateProfilePictureHandler : null}
                 src={myProfile ? state.profileImage : props.pic}
+                style={myProfile ? {cursor: 'pointer'} : null}
             />
             {myProfile && <input
                 type='file'
@@ -64,8 +70,8 @@ const ProfileSummary = (props) => {
             />}
             <section className={styles['profile__details']}>
                 <FollowButton
-                    onFollow={followRequest.bind(this, props.id, props.dispatch)}
-                    onUnfollow={unfollowRequest.bind(this, props.id, props.dispatch)}
+                    onFollow={followRequest.bind(this, props._id, props.dispatch)}
+                    onUnfollow={unfollowRequest.bind(this, props._id, props.dispatch)}
                     isFollowing={props.isFollowing}
                     myProfile={myProfile}
                     error={props.error}

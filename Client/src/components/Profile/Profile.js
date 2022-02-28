@@ -49,6 +49,7 @@ const Profile = () => {
     if (profile.isLoading) {
         return <LoadingFeed />
     }
+    console.log(profile)
     return (
         <>
             <ProfileHeader
@@ -56,7 +57,7 @@ const Profile = () => {
                 onBackButton={goBackHandler}
             />
             <ProfileSummary
-                id={profile.id}
+                _id={profile._id}
                 isFollowing={profile.isFollow}
                 followerCount={profile.followerCount}
                 followingCount={profile.followingCount}
@@ -65,7 +66,7 @@ const Profile = () => {
                 banner={profile.banner}
             />
             <ProfileTabs tabs={MAIN_TABS} />
-            <Outlet context={{ likes: profile.likes, dispatch }} />
+            <Outlet context={{ _id: profile._id, likes: profile.likes, dispatch }} />
         </>
     )
 

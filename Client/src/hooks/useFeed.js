@@ -35,22 +35,22 @@ const reducer = (state, action) => {
                     feed: syncRechirps(
                         [action.payload.chirp, ...state.feed],
                         action.payload.id,
-                        action.payload.rechirps
+                        action.payload.rechirpsCount
                     )
                 }
             }
         case 'REMOVE_RECHIRP':
             const feed = state.feed.filter(chirp => {
                 if (!chirp.rechirp) return true
-                return chirp.rechirp.original_id !== action.payload.id
-                    || action.payload.user !== chirp.owner_username
+                return chirp.rechirp._id !== action.payload.id
+                    || action.payload.user !== chirp.owner.username
             })
             return {
                 ...state,
                 feed: syncRechirps(
                     feed,
                     action.payload.id,
-                    action.payload.rechirps
+                    action.payload.rechirpsCount
                 )
             }
         case 'LIKE':
@@ -59,7 +59,7 @@ const reducer = (state, action) => {
                 feed: syncLikes(
                     state.feed,
                     action.payload.id,
-                    action.payload.likes
+                    action.payload.likesCount
                 )
             }
         case 'UNLIKE':
@@ -68,7 +68,7 @@ const reducer = (state, action) => {
                 feed: syncLikes(
                     state.feed,
                     action.payload.id,
-                    action.payload.likes
+                    action.payload.likesCount
                 )
             }
         case 'ERROR':
@@ -93,8 +93,8 @@ const syncFeed = (feed, likedChirps, retweetedChirps) => {
         let isLiked = false;
         let isRechirped = false;
         if (chirp.rechirp) {
-            isLiked = likedChirps.includes(chirp.rechirp.original_id)
-            isRechirped = retweetedChirps.includes(chirp.rechirp.original_id)
+            isLiked = likedChirps.includes(chirp.rechirp._id)
+            isRechirped = retweetedChirps.includes(chirp.rechirp._id)
         } else {
             isLiked = likedChirps.includes(chirp._id)
             isRechirped = retweetedChirps.includes(chirp._id)
@@ -106,7 +106,7 @@ const syncFeed = (feed, likedChirps, retweetedChirps) => {
 const syncLikes = (feed, id, count) => {
     return feed.map(chirp => {
         if (chirp.rechirp) {
-            if (chirp.rechirp.original_id === id) {
+            if (chirp.rechirp._id === id) {
                 chirp.isLiked = !chirp.isLiked
                 chirp.likesCount = count
                 return chirp
@@ -124,7 +124,7 @@ const syncLikes = (feed, id, count) => {
 const syncRechirps = (feed, id, count) => {
     return feed.map(chirp => {
         if (chirp.rechirp) {
-            if (chirp.rechirp.original_id === id) {
+            if (chirp.rechirp._id === id) {
                 chirp.isRechirped = !chirp.isRechirped
                 chirp.rechirpsCount = count
                 return chirp

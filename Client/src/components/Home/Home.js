@@ -21,7 +21,7 @@ const Home = () => {
         getMainChirpFeed(feedDispatch)
         const onScroll = function () { //Can be used for pagination
             if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-              console.log("you're at the bottom of the page")
+            //   console.log("you're at the bottom of the page")
             }
          }
          window.addEventListener('scroll', onScroll)
