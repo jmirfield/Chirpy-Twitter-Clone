@@ -84,6 +84,7 @@
     max-width: 55px;
     min-width: 55px;
     max-height: 55px;
+    min-height: 55px;
 }
 
 .menu__user {
@@ -153,7 +154,7 @@
     .menu__chirp {
         display: flex;
         max-height: 2rem;
-        max-width: 7rem;
+        max-width: 10rem;
         align-items: center;
         justify-content: center;
     }

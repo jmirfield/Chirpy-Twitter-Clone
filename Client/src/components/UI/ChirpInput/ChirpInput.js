@@ -34,18 +34,13 @@ const ChirpInput = ({ text, image, onChange, onImage, onCancel, onSubmit }) => {
             />
             {image && (
                 <>
-                    <Icon d={CANCEL.d} height='24px' width='24px' fill='white' className={styles['staged-cancel']} onClick={onCancel}/>
+                    <Icon d={CANCEL.d} height='24px' width='24px' fill='white' className={styles['staged-cancel']} onClick={onCancel} />
                     <img className={styles.staged} src={image.blob} />
                 </>
             )}
             <section className={className}>
-                {focus &&
-                    <>
-                        <Icon d={IMAGE.d} fill='rgb(29, 155, 240)' height='24px' width='24px' className={styles.image} onClick={imageHandler} />
-                        <input type='file' style={{ 'display': 'none' }} ref={imageRef} accept='image/*' onChange={onImage} />
-                    </>
-                }
-
+                <Icon d={IMAGE.d} fill='rgb(29, 155, 240)' height='24px' width='24px' className={styles.image} onClick={imageHandler} />
+                <input type='file' style={{ 'display': 'none' }} ref={imageRef} accept='image/*' onChange={onImage} />
                 <Button disabled={(text.trim().length === 0 || text.length > 150) && !image}>Chirp</Button>
             </section>
         </form>

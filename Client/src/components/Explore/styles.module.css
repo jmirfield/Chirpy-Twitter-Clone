@@ -20,3 +20,8 @@
     z-index: 5;
     box-shadow: 0 0 3px white;
 }
+
+.modal > p {
+    margin: 1rem;
+    color: rgb(101, 119, 134);
+}

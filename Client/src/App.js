@@ -5,7 +5,6 @@ import SignIn from './components/Login/SignIn';
 import SignUp from './components/Login/SignUp';
 import Home from './components/Home/Home';
 import MainLayout from './components/MainLayout/MainLayout';
-import GuestLayout from './components/GuestLayout/GuestLayout';
 import AuthContext from './context/AuthContext';
 import LoadingIcon from './components/Loading/LoadingIcon';
 import Profile from './components/Profile/Profile';
@@ -14,9 +13,9 @@ import ProfileLikes from './components/Profile/ProfileLikes';
 import ProfileRelationships from './components/Profile/ProfileRelationships';
 import ProfileFollowings from './components/Profile/ProfileFollowing';
 import ProfileFollowers from './components/Profile/ProfileFollower';
-import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import ProfileMedia from './components/Profile/ProfileMedia';
 import Explore from './components/Explore/Explore';
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 const App = () => {
   const { state } = useContext(AuthContext)
@@ -39,7 +38,6 @@ const App = () => {
             <Route path='flow/*' element={<Navigate replace to='/' />} />
           </Route>
           <Route path='home' element={<Navigate replace to='/' />} />
-          <Route path=':user' element={<GuestLayout />} />
           <Route path='*' element={<Navigate replace to='/' />} />
         </Routes>
       </BrowserRouter>

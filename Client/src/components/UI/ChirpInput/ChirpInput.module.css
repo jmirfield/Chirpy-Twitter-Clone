@@ -22,10 +22,11 @@
 
 .chirp__form-action {
     display: flex;
-    justify-content: right;
+    justify-content: space-between;
     margin-right: 1rem;
     padding: .5rem 0 .5rem 1rem;
     align-items: right;
+    align-items: center;
 }
 
 .chirp__form-action--active {

@@ -1,48 +1,32 @@
-import React, { useState, useEffect } from 'react'
-import { getListOfUsersRequest } from '../../actions/profile'
+import React from 'react'
+import useSearch from '../../hooks/useSearch'
 import SearchInput from '../UI/SearchInput/SearchInput'
 import SearchModal from './SearchModal'
 import styles from './styles.module.css'
 
-const Sidebar = () => {
-  const [text, setText] = useState('')
-  const [openModal, setOpenModal] = useState(false)
-  const [users, setUsers] = useState([])
-
-  const searchChangeHandler = (e) => setText(e.target.value)
-  const openModalHandler = () => setOpenModal(true)
-  const closeModalHandler = () => setOpenModal(false)
-
-  const userHandler = (users) => {
-    setUsers(users)
-  }
-
-  const resetHandler = () => {
-    setUsers([])
-  }
-
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (text.trim().length > 0) getListOfUsersRequest(text, userHandler)
-      if (text.trim().length === 0) resetHandler()
-    }, 500)
-    return () => clearTimeout(timer)
-  }, [text])
+const Sidebar = (props) => {
+  const {
+    text,
+    search,
+    result,
+    textChangeHandler,
+    openSearch,
+    closeSearch
+  } = useSearch()
 
   return (
     <aside className={styles.sidebar}>
-      <SearchInput
-        text={text}
-        onChange={searchChangeHandler}
-        onFocus={openModalHandler}
-      />
-      {openModal &&
+      {!props.onExplore &&
+        <SearchInput
+          text={text}
+          onChange={textChangeHandler}
+          onFocus={openSearch}
+        />}
+      {search &&
         <SearchModal
-          onClose={closeModalHandler}
-          users={users}
-        />
-      }
+          onClose={closeSearch}
+          users={result}
+        />}
     </aside>
   )
 }

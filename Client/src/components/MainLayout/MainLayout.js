@@ -26,7 +26,7 @@ const MainLayout = () => {
             <main className={styles['layout__main']}>
                 <Outlet context={{ setOnExplore }} />
             </main>
-            {!onExplore && <Sidebar />}
+            <Sidebar onExplore={onExplore} />
             {composeChirp && <ChirpModal onClose={onCloseNewChirpHandler} />}
         </div>
     )
