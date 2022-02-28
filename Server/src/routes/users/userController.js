@@ -191,6 +191,7 @@ class UserController {
                 public_id: `profile/pic/${req.user._id}`,
                 invalidate: true,
                 transformation: {
+                    crop: 'fill',
                     width: 200,
                     height: 200
                 }
@@ -212,6 +213,7 @@ class UserController {
                 public_id: `profile/banner/${req.user._id}`,
                 invalidate: true,
                 transformation: {
+                    crop: 'fill',
                     width: 600,
                     height: 200
                 }
