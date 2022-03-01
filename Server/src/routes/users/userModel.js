@@ -10,7 +10,15 @@ const UserSchema = new Schema({
         type: String,
         required: true,
         trim: true,
-        unique: true
+        unique: true,
+        index: {
+            unique: true,
+            collation: {
+                locale: 'en',
+                strength: 2
+            },
+            dropDups: true
+        }
     },
     email: {
         type: String,
@@ -68,6 +76,7 @@ UserSchema.virtual('following', {
     foreignField: 'user_id'
 })
 
+
 //Checks for login using email and password
 UserSchema.statics.findByCredentials = async (username, password) => {
     const user = await User.findOne({ "username": { $regex: new RegExp(username, "i") } })
@@ -112,6 +121,16 @@ UserSchema.pre('deleteOne', { document: true }, async function (next) {
     await Chirp.deleteMany({ owner_id: this._id })
     next()
 })
+
+UserSchema.index({
+    username: 1,
+}, {
+    collation: {
+        locale: "en",
+        strength: 2
+    }
+}
+)
 
 const User = mongoose.model('User', UserSchema)
 

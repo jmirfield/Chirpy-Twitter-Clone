@@ -67,13 +67,15 @@ class UserController {
     getUserProfile = async (req, res) => {
         try {
             const user = (req.user.username !== req.params.username)
-                ? await User.findOne({ username: req.params.username }).populate({ path: 'following' })
+            
+                ? await User.findOne({ username: {$regex: new RegExp(req.params.username, "i")} }).populate({ path: 'following' })
                 : req.user
             if (user === null) throw new Error('User not found')
             await req.user.populate({ path: 'following' })
             const isFollowing = req.user.following.some(u => u.following_id.equals(user._id))
             res.send({
                 _id: user._id,
+                username: user.username,
                 profileImage: user.image || null,
                 banner: user.banner || null,
                 isFollowing,
