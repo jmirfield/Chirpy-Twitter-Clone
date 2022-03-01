@@ -11,14 +11,13 @@ const UserSchema = new Schema({
         required: true,
         trim: true,
         unique: true,
-        index: {
-            unique: true,
-            collation: {
-                locale: 'en',
-                strength: 2
-            },
-            dropDups: true
-        }
+    },
+    username_lower: {
+        type: String,
+        required: true,
+        trim: true,
+        lowercase: true,
+        unique: true
     },
     email: {
         type: String,
@@ -122,16 +121,9 @@ UserSchema.pre('deleteOne', { document: true }, async function (next) {
     next()
 })
 
-UserSchema.index({
-    username: 1,
-}, {
-    collation: {
-        locale: "en",
-        strength: 2
-    }
-}
-)
 
 const User = mongoose.model('User', UserSchema)
+
+User.createIndexes()
 
 module.exports = User

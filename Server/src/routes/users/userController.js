@@ -8,6 +8,7 @@ class UserController {
         try {
             const user = new User({
                 ...req.body,
+                username_lower: req.body.username,
                 followerCount: 0,
                 followingCount: 0,
                 chirpCount: 0
