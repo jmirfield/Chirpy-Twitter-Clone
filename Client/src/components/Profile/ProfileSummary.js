@@ -58,7 +58,7 @@ const ProfileSummary = (props) => {
             <ProfileImage
                 className={styles['profile__picture']}
                 onClick={myProfile ? updateProfilePictureHandler : null}
-                src={myProfile ? state.profileImage : props.pic}
+                src={myProfile ? state.profileImage : props.profileImage}
                 style={myProfile ? {cursor: 'pointer'} : null}
             />
             {myProfile && <input

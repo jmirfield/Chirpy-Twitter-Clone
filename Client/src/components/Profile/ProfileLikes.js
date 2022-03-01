@@ -6,10 +6,10 @@ import ChirpList from '../Chirps/ChirpList'
 
 const ProfileLikes = () => {
     const [{ feed, isLoading, error }, feedDispatch] = useFeed()
-    const { likes } = useOutletContext()
+    const { profile } = useOutletContext()
 
     useEffect(() => {
-        getUserLikesRequest(likes, feedDispatch)
+        getUserLikesRequest(profile.likes, feedDispatch)
         return () => {
             feedDispatch({ type: 'RESET' })
         }

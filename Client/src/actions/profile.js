@@ -15,8 +15,9 @@ import {
 export const getUserProfileRequest = async (user, dispatch) => {
     try {
         const { data } = await getUserProfile(user)
-        const { id,
-            pic,
+        const {
+            _id,
+            profileImage,
             banner,
             isFollowing,
             followingCount,
@@ -26,8 +27,8 @@ export const getUserProfileRequest = async (user, dispatch) => {
         dispatch({
             type: 'PROFILE_READ',
             payload: {
-                id,
-                pic,
+                _id,
+                profileImage,
                 banner,
                 isFollow: isFollowing,
                 followingCount: followingCount || 0,
@@ -41,18 +42,27 @@ export const getUserProfileRequest = async (user, dispatch) => {
     }
 }
 
-export const getUserProfileFeedRequest = async (user, dispatch, myProfile) => {
+export const getUserProfileFeedRequest = async (_id, profileImage, user, myProfile, dispatch) => {
     try {
-        const { data } = await getUserProfileFeed(user)
+        const { data } = await getUserProfileFeed(_id)
         const {
             feed,
             likedChirps,
             retweetedChirps
         } = data
+        const chirps = feed.map((chirp) => {
+            return {
+                ...chirp,
+                owner: {
+                    username: user,
+                    image: profileImage
+                }
+            }
+        })
         dispatch({
             type: 'INIT_SYNC',
             payload: {
-                feed,
+                feed: chirps,
                 liked: likedChirps,
                 rechirped: retweetedChirps,
                 myProfile
@@ -64,18 +74,27 @@ export const getUserProfileFeedRequest = async (user, dispatch, myProfile) => {
     }
 }
 
-export const getUserProfileMediaRequest = async (user, dispatch) => {
+export const getUserProfileMediaRequest = async (_id, profileImage, user, dispatch) => {
     try {
-        const { data } = await getUserMedia(user)
+        const { data } = await getUserMedia(_id)
         const {
             feed,
             likedChirps,
             retweetedChirps
         } = data
+        const chirps = feed.map((chirp) => {
+            return {
+                ...chirp,
+                owner: {
+                    username: user,
+                    image: profileImage
+                }
+            }
+        })
         dispatch({
             type: 'INIT_SYNC',
             payload: {
-                feed,
+                feed: chirps,
                 liked: likedChirps,
                 rechirped: retweetedChirps
             }
@@ -109,18 +128,18 @@ export const getUserLikesRequest = async (likes, dipsatch) => {
     }
 }
 
-export const followRequest = async (id, dispatch) => {
+export const followRequest = async (_id, dispatch) => {
     try {
-        await followUser({ id })
+        await followUser({ _id })
         dispatch({ type: 'FOLLOW' })
     } catch (e) {
         console.log(e)
     }
 }
 
-export const unfollowRequest = async (id, dispatch) => {
+export const unfollowRequest = async (_id, dispatch) => {
     try {
-        await unfollowUser({ id })
+        await unfollowUser({ _id })
         dispatch({ type: 'UNFOLLOW' })
     } catch (e) {
         console.log(e)

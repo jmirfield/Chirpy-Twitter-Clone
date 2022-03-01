@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react'
-import { newChirpRequest, newChirpRequestWithImage  } from '../../actions/chirps'
+import { newChirpRequest, newChirpRequestWithImage } from '../../actions/chirps'
 import AuthContext from '../../context/AuthContext'
 import ChirpInput from '../UI/ChirpInput/ChirpInput'
 import ProfileImage from '../UI/ProfileImage/ProfileImage'
@@ -19,19 +19,19 @@ const NewChirp = (props) => {
     const stageImageHandler = (e) => {
         e.preventDefault()
         setImage({ blob: URL.createObjectURL(e.target.files[0]), data: e.target.files[0] })
-        e.target.value=''
+        e.target.value = ''
     }
 
     const cancelStagedImageHandler = () => setImage(null)
 
     const onSubmitChirpHandler = (e) => {
         e.preventDefault()
-        if (textInput.trim().length > 0 && !image) newChirpRequest(textInput, props.onNewChirp, props.isModal, props.onClose)
+        if (textInput.trim().length > 0 && !image) newChirpRequest(textInput, props, { user: state.user, image: state.profileImage })
         if (image) {
             const data = new FormData()
             data.append('text', textInput)
             data.append('image', image.data)
-            newChirpRequestWithImage(data, props.onNewChirp, props.isModal, props.onClose)
+            newChirpRequestWithImage(data, props, { user: state.user, image: state.profileImage })
         }
         resetHandler()
     }

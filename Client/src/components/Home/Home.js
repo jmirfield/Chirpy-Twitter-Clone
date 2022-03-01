@@ -8,24 +8,17 @@ import styles from './Home.module.css'
 const Home = () => {
     const [{ feed, isLoading, error }, feedDispatch] = useFeed()
 
-    const newChirpHandler = (chirp) => {
-        feedDispatch({
-            type: 'NEW_CHIRP',
-            payload: chirp
-        })
-    }
-
     useEffect(() => {
         document.title = 'Home / Chirpy'
         window.scrollTo(0, 0);
         getMainChirpFeed(feedDispatch)
         const onScroll = function () { //Can be used for pagination
             if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-            //   console.log("you're at the bottom of the page")
+                //   console.log("you're at the bottom of the page")
             }
-         }
-         window.addEventListener('scroll', onScroll)
-         return () => window.removeEventListener('scroll', onScroll)
+        }
+        window.addEventListener('scroll', onScroll)
+        return () => window.removeEventListener('scroll', onScroll)
     }, [])
 
     return (
@@ -34,7 +27,7 @@ const Home = () => {
                 <h2>Home</h2>
             </header>
             <NewChirp
-                onNewChirp={newChirpHandler}
+                dispatch={feedDispatch}
                 isModal={false}
                 className={styles['home__new-chirp']}
             />

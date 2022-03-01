@@ -20,7 +20,6 @@ const ChirpList = ({ chirps, dispatch, error, isLoading }) => {
     return (
         <section className={styles.chirps}>
             {chirps.map((chirp) => {
-                // console.log(chirp)
                 const {
                     _id,
                     owner,

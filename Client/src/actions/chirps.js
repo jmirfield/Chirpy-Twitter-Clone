@@ -25,7 +25,7 @@ export const getMainChirpFeed = async (dispatch) => {
     }
 }
 
-export const newChirpRequest = async (content, onNewChirp, isModal, onClose) => {
+export const newChirpRequest = async (content, { dispatch, isModal, onClose }, { user, image }) => {
     try {
         const { data } = await newChirp({ content, imageURL: '' })
         if (isModal) {
@@ -34,13 +34,24 @@ export const newChirpRequest = async (content, onNewChirp, isModal, onClose) => 
             //Will need to be fixed to update feed on home and profile when using menubar chirp buton
             return
         }
-        onNewChirp({ ...data, isLiked: false, isRechirped: false })
+        // console.log(data)
+        dispatch({
+            type: 'NEW_CHIRP',
+            payload: {
+                chirp: {
+                    ...data,
+                    isLiked: false,
+                    isRechirped: false
+                },
+                client: { user, image }
+            }
+        })
     } catch (e) {
         console.log('Error with chirp request')
     }
 }
 
-export const newChirpRequestWithImage = async (content, onNewChirp, isModal, onClose) => {
+export const newChirpRequestWithImage = async (content, { dispatch, isModal, onClose }, { user, image }) => {
     try {
         const { data } = await newChirpWithImage(content)
         if (isModal) {
@@ -49,7 +60,18 @@ export const newChirpRequestWithImage = async (content, onNewChirp, isModal, onC
             //Will need to be fixed to update feed on home and profile when using menubar chirp buton
             return
         }
-        onNewChirp({ ...data, isLiked: false, isRechirped: false })
+        // console.log(data)
+        dispatch({
+            type: 'NEW_CHIRP',
+            payload: {
+                chirp: {
+                    ...data,
+                    isLiked: false,
+                    isRechirped: false
+                },
+                client: { user, image }
+            }
+        })
     } catch (e) {
         console.log('Error with chirp request')
     }
@@ -93,8 +115,8 @@ export const onRechirpRequest = async (chirp, client) => {
         rechirpsCount,
         rechirp,
         content,
-        dispatch,
-        imageURL = ''
+        imageURL = '',
+        dispatch
     } = chirp
     if (!isRechirped) {
         try {
@@ -114,7 +136,7 @@ export const onRechirpRequest = async (chirp, client) => {
                         isLiked,
                         isRechirped
                     },
-                    id: data.rechirp,
+                    _id: data.rechirp,
                     rechirpsCount: rechirpsCount + 1
                 }
             })
@@ -124,12 +146,12 @@ export const onRechirpRequest = async (chirp, client) => {
         }
     } else {
         try {
-            const req = !rechirp ? _id : rechirp._id
+            const req = !rechirp ? chirp._id : rechirp._id
             await deleteRechirp({ _id: req })
             dispatch({
                 type: 'REMOVE_RECHIRP',
                 payload: {
-                    id: req,
+                    _id: req,
                     user: client,
                     rechirpsCount: rechirpsCount - 1
                 }

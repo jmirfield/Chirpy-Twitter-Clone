@@ -26,15 +26,24 @@ const reducer = (state, action) => {
         case 'NEW_CHIRP':
             return {
                 ...state,
-                feed: [action.payload, ...state.feed]
+                feed: [
+                    {
+                        ...action.payload.chirp,
+                        owner: {
+                            username: action.payload.client.user,
+                            image: action.payload.client.image
+                        }
+                    },
+                    ...state.feed
+                ]
             }
         case 'ADD_RECHIRP':
-            if ((state.myProfile || state.myProfile === undefined) && !state.isLikePage ) {
+            if ((state.myProfile || state.myProfile === undefined) && !state.isLikePage) {
                 return {
                     ...state,
                     feed: syncRechirps(
                         [action.payload.chirp, ...state.feed],
-                        action.payload.id,
+                        action.payload._id,
                         action.payload.rechirpsCount
                     )
                 }
@@ -42,14 +51,14 @@ const reducer = (state, action) => {
         case 'REMOVE_RECHIRP':
             const feed = state.feed.filter(chirp => {
                 if (!chirp.rechirp) return true
-                return chirp.rechirp._id !== action.payload.id
+                return chirp.rechirp._id !== action.payload._id
                     || action.payload.user !== chirp.owner.username
             })
             return {
                 ...state,
                 feed: syncRechirps(
                     feed,
-                    action.payload.id,
+                    action.payload._id,
                     action.payload.rechirpsCount
                 )
             }
@@ -141,6 +150,7 @@ const syncRechirps = (feed, id, count) => {
 
 const useFeed = () => {
     const [state, dispatch] = useReducer(reducer, initialState)
+    // console.log(state.feed)
     return [state, dispatch]
 }
 

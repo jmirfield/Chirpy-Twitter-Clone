@@ -1,6 +1,6 @@
 export const initialState = {
     _id: '',
-    pic: null,
+    profileImage: null,
     banner: null,
     isFollow: false,
     followerCount: 0,
@@ -17,7 +17,7 @@ export const reducer = (state, action) => {
             return {
                 ...state,
                 _id: action.payload._id,
-                pic: action.payload.pic,
+                profileImage: action.payload.profileImage,
                 banner: action.payload.banner,
                 isFollow: action.payload.isFollow,
                 followerCount: action.payload.followerCount,
@@ -42,6 +42,8 @@ export const reducer = (state, action) => {
             return {
                 ...state,
                 _id: '',
+                profileImage: null,
+                banner: null,
                 isFollow: false,
                 followerCount: 0,
                 followingCount: 0,
