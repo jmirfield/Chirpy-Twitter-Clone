@@ -50,17 +50,19 @@ class ChirpController {
                 'owner': { $in: followQuery }
             }, null, {
                 sort: { createdAt: -1 },
+                select: '-__v -updatedAt',
+                lean: true
             }).populate([
                 {
                     path: 'owner',
-                    select: ['image', 'username']
+                    select: '-_id image username'
                 },
                 {
                     path: 'rechirp',
                     select: ['createdAt'],
                     populate: {
                         path: 'owner',
-                        select: ['image', 'username']
+                        select: '-_id image username'
                     }
                 }
             ]))
@@ -91,17 +93,6 @@ class ChirpController {
                 chirp.rechirpsCount = original.rechirpsCount
                 chirp.likesCount = original.likesCount
                 await chirp.save()
-                // await chirp.populate([
-                //     {
-                //         path: 'rechirp',
-                //         select: ['createdAt'],
-                //         populate: {
-                //             path: 'owner',
-                //             select: ['image', 'username']
-                //         }
-                //     }
-                // ])
-                console.log(chirp)
                 req.user.chirpCount++
                 await req.user.save()
                 await Chirp.updateMany(
@@ -150,15 +141,20 @@ class ChirpController {
 
     getUserChirps = async (req, res) => {
         try {
-            const chirps = (await Chirp.find({
-                'owner_username': req.params.username
+            const chirps = await Chirp.find({
+                'owner': req.params.userId
             }, null, {
                 sort: { createdAt: -1 },
+                select: '-__v -updatedAt',
                 lean: true
             }).populate({
-                path: 'user',
-                select: 'image'
-            })).map(chirp => ({ ...chirp, user: chirp.user[0].image }))
+                path: 'rechirp',
+                select: ['createdAt'],
+                populate: {
+                    path: 'owner',
+                    select: '-_id image username'
+                }
+            })
             res.send({
                 feed: chirps,
                 likedChirps: req.user.likedChirps,
@@ -172,19 +168,17 @@ class ChirpController {
 
     getUserMedia = async (req, res) => {
         try {
-            const chirps = (await Chirp.find({
+            const chirps = await Chirp.find({
                 $and: [
-                    { 'owner_username': req.params.username },
+                    { 'owner': req.params.userId },
                     { 'rechirp': { '$exists': false } },
                     { 'imageURL': { '$ne': '' }, }
                 ]
             }, null, {
                 sort: { createdAt: -1 },
+                select: '-__v -updatedAt',
                 lean: true
-            }).populate({
-                path: 'user',
-                select: 'image'
-            })).map(chirp => ({ ...chirp, user: chirp.user[0].image }))
+            })
             res.send({
                 feed: chirps,
                 likedChirps: req.user.likedChirps,
@@ -197,24 +191,25 @@ class ChirpController {
 
     getUserLikedChirps = async (req, res) => {
         try {
-            const chirps = (await Chirp.find({
+            const chirps = await Chirp.find({
                 _id: {
                     $in: req.body
                 }
             }, null, {
                 sort: { createdAt: -1 },
+                select: '-__v -updatedAt',
                 lean: true
             }).populate({
-                path: 'user',
-                select: 'image'
-            })).map(chirp => ({ ...chirp, user: chirp.user[0].image }))
+                path: 'owner',
+                select: 'image username -_id'
+            })
             res.send({
                 feed: chirps,
                 likedChirps: req.user.likedChirps,
                 retweetedChirps: req.user.retweetedChirps
             })
         } catch (e) {
-
+            res.status(400).send()
         }
     }
 

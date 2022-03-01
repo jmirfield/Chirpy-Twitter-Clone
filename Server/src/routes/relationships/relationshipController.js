@@ -16,12 +16,12 @@ class RelationshipController {
     createRelationship = async (req, res) => {
         try {
             const relationship = new Relationship({
-                following_id: req.body.id,
+                following_id: req.body._id,
                 user_id: req.user._id
             })
             await relationship.save()
             await User.findOneAndUpdate(
-                { _id: req.body.id },
+                { _id: req.body._id },
                 { $inc: { followerCount: 1 } }
             )
             req.user.followingCount++
@@ -37,13 +37,13 @@ class RelationshipController {
         try {
             const relationship = await Relationship.findOneAndDelete({
                 $and: [
-                    { following_id: req.body.id },
+                    { following_id: req.body._id },
                     { user_id: req.user._id }
                 ]
             })
             if(!relationship)throw new Error('Could not find that user')
             await User.findOneAndUpdate(
-                { _id: req.body.id },
+                { _id: req.body._id },
                 { $inc: { followerCount: -1 } }
             )
             req.user.followingCount--

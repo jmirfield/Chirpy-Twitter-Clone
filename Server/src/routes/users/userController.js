@@ -73,8 +73,8 @@ class UserController {
             await req.user.populate({ path: 'following' })
             const isFollowing = req.user.following.some(u => u.following_id.equals(user._id))
             res.send({
-                id: user._id,
-                pic: user.image || null,
+                _id: user._id,
+                profileImage: user.image || null,
                 banner: user.banner || null,
                 isFollowing,
                 followingCount: user.followingCount,
@@ -102,7 +102,6 @@ class UserController {
                 const isFollowing = req.user.following.some(u => u.following_id.equals(id.following[0]._id))
                 return { username: id.following[0].username, image: id.following[0].image, isFollowing, id: id.following_id }
             })
-
             res.send(followings)
         } catch (e) {
             console.log(e)
