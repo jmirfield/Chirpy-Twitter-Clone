@@ -8,10 +8,11 @@ import styles from './styles.module.css'
 
 const ProfileSummary = (props) => {
     const { state, dispatch } = useContext(AuthContext)
-    const { user } = useParams()
-    const myProfile = user === state.user
+    const myProfile = props.user === state.user
+
     const profilePicRef = useRef(null)
     const profileBannerRef = useRef(null)
+    
     const [banner, setBanner] = useState(props.banner || null)
 
     const updateProfilePictureHandler = () => {
@@ -76,7 +77,7 @@ const ProfileSummary = (props) => {
                     myProfile={myProfile}
                     error={props.error}
                 />
-                <span id={styles.user}>{user}</span>
+                <span id={styles.user}>{props.user}</span>
                 {!props.error &&
                     <section className={styles['profile__follow']}>
                         <Link to='following'>

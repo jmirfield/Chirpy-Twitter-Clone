@@ -46,6 +46,20 @@
     cursor: pointer;
 }
 
+.image:active {
+    animation: bigsmall .5s;
+}
+
+@keyframes bigsmall {
+    from {
+        transform: scale(110%);
+    }
+    to {
+        transform: scale(100%);
+    }
+    
+}
+
 .staged {
     transform: scale(90%);
     border-radius: 2rem;

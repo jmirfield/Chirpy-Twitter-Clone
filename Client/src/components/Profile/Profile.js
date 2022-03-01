@@ -53,11 +53,13 @@ const Profile = () => {
     return (
         <>
             <ProfileHeader
+                user={profile.username}
                 chirpCount={profile.chirpCount}
                 onBackButton={goBackHandler}
             />
             <ProfileSummary
                 _id={profile._id}
+                user={profile.username}
                 isFollowing={profile.isFollow}
                 followerCount={profile.followerCount}
                 followingCount={profile.followingCount}

@@ -17,6 +17,7 @@ export const getUserProfileRequest = async (user, dispatch) => {
         const { data } = await getUserProfile(user)
         const {
             _id,
+            username,
             profileImage,
             banner,
             isFollowing,
@@ -28,6 +29,7 @@ export const getUserProfileRequest = async (user, dispatch) => {
             type: 'PROFILE_READ',
             payload: {
                 _id,
+                username,
                 profileImage,
                 banner,
                 isFollow: isFollowing,
