@@ -34,6 +34,8 @@ class ChirpController {
                 if (error) throw new Error(error)
                 chirp.imageURL = result.secure_url
                 await chirp.save()
+                req.user.chirpCount++
+                await req.user.save()
                 res.send(chirp)
             }).end(req.files[0].buffer)
         } catch (e) {
