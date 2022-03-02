@@ -18,11 +18,13 @@ class UserController {
                 user_id: user._id
             })
             const token = await user.generateAuthToken()
+            console.log(user, token)
             await relationship.save()
             await user.save()
             res.status(201).send({ user, token })
         } catch (e) {
-            res.status(400).send(e)
+            res.status(400).send()
+            console.log(e)
         }
     }
 
@@ -67,9 +69,8 @@ class UserController {
     }
     getUserProfile = async (req, res) => {
         try {
-            const user = (req.user.username !== req.params.username)
-            
-                ? await User.findOne({ username: {$regex: new RegExp(req.params.username, "i")} }).populate({ path: 'following' })
+            const user = (req.user.username.toLowerCase() !== req.params.username.toLowerCase())
+                ? await User.findOne({ username_lower: req.params.username.toLowerCase() }).populate({ path: 'following' })
                 : req.user
             if (user === null) throw new Error('User not found')
             await req.user.populate({ path: 'following' })
@@ -92,8 +93,8 @@ class UserController {
     }
     getUserFollowings = async (req, res) => {
         try {
-            const user = (req.user.username !== req.params.username)
-                ? await User.findOne({ username: req.params.username }).populate({ path: 'following' })
+            const user = (req.user.username.toLowerCase() !== req.params.username.toLowerCase())
+                ? await User.findOne({ username_lower: req.params.username.toLowerCase() }).populate({ path: 'following' })
                 : req.user
             const relationships = await Relationship.find({ user_id: user._id })
                 .populate({ path: 'following', select: ['username', 'image'] })
@@ -113,8 +114,8 @@ class UserController {
 
     getUserFollowers = async (req, res) => {
         try {
-            const user = (req.user.username !== req.params.username)
-                ? await User.findOne({ username: req.params.username }).populate({ path: 'following' })
+            const user = (req.user.username.toLowerCase() !== req.params.username.toLowerCase())
+                ? await User.findOne({ username_lower: req.params.username.toLowerCase() }).populate({ path: 'following' })
                 : req.user
             const relationships = await Relationship.find({ following_id: user._id })
                 .populate({ path: 'follower', select: ['username', 'image'] })
@@ -237,11 +238,11 @@ class UserController {
             const users = (await User.find({
                 $and:
                     [
-                        { 'username': { '$regex': new RegExp(req.params.username, 'i') } },
+                        { username_lower: { '$regex': new RegExp(req.params.username.toLowerCase(), 'i') } },
                         { 'username': { '$ne': req.user.username } }
                     ]
             }, null, {
-                limit: 5,
+                limit: 10,
                 lean: true
             }).select(['username', 'image'])).map(user => {
                 const isFollowing = req.user.following.some(u => u.following_id.equals(user._id))

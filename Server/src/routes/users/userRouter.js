@@ -5,7 +5,7 @@ const upload = multer()
 const userController = require('./userController')
 const auth = require('../../middleware/auth')
 
-router.post('/users', userController.createNewUser)
+router.post('/users/new', userController.createNewUser)
 
 router.post('/users/login', userController.login)
 router.get('/users/auth', auth, userController.authenticatePersistentLogin)

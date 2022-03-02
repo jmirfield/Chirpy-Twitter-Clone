@@ -11,11 +11,12 @@ const UserSchema = new Schema({
         required: true,
         trim: true,
         unique: true,
+        minlength: 4,
+        maxlength: 25
     },
     username_lower: {
         type: String,
         required: true,
-        trim: true,
         lowercase: true,
         unique: true
     },
@@ -25,15 +26,14 @@ const UserSchema = new Schema({
         trim: true,
         lowercase: true,
         unique: true,
+        minlength: 5,
+        maxlength: 64
     },
     password: {
         type: String,
         required: true,
         trim: true,
-        validate(val) {
-            if (val.length < 7) throw new Error("Passsword needs to be at least 7 characters")
-            if (val.toLowerCase().includes("password")) throw new Error("Password cannot contain 'password'")
-        }
+        minlength: 8
     },
     image: {
         type: String
@@ -78,7 +78,7 @@ UserSchema.virtual('following', {
 
 //Checks for login using email and password
 UserSchema.statics.findByCredentials = async (username, password) => {
-    const user = await User.findOne({ "username": { $regex: new RegExp(username, "i") } })
+    const user = await User.findOne({ username_lower: username.toLowerCase() })
     if (!user) throw new Error('Unable to login')
     const isMatch = await bcrypt.compare(password, user.password)
     if (!isMatch) throw new Error('Unable to login')
