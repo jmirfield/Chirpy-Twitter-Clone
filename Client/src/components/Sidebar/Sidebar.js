@@ -1,6 +1,7 @@
 import React from 'react'
 import useSearch from '../../hooks/useSearch'
 import SearchInput from '../UI/SearchInput/SearchInput'
+import FollowCard from './FollowCard'
 import SearchModal from './SearchModal'
 import styles from './styles.module.css'
 
@@ -9,6 +10,7 @@ const Sidebar = (props) => {
     text,
     search,
     result,
+    error,
     textChangeHandler,
     openSearch,
     closeSearch
@@ -22,10 +24,12 @@ const Sidebar = (props) => {
           onChange={textChangeHandler}
           onFocus={openSearch}
         />}
+      <FollowCard />
       {search &&
         <SearchModal
           onClose={closeSearch}
           users={result}
+          error={error}
         />}
     </aside>
   )

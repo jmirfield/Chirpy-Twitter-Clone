@@ -14,7 +14,6 @@ const ProfileHeader = (props) => {
             <section className={styles['profile__header__main']}>
                 <h3>{props.user}</h3>
                 <span className={styles.profile__span}>
-                    {/* Will need to be fixed when feed gets pulled incrementally */}
                     {props.chirpCount !== null && `${props.chirpCount} chirps`}
                 </span>
             </section>

@@ -13,9 +13,6 @@
         transform: translateY(-100%);
         opacity: 0;
     } 
-    30% {
-        opacity: 20%;
-    }
     to {
         transform: translateY(0);
     }

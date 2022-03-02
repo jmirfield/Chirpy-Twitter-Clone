@@ -26,6 +26,8 @@
     background-color: black;
     z-index: 5;
     box-shadow: 0 0 3px white;
+    max-height: 50vh;
+    overflow-y: auto;
 }
 
 .modal > p {
@@ -42,3 +44,4 @@
         display: none;
     }
 }
+

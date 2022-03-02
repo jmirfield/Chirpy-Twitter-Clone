@@ -5,16 +5,22 @@ const useSearch = () => {
     const [text, setText] = useState('')
     const [search, setSearch] = useState(false)
     const [result, setResult] = useState([])
+    const [error, setError] = useState('')
 
     const textChangeHandler = (e) => setText(e.target.value)
     const openSearch = () => setSearch(true)
     const closeSearch = () => setSearch(false)
-    const resultHandler = (users) => setResult(users)
-    const resetHandler = () => setResult([])
+    const resetHandler = () => {
+        setResult([])
+        setError('')
+    }
 
     useEffect(() => {
         const timer = setTimeout(() => {
-            if (text.trim().length > 0) getListOfUsersRequest(text, resultHandler)
+            if (text.trim().length > 0) getListOfUsersRequest(text, (users) => {
+                if (users.length === 0) setError('Could not find any users')
+                setResult(users)
+            })
             if (text.trim().length === 0) resetHandler()
         }, 500)
         return () => clearTimeout(timer)
@@ -24,11 +30,10 @@ const useSearch = () => {
         text,
         search,
         result,
+        error,
         textChangeHandler,
         openSearch,
-        closeSearch,
-        resultHandler,
-        resetHandler
+        closeSearch
     }
 }
 

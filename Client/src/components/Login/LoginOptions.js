@@ -1,9 +1,9 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import Button from '../UI/Button/Button'
-import styles from './LoginOptions.module.css'
+import styles from './styles.module.css'
 
-const LoginOptions = ({className}) => {
+const LoginOptions = ({ className }) => {
     const navigate = useNavigate()
 
     const openSignUpModalHandler = () => {
@@ -15,16 +15,12 @@ const LoginOptions = ({className}) => {
     }
 
     return (
-        <div className={`${className} ${styles.options}`}>
-            <section>
-                <h2>Join Chirpy today.</h2>
-                <Button onClick={openSignUpModalHandler}>Sign Up</Button>
-            </section>
-            <section>
-                <p>Already have an account?</p>
-                <Button onClick={openSignInModalHandler}>Sign In</Button>
-            </section>
-        </div>
+        <section className={`${className} ${styles.options}`}>
+            <h2>Join Chirpy today.</h2>
+            <Button onClick={openSignUpModalHandler}>Sign Up</Button>
+            <p>Already have an account?</p>
+            <Button onClick={openSignInModalHandler}>Sign In</Button>
+        </section>
     )
 }
 

@@ -1,3 +1,32 @@
+.main {
+    text-align: center;
+    margin-top: 10vh;
+}
+
+.main__title {
+    font-size: 3rem;
+    margin-top: 0;
+}
+
+.main__options {
+    margin: auto;
+    max-width: 20rem;
+}
+
+.options > h2 {
+    margin-top: 4rem;
+}
+
+.options > p {
+    margin-top: 3rem;
+}
+
+.options > button {
+    width: 50%;
+    padding: 1rem 0 1rem 0;
+    border-radius: 2rem;
+}
+
 .form {
     display: flex;
     flex-direction: column;

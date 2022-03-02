@@ -103,8 +103,6 @@
 
 .profile__list {
     list-style: none;
-    overflow-y: scroll;
-    max-height: 50vh;
 }
 
 .profile__item {

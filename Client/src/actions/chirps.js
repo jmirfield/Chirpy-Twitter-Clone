@@ -27,9 +27,9 @@ export const getMainChirpFeed = async (dispatch) => {
 
 export const newChirpRequest = async (content, { dispatch, isModal, onClose }, { user, image }) => {
     try {
+        if(isModal)onClose()
         const { data } = await newChirp({ content, imageURL: '' })
         if (isModal) {
-            onClose()
             window.location.reload(false)
             //Will need to be fixed to update feed on home and profile when using menubar chirp buton
             return
@@ -53,9 +53,9 @@ export const newChirpRequest = async (content, { dispatch, isModal, onClose }, {
 
 export const newChirpRequestWithImage = async (content, { dispatch, isModal, onClose }, { user, image }) => {
     try {
+        if(isModal)onClose()
         const { data } = await newChirpWithImage(content)
         if (isModal) {
-            onClose()
             window.location.reload(false)
             //Will need to be fixed to update feed on home and profile when using menubar chirp buton
             return

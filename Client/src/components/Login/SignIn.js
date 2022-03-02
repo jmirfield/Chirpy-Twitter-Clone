@@ -59,7 +59,7 @@ const SignIn = () => {
                     {errors.password && <p className={styles.error}>{errors.password.message}</p>}
                 </section>
                 <section className={styles.form__action}>
-                    <Button>Sign In</Button>
+                    <Button disabled={!isValid && isSubmitted}>Sign In</Button>
                     <Button type='button' onClick={onCloseHandler}>Cancel</Button>
                 </section>
             </form>

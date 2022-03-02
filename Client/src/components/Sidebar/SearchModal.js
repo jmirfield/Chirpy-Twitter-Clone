@@ -11,7 +11,7 @@ const SearchModal = (props) => {
       onClick={props.onClose}
     >
       {props.users.length === 0
-        ? <p>Try searching for people, topics, or keywords</p>
+        ? !props.error ? <p>Try searching for people, topics, or keywords</p> : <p>{props.error}</p>
         : <ProfileList users={props.users} />
       }
 
