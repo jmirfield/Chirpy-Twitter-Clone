@@ -1,0 +1,53 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    max-width: 20rem;
+    justify-content: center;
+    margin: auto; 
+    padding: 1rem 0 1rem 0;
+}
+
+.form__control > label {
+    display: flex;
+    margin-top: .5rem;
+}
+
+.form__control > input {
+    margin: .5rem 0 .5rem 0;
+    font-size: 1rem;
+    min-height: 2rem;
+    border-radius: 5px;
+    width: 95%;
+    outline: none;
+    background-color: black;
+    color: white;
+    border-color: rgb(47, 51, 54);
+    font-weight: bolder;
+}
+
+.form__control > input:focus {
+    border-color: rgb(29, 155, 240);
+}
+
+.form__action {
+    display: flex;
+    margin-top: 2rem;
+    justify-content: space-between;
+}
+
+.form__action > button {
+    padding: .5rem 1rem .5rem 1rem;
+    border-radius: 1rem;
+}
+
+.error {
+    padding: 0;
+    margin: 0 0 .5rem 0;
+    color: red;
+    font-size: smaller;
+}
+
+.error::before {
+    display: inline;
+    content: "⚠ ";
+}

@@ -19,7 +19,7 @@ export const reducer = (state, action) => {
         case 'ERROR':
             return {
                 ...state,
-                error: action.payload,
+                error: true,
                 isLoading: false
             }
         case 'REMOVE_ERROR':

@@ -13,6 +13,7 @@ API.interceptors.request.use((req) => {
     return req
 })
 
+export const signup = (body) => API.post('users/new', body)
 export const login = (body) => API.post('users/login', body)
 export const persistentLogin = () => API.get('users/auth')
 export const logout = () => API.post('users/logout')

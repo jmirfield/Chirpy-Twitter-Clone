@@ -1,5 +1,5 @@
 /**
- * Converts date string into string representing time since post was created relative to now
+ * Converts date string of when post was created into string representing time since post was created relative to now
  * @param  {String} time Date string of when post was created
  * @return {String}      Formatted string representing time since post was created
  */
