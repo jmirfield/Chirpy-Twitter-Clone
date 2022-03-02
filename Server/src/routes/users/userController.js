@@ -18,7 +18,6 @@ class UserController {
                 user_id: user._id
             })
             const token = await user.generateAuthToken()
-            console.log(user, token)
             await relationship.save()
             await user.save()
             res.status(201).send({ user, token })

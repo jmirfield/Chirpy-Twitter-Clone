@@ -7,7 +7,6 @@ const chirpRouter = require('./routes/chirps/chirpRouter')
 const relationshipRouter = require('./routes/relationships/relationshipRouter')
 
 const app = express()
-const PORT = process.env.PORT
 
 app.use(express.json())
 // app.use(cors())
@@ -34,9 +33,5 @@ cloudinary.config({
 app.use(userRouter)
 app.use(chirpRouter)
 app.use(relationshipRouter)
-
-app.listen(PORT, /*'192.168.0.7',*/() => {
-    console.log(`Server is listening on port: ${PORT}`)
-})
 
 module.exports = app
