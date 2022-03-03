@@ -18,12 +18,11 @@ class UserController {
                 user_id: user._id
             })
             const token = await user.generateAuthToken()
+            await user.save().catch((err) => { throw new Error(err) })
             await relationship.save()
-            await user.save()
             res.status(201).send({ user, token })
         } catch (e) {
             res.status(400).send()
-            console.log(e)
         }
     }
 
@@ -32,10 +31,9 @@ class UserController {
             const user = await User.findByCredentials(req.body.username, req.body.password)
             const token = await user.generateAuthToken()
             await user.save()
-            res.status(201).send({ user, token, pic: user.image })
+            res.status(201).send({ username: user.username, token, pic: user.image })
         } catch (e) {
-            res.status(400).send()
-            console.log(e)
+            res.status(401).send(e.message)
         }
     }
 
@@ -43,7 +41,7 @@ class UserController {
         try {
             res.status(200).send({ username: req.user.username, pic: req.user.image })
         } catch (e) {
-            res.status(404).send()
+            res.status(400).send()
         }
     }
 
