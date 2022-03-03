@@ -35,10 +35,10 @@ const UserSchema = new Schema({
         trim: true,
         minlength: 8
     },
-    image: {
+    profileImage: {
         type: String
     },
-    banner: {
+    bannerImage: {
         type: String
     },
     tokens: [{

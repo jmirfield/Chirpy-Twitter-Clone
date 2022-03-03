@@ -31,7 +31,7 @@ class UserController {
             const user = await User.findByCredentials(req.body.username, req.body.password)
             const token = await user.generateAuthToken()
             await user.save()
-            res.status(201).send({ username: user.username, token, pic: user.image })
+            res.status(201).send({ username: user.username, token, profileImage: user.profileImage })
         } catch (e) {
             res.status(401).send(e.message)
         }
@@ -39,7 +39,7 @@ class UserController {
 
     authenticatePersistentLogin = async (req, res) => {
         try {
-            res.status(200).send({ username: req.user.username, pic: req.user.image })
+            res.status(200).send({ username: req.user.username, profileImage: req.user.profileImage })
         } catch (e) {
             res.status(400).send()
         }
@@ -75,8 +75,8 @@ class UserController {
             res.send({
                 _id: user._id,
                 username: user.username,
-                profileImage: user.image || null,
-                banner: user.banner || null,
+                profileImage: user.profileImage || null,
+                bannerImage: user.bannerImage || null,
                 isFollowing,
                 followingCount: user.followingCount,
                 followerCount: user.followerCount,
@@ -84,7 +84,6 @@ class UserController {
                 likes: user.likedChirps
             })
         } catch (e) {
-            console.log(e)
             res.status(404).send()
         }
     }
@@ -94,14 +93,14 @@ class UserController {
                 ? await User.findOne({ username_lower: req.params.username.toLowerCase() }).populate({ path: 'following' })
                 : req.user
             const relationships = await Relationship.find({ user_id: user._id })
-                .populate({ path: 'following', select: ['username', 'image'] })
+                .populate({ path: 'following', select: ['username', 'profileImage'] })
             await req.user.populate({ path: 'following' })
             const followings = relationships.filter(id => {
                 if (!id.following[0]) return false
                 return !id.following_id.equals(id.user_id)
             }).map(id => {
                 const isFollowing = req.user.following.some(u => u.following_id.equals(id.following[0]._id))
-                return { username: id.following[0].username, image: id.following[0].image, isFollowing, id: id.following_id }
+                return { username: id.following[0].username, profileImage: id.following[0].profileImage, isFollowing, id: id.following_id }
             })
             res.send(followings)
         } catch (e) {
@@ -115,14 +114,14 @@ class UserController {
                 ? await User.findOne({ username_lower: req.params.username.toLowerCase() }).populate({ path: 'following' })
                 : req.user
             const relationships = await Relationship.find({ following_id: user._id })
-                .populate({ path: 'follower', select: ['username', 'image'] })
+                .populate({ path: 'follower', select: ['username', 'profileImage'] })
             await req.user.populate({ path: 'following' })
             const followers = relationships.filter(id => {
                 if (!id.follower[0]) return false
                 return !id.following_id.equals(id.user_id)
             }).map(id => {
                 const isFollowing = req.user.following.some(u => u.following_id.equals(id.follower[0]._id))
-                return { username: id.follower[0].username, image: id.follower[0].image, isFollowing, id: id.user_id }
+                return { username: id.follower[0].username, profileImage: id.follower[0].profileImage, isFollowing, id: id.user_id }
             })
             res.send(followers)
         } catch (e) {
@@ -197,7 +196,7 @@ class UserController {
                 }
             }, async (error, result) => {
                 if (error) throw new Error(error)
-                req.user.image = result.secure_url
+                req.user.profileImage = result.secure_url
                 await req.user.save()
                 res.send(result.secure_url)
             }).end(req.file.buffer)
@@ -219,7 +218,7 @@ class UserController {
                 }
             }, async (error, result) => {
                 if (error) throw new Error(error)
-                req.user.banner = result.secure_url
+                req.user.bannerImage = result.secure_url
                 await req.user.save()
                 res.send(result.secure_url)
             }).end(req.file.buffer)
@@ -241,9 +240,9 @@ class UserController {
             }, null, {
                 limit: 10,
                 lean: true
-            }).select(['username', 'image'])).map(user => {
+            }).select(['username', 'profileImage'])).map(user => {
                 const isFollowing = req.user.following.some(u => u.following_id.equals(user._id))
-                return { username: user.username, image: user.image, isFollowing, id: user._id }
+                return { username: user.username, profileImage: user.profileImage, isFollowing, id: user._id }
             })
             res.send(users)
         } catch (e) {
