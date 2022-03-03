@@ -92,6 +92,7 @@ class UserController {
             const user = (req.user.username.toLowerCase() !== req.params.username.toLowerCase())
                 ? await User.findOne({ username_lower: req.params.username.toLowerCase() }).populate({ path: 'following' })
                 : req.user
+            if (user === null) throw new Error('User not found')
             const relationships = await Relationship.find({ user_id: user._id })
                 .populate({ path: 'following', select: ['username', 'profileImage'] })
             await req.user.populate({ path: 'following' })
@@ -100,11 +101,11 @@ class UserController {
                 return !id.following_id.equals(id.user_id)
             }).map(id => {
                 const isFollowing = req.user.following.some(u => u.following_id.equals(id.following[0]._id))
-                return { username: id.following[0].username, profileImage: id.following[0].profileImage, isFollowing, id: id.following_id }
+                return { username: id.following[0].username, profileImage: id.following[0].profileImage, isFollowing, _id: id.following_id }
             })
             res.send(followings)
         } catch (e) {
-            console.log(e)
+            res.status(404).send()
         }
     }
 
@@ -113,6 +114,7 @@ class UserController {
             const user = (req.user.username.toLowerCase() !== req.params.username.toLowerCase())
                 ? await User.findOne({ username_lower: req.params.username.toLowerCase() }).populate({ path: 'following' })
                 : req.user
+            if (user === null) throw new Error('User not found')
             const relationships = await Relationship.find({ following_id: user._id })
                 .populate({ path: 'follower', select: ['username', 'profileImage'] })
             await req.user.populate({ path: 'following' })
@@ -121,11 +123,11 @@ class UserController {
                 return !id.following_id.equals(id.user_id)
             }).map(id => {
                 const isFollowing = req.user.following.some(u => u.following_id.equals(id.follower[0]._id))
-                return { username: id.follower[0].username, profileImage: id.follower[0].profileImage, isFollowing, id: id.user_id }
+                return { username: id.follower[0].username, profileImage: id.follower[0].profileImage, isFollowing, _id: id.user_id }
             })
             res.send(followers)
         } catch (e) {
-            console.log(e)
+            res.status(404).send()
         }
     }
 
@@ -242,7 +244,7 @@ class UserController {
                 lean: true
             }).select(['username', 'profileImage'])).map(user => {
                 const isFollowing = req.user.following.some(u => u.following_id.equals(user._id))
-                return { username: user.username, profileImage: user.profileImage, isFollowing, id: user._id }
+                return { username: user.username, profileImage: user.profileImage, isFollowing, _id: user._id }
             })
             res.send(users)
         } catch (e) {

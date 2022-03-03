@@ -57,14 +57,14 @@ class ChirpController {
             }).populate([
                 {
                     path: 'owner',
-                    select: '-_id image username'
+                    select: '-_id profileImage username'
                 },
                 {
                     path: 'rechirp',
                     select: ['createdAt'],
                     populate: {
                         path: 'owner',
-                        select: '-_id image username'
+                        select: '-_id profileImage username'
                     }
                 }
             ]))
@@ -154,7 +154,7 @@ class ChirpController {
                 select: ['createdAt'],
                 populate: {
                     path: 'owner',
-                    select: '-_id image username'
+                    select: '-_id profileImage username'
                 }
             })
             res.send({

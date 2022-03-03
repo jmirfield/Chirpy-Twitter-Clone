@@ -1,10 +1,10 @@
 const app = require('../../app')
 const request = require('supertest')
-const { dbConnect, dbDisconnect, testUserId, testUser, dbSetupDB } = require('../../db/fixtures/dbtest')
+const { dbConnect, dbDisconnect, testUserId, testUser, dbSetup } = require('../../db/fixtures/dbtest')
 
 beforeAll(dbConnect)
 
-beforeEach(dbSetupDB)
+beforeEach(dbSetup)
 
 afterAll(dbDisconnect)
 

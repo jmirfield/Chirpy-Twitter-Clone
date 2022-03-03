@@ -24,7 +24,7 @@ const dbDisconnect = async () => {
     await mongoServer.stop()
 }
 
-const dbSetupDB = async () => {
+const dbSetup = async () => {
     await User.deleteMany()
     await Relationship.deleteMany()
     await Chirp.deleteMany()
@@ -41,5 +41,5 @@ const dbSetupDB = async () => {
 module.exports = {
     dbConnect,
     dbDisconnect,
-    dbSetupDB
+    dbSetup
 }

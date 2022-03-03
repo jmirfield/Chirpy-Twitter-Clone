@@ -2,12 +2,12 @@ const app = require('../../app')
 const request = require('supertest')
 const User = require('./userModel')
 const Relationship = require('../relationships/relationshipModel')
-const { dbConnect, dbDisconnect, dbSetupDB } = require('../../db/fixtures/dbtest')
+const { dbConnect, dbDisconnect, dbSetup } = require('../../db/fixtures/dbtest')
 const { testUserMain, testUserMainId, mockUsers } = require('../../db/fixtures/userTestData')
 
 beforeAll(dbConnect)
 
-beforeEach(dbSetupDB)
+beforeEach(dbSetup)
 
 afterAll(dbDisconnect)
 
@@ -180,6 +180,58 @@ describe('User profiles', () => {
     test('Should not find user', async () => {
         await request(app)
             .get('/users/profile/fakeuser1234')
+            .set('Authorization', `Bearer ${testUserMain.tokens[0].token}`)
+            .expect(404)
+    })
+
+    test('Should get current user list of followings', async () => {
+        const response = await request(app)
+            .get(`/users/profile/followings/${testUserMain.username}`)
+            .set('Authorization', `Bearer ${testUserMain.tokens[0].token}`)
+            .expect(200)
+        expect(response.body.length).toBe(mockUsers.users.length - 1)
+        for (let i in response.body) expect(response.body[i]._id).toBe(mockUsers.users[i]._id.toString())
+    })
+
+    test('Should get current user list of followers', async () => {
+        const last = mockUsers.users.length - 1
+        const response = await request(app)
+            .get(`/users/profile/followers/${testUserMain.username}`)
+            .set('Authorization', `Bearer ${testUserMain.tokens[0].token}`)
+            .expect(200)
+        expect(response.body.length).toBe(1)
+        expect(response.body[0]._id).toBe(mockUsers.users[last]._id.toString())
+    })
+
+    test('Should get searched user\'s list of followings', async () => {
+        const last = mockUsers.users.length - 1
+        const response = await request(app)
+            .get(`/users/profile/followings/${mockUsers.users[last].username}`)
+            .set('Authorization', `Bearer ${testUserMain.tokens[0].token}`)
+            .expect(200)
+        expect(response.body.length).toBe(1)
+        expect(response.body[0]._id).toBe(testUserMainId.toString())
+    })
+
+    test('Should get searched user\'s list of followers', async () => {
+        const response = await request(app)
+            .get(`/users/profile/followers/${mockUsers.users[0].username}`)
+            .set('Authorization', `Bearer ${testUserMain.tokens[0].token}`)
+            .expect(200)
+        expect(response.body.length).toBe(1)
+        expect(response.body[0]._id).toBe(testUserMainId.toString())
+    })
+
+    test('Should fail to find followings due to user does not exist', async () => {
+        await request(app)
+            .get('/users/profile/followings/fakeuser1234')
+            .set('Authorization', `Bearer ${testUserMain.tokens[0].token}`)
+            .expect(404)
+    })
+
+    test('Should fail to find followers due to user does not exist', async () => {
+        await request(app)
+            .get('/users/profile/followings/fakeuser1234')
             .set('Authorization', `Bearer ${testUserMain.tokens[0].token}`)
             .expect(404)
     })

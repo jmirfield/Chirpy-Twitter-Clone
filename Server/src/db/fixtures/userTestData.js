@@ -18,8 +18,9 @@ const testUserMain = {
 }
 
 const createMockUsers = (n) => {
-    let users = []
-    let relationships = []
+    const users = []
+    const relationships = []
+
     for (let i = 0; i < n; i++) {
         const _id = new mongoose.Types.ObjectId()
         users.push({
@@ -35,10 +36,17 @@ const createMockUsers = (n) => {
             followingCount: 0,
             chirpCount: 0
         })
-        if (n-1 !== i) {
+        //Main test user follows everyone except last mockUser
+        //Last mockUser only follows main user
+        if (n - 1 !== i) {
             relationships.push({
                 user_id: testUserMainId,
                 following_id: _id
+            })
+        } else {
+            relationships.push({
+                user_id: _id,
+                following_id: testUserMainId
             })
         }
     }
