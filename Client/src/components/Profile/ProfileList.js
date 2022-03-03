@@ -27,7 +27,7 @@ const ProfileList = (props) => {
                     <ProfileMin
                         key={user.id}
                         username={user.username}
-                        image={user.image}
+                        profileImage={user.profileImage}
                         isFollow={user.isFollowing}
                         id={user.id}
                     />
@@ -50,7 +50,7 @@ const ProfileMin = (props) => {
             <Link to={`/${props.username}`}>
                 <ProfileImage
                     className={styles.profile__user__icon}
-                    src={props.image}
+                    src={props.profileImage}
                 />
                 <span className={styles.profile__user}>{props.username}</span>
             </Link>

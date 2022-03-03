@@ -16,7 +16,7 @@ const Chirp = (props) => {
     const post_owner = props.rechirp ? props.rechirp.owner.username : props.owner.username
     const post_id = props.rechirp ? props.rechirp._id : props._id
     const post_time = props.rechirp ? props.rechirp.createdAt : props.createdAt
-    const post_icon = props.rechirp ? props.rechirp.owner.image : props.owner.image
+    const post_icon = props.rechirp ? props.rechirp.owner.profileImage : props.owner.profileImage
 
     const chirpOptions = [
         {

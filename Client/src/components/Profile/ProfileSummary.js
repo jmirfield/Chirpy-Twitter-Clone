@@ -1,5 +1,5 @@
 import React, { useContext, useRef, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import AuthContext from '../../context/AuthContext'
 import { followRequest, unfollowRequest, uploadProfileImageRequest, uploadProfileBannerRequest } from '../../actions/profile'
 import FollowButton from '../UI/FollowButton/FollowButton'
@@ -13,7 +13,7 @@ const ProfileSummary = (props) => {
     const profilePicRef = useRef(null)
     const profileBannerRef = useRef(null)
     
-    const [banner, setBanner] = useState(props.banner || null)
+    const [banner, setBanner] = useState(props.bannerImage || null)
 
     const updateProfilePictureHandler = () => {
         profilePicRef.current.click()

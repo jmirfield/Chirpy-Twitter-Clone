@@ -19,7 +19,7 @@ export const getUserProfileRequest = async (user, dispatch) => {
             _id,
             username,
             profileImage,
-            banner,
+            bannerImage,
             isFollowing,
             followingCount,
             followerCount,
@@ -31,7 +31,7 @@ export const getUserProfileRequest = async (user, dispatch) => {
                 _id,
                 username,
                 profileImage,
-                banner,
+                bannerImage,
                 isFollow: isFollowing,
                 followingCount: followingCount || 0,
                 followerCount: followerCount || 0,
@@ -57,7 +57,7 @@ export const getUserProfileFeedRequest = async (_id, profileImage, user, myProfi
                 ...chirp,
                 owner: {
                     username: user,
-                    image: profileImage
+                    profileImage: profileImage
                 }
             }
         })
@@ -89,7 +89,7 @@ export const getUserProfileMediaRequest = async (_id, profileImage, user, dispat
                 ...chirp,
                 owner: {
                     username: user,
-                    image: profileImage
+                    profileImage: profileImage
                 }
             }
         })

@@ -65,7 +65,7 @@ const Profile = () => {
                 followingCount={profile.followingCount}
                 dispatch={dispatch}
                 profileImage={profile.profileImage}
-                banner={profile.banner}
+                bannerImage={profile.bannerImage}
             />
             <ProfileTabs tabs={MAIN_TABS} />
             <Outlet context={{ profile, dispatch }} />

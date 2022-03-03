@@ -25,7 +25,7 @@ export const loginRequest = async ({ username, password }, dispatch) => {
             type: 'LOGIN',
             payload: {
                 username: data.username,
-                profileImage: data.pic
+                profileImage: data.profileImage
             }
         })
     } catch (e) {
@@ -41,7 +41,7 @@ export const authPersistentLoginRequest = async (dispatch) => {
             type: 'LOGIN',
             payload: {
                 username: data.username,
-                profileImage: data.pic
+                profileImage: data.profileImage
             }
         })
     } catch (e) {
