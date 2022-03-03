@@ -24,7 +24,7 @@ export const loginRequest = async ({ username, password }, dispatch) => {
         dispatch({
             type: 'LOGIN',
             payload: {
-                username: data.user.username,
+                username: data.username,
                 profileImage: data.pic
             }
         })
