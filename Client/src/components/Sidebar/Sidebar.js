@@ -10,7 +10,7 @@ const Sidebar = (props) => {
     text,
     search,
     result,
-    error,
+    message,
     textChangeHandler,
     openSearch,
     closeSearch
@@ -29,7 +29,7 @@ const Sidebar = (props) => {
         <SearchModal
           onClose={closeSearch}
           users={result}
-          error={error}
+          message={message}
         />}
     </aside>
   )

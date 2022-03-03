@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useContext } from 'react'
-import { Outlet, useResolvedPath } from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
 import AuthContext from '../../context/AuthContext'
 import Menubar from '../Menubar/Menubar'
 import Sidebar from '../Sidebar/Sidebar'
@@ -32,4 +32,4 @@ const MainLayout = () => {
     )
 }
 
-export default React.memo(MainLayout)
+export default MainLayout

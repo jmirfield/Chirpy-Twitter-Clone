@@ -40,7 +40,7 @@ const SignUp = () => {
                             },
                             maxLength: {
                                 value: 25,
-                                message: 'Must not be longer than 25 chracters'
+                                message: 'Must not be longer than 25 characters'
                             },
 
                         })}
@@ -58,7 +58,7 @@ const SignUp = () => {
                             },
                             maxLength: {
                                 value: 64,
-                                message: 'Must not be longer than 64 chracters'
+                                message: 'Must not be longer than 64 characters'
                             },
                             pattern: {
                                 value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,

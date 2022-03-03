@@ -10,7 +10,7 @@ const Explore = () => {
         text,
         search,
         result,
-        error,
+        message,
         textChangeHandler,
         openSearch,
         closeSearch
@@ -32,7 +32,7 @@ const Explore = () => {
                 <ExploreModal
                     onClose={closeSearch}
                     users={result}
-                    error={error}
+                    message={message}
                 />}
         </>
     )

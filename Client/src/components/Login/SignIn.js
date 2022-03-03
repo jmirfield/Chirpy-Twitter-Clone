@@ -39,7 +39,7 @@ const SignIn = () => {
                             },
                             maxLength: {
                                 value: 25,
-                                message: 'Must not be longer than 25 chracters'
+                                message: 'Must not be longer than 25 characters'
                             },
 
                         })}
