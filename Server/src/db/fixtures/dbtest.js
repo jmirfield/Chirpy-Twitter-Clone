@@ -1,8 +1,29 @@
 const mongoose = require('mongoose')
+const { MongoMemoryServer } = require('mongodb-memory-server');
 const jwt = require('jsonwebtoken')
 const User = require('../../routes/users/userModel')
 const Relationship = require('../../routes/relationships/relationshipModel')
 const Chirp = require('../../routes/chirps/chirpModel')
+
+let mongoServer;
+
+const dbConnect = async () => {
+    mongoServer = await MongoMemoryServer.create()
+    const uri = mongoServer.getUri()
+    const opts = {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    }
+    await mongoose.connect(uri, opts, (err) => {
+        if (err) console.log(err)
+        console.log('Connected to mongodb memory server')
+    })
+}
+
+const dbDisconnect = async () => {
+    await mongoose.disconnect()
+    await mongoServer.stop()
+}
 
 const testUserId = new mongoose.Types.ObjectId()
 
@@ -20,6 +41,7 @@ const testUser = {
     chirpCount: 0
 }
 
+
 const setupDB = async () => {
     await User.deleteMany()
     await Relationship.deleteMany()
@@ -32,6 +54,8 @@ const setupDB = async () => {
 }
 
 module.exports = {
+    dbConnect,
+    dbDisconnect,
     testUserId,
     testUser,
     setupDB

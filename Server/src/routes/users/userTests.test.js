@@ -1,12 +1,14 @@
-const mongoose = require('mongoose')
-const request = require('supertest')
 const app = require('../../app')
+const request = require('supertest')
 const User = require('./userModel')
 const Relationship = require('../relationships/relationshipModel')
-const { testUserId, testUser, setupDB } = require('../../db/fixtures/dbtest')
+const { dbConnect, dbDisconnect, testUserId, testUser, setupDB } = require('../../db/fixtures/dbtest')
 
+beforeAll(dbConnect)
 
 beforeEach(setupDB)
+
+afterAll(dbDisconnect)
 
 test('Should sign up new user', async () => {
     const response = await request(app)
@@ -115,3 +117,9 @@ test('Should fail authenticate due to invalid Bearer Token', async () => {
         .expect(401)
 })
 
+test('Should fail authenticate due to invalid Bearer Token 2', async () => {
+    await request(app)
+        .get('/users/auth')
+        .set('Authorization', `Bearer ${testUser.tokens[0].token}123`)
+        .expect(401)
+})
