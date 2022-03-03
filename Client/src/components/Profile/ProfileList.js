@@ -25,11 +25,11 @@ const ProfileList = (props) => {
             {props.users.map((user) => {
                 return (
                     <ProfileMin
-                        key={user.id}
+                        key={user._id}
                         username={user.username}
                         profileImage={user.profileImage}
                         isFollow={user.isFollowing}
-                        id={user.id}
+                        _id={user._id}
                     />
                 )
             }
@@ -55,8 +55,8 @@ const ProfileMin = (props) => {
                 <span className={styles.profile__user}>{props.username}</span>
             </Link>
             <FollowButton
-                onFollow={followRequest.bind(this, props.id, dispatch)}
-                onUnfollow={unfollowRequest.bind(this, props.id, dispatch)}
+                onFollow={followRequest.bind(this, props._id, dispatch)}
+                onUnfollow={unfollowRequest.bind(this, props._id, dispatch)}
                 isFollowing={profile.isFollow}
                 myProfile={props.username === state.user}
             />

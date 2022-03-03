@@ -40,11 +40,11 @@ const Chirp = (props) => {
         <article className={styles['chirp']} key={props._id}>
             {props.rechirp && <ChirpRechirpHeader user={props.owner.username} />}
             <section className={styles['chirp__main']}>
-                <ChirpPostIcon owner={post_owner} image={post_icon} />
+                <ChirpPostIcon owner={post_owner} profileImage={post_icon} />
                 <section className={styles['chirp__body']}>
                     <ChirpHeader owner={post_owner} id={post_id} time={post_time} />
                     {props.content !== '**empty**' && <ChirpMessage owner={post_owner} id={post_id} message={props.content} />}
-                    {props.imageURL && <ChirpImage  owner={post_owner} id={post_id} imageURL={props.imageURL}/>}
+                    {props.imageURL && <ChirpImage owner={post_owner} id={post_id} imageURL={props.imageURL} />}
                     <ChirpIcons options={chirpOptions} />
                 </section>
                 <ChirpOption />
