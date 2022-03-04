@@ -3,7 +3,7 @@ const request = require('supertest')
 const User = require('./userModel')
 const Relationship = require('../relationships/relationshipModel')
 const { dbConnect, dbDisconnect, dbSetup } = require('../../db/fixtures/dbtest')
-const { testUserMain, testUserMainId, mockUsers } = require('../../db/fixtures/userTestData')
+const { testUserMain, testUserMainId, mockUsers } = require('../../db/fixtures/testData')
 
 beforeAll(dbConnect)
 
@@ -11,7 +11,7 @@ beforeEach(dbSetup)
 
 afterAll(dbDisconnect)
 
-describe('Sign up and login', () => {
+describe('Sign up, login, and deleting account', () => {
     test('Should sign up new user', async () => {
         const response = await request(app)
             .post('/users/new')
@@ -131,6 +131,22 @@ describe('Sign up and login', () => {
             .post('/users/logout')
             .expect(401)
     })
+
+    test('Should delete current user', async () => {
+        await request(app)
+            .delete('/users/delete')
+            .set('Authorization', `Bearer ${testUserMain.tokens[0].token}`)
+            .expect(204)
+        const user = await User.findById(testUserMainId)
+        expect(user).toBeNull()
+        const relationships = await Relationship.find({
+            $or: [
+                { user_id: testUserMainId },
+                { following_id: testUserMainId }
+            ]
+        })
+        expect(relationships).toHaveLength(0)
+    })
 })
 
 describe('User profiles', () => {
@@ -151,7 +167,7 @@ describe('User profiles', () => {
     })
 
     test('Should fail to get user profile since no auth', async () => {
-        const response = await request(app)
+        await request(app)
             .get(`/users/profile/${testUserMain.username}`)
             .expect(401)
     })
@@ -189,7 +205,7 @@ describe('User profiles', () => {
             .get(`/users/profile/followings/${testUserMain.username}`)
             .set('Authorization', `Bearer ${testUserMain.tokens[0].token}`)
             .expect(200)
-        expect(response.body.length).toBe(mockUsers.users.length - 1)
+        expect(response.body).toHaveLength(mockUsers.users.length - 1)
         for (let i in response.body) expect(response.body[i]._id).toBe(mockUsers.users[i]._id.toString())
     })
 
@@ -199,7 +215,7 @@ describe('User profiles', () => {
             .get(`/users/profile/followers/${testUserMain.username}`)
             .set('Authorization', `Bearer ${testUserMain.tokens[0].token}`)
             .expect(200)
-        expect(response.body.length).toBe(1)
+        expect(response.body).toHaveLength(1)
         expect(response.body[0]._id).toBe(mockUsers.users[last]._id.toString())
     })
 
@@ -209,7 +225,7 @@ describe('User profiles', () => {
             .get(`/users/profile/followings/${mockUsers.users[last].username}`)
             .set('Authorization', `Bearer ${testUserMain.tokens[0].token}`)
             .expect(200)
-        expect(response.body.length).toBe(1)
+        expect(response.body).toHaveLength(1)
         expect(response.body[0]._id).toBe(testUserMainId.toString())
     })
 
@@ -218,7 +234,7 @@ describe('User profiles', () => {
             .get(`/users/profile/followers/${mockUsers.users[0].username}`)
             .set('Authorization', `Bearer ${testUserMain.tokens[0].token}`)
             .expect(200)
-        expect(response.body.length).toBe(1)
+        expect(response.body).toHaveLength(1)
         expect(response.body[0]._id).toBe(testUserMainId.toString())
     })
 
@@ -234,5 +250,28 @@ describe('User profiles', () => {
             .get('/users/profile/followings/fakeuser1234')
             .set('Authorization', `Bearer ${testUserMain.tokens[0].token}`)
             .expect(404)
+    })
+})
+
+describe('Searching for users', () => {
+    test('Should get list of users that meet search criteria', async () => {
+        const response = await request(app)
+            .get('/users/search/u')
+            .set('Authorization', `Bearer ${testUserMain.tokens[0].token}`)
+            .expect(200)
+        for (let i in response.body) {
+            expect(response.body[i]).toHaveProperty('username', mockUsers.users[i].username)
+            expect(response.body[i]).toHaveProperty('profileImage')
+            expect(response.body[i]).toHaveProperty('isFollowing')
+            expect(response.body[i]).toHaveProperty('_id', mockUsers.users[i]._id.toString())
+        }
+    })
+
+    test('Should get list of empty array', async () => {
+        const response = await request(app)
+            .get('/users/search/fakeusers')
+            .set('Authorization', `Bearer ${testUserMain.tokens[0].token}`)
+            .expect(200)
+        expect(response.body).toHaveLength(0)
     })
 })

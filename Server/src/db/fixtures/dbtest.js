@@ -3,13 +3,13 @@ const { MongoMemoryServer } = require('mongodb-memory-server');
 const User = require('../../routes/users/userModel')
 const Relationship = require('../../routes/relationships/relationshipModel')
 const Chirp = require('../../routes/chirps/chirpModel')
-const { testUserMain, testUserMainId, mockUsers } = require('./userTestData')
+const { testUserMain, testUserMainId, mockUsers } = require('./testData')
 
 let mongoServer;
 
 const dbConnect = async () => {
     mongoServer = await MongoMemoryServer.create()
-    const uri = mongoServer.getUri()
+    const uri = await mongoServer.getUri()
     const opts = {
         useNewUrlParser: true,
         useUnifiedTopology: true

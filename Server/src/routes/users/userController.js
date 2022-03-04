@@ -149,7 +149,6 @@ class UserController {
             }
             res.status(202).send()
         } catch (e) {
-            console.log(e.message)
             res.status(400).send()
         }
     }
@@ -172,7 +171,6 @@ class UserController {
             }
             res.status(202).send()
         } catch (e) {
-            console.log(e.message)
             res.status(400).send()
         }
     }
@@ -180,7 +178,7 @@ class UserController {
     deleteUser = async (req, res) => {
         try {
             await req.user.deleteOne()
-            res.send(req.user)
+            res.status(204).send()
         } catch (e) {
             res.status(500).send()
         }
@@ -244,11 +242,10 @@ class UserController {
                 lean: true
             }).select(['username', 'profileImage'])).map(user => {
                 const isFollowing = req.user.following.some(u => u.following_id.equals(user._id))
-                return { username: user.username, profileImage: user.profileImage, isFollowing, _id: user._id }
+                return { username: user.username, profileImage: user.profileImage = '', isFollowing, _id: user._id }
             })
             res.send(users)
         } catch (e) {
-            console.log(e)
             res.status(400).send()
         }
     }
