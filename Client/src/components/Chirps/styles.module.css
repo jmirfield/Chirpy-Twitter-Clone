@@ -8,6 +8,10 @@
     animation: slidein .5s;
 }
 
+.chirp:hover {
+    background-color: #131414;
+}
+
 @keyframes slidein {
     from {
         transform: translateY(-100%);

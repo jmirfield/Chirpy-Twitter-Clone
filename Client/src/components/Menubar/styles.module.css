@@ -23,7 +23,6 @@
     display: flex;
     margin: 0;
     padding: 0;
-    align-self: flex-end;
 }
 
 .menu__item > a { 
@@ -65,6 +64,7 @@
     display: flex;
     align-items: center;
     height: 4rem;
+    width: 100%;
     border-radius: 10rem;
     text-decoration: none;
     border: none;
@@ -144,8 +144,12 @@
 
 @media (height < 720px) {
 
-    .menu__nav {
-        width: 50%;
+    .menu__list {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 90%;
+        justify-content: space-between;
     }
 
     .menu__item > a { 
@@ -155,7 +159,7 @@
     .menu__chirp {
         display: flex;
         max-height: 2rem;
-        max-width: 10rem;
+        width: 100%;
         align-items: center;
         justify-content: center;
     }
@@ -163,6 +167,7 @@
     .menu__actions {
         display: flex;
         align-items: flex-start !important;
+        width: 75%;
     }
 
     .menu__label {

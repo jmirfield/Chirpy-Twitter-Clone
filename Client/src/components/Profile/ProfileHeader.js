@@ -11,12 +11,14 @@ const ProfileHeader = (props) => {
                     <Icon width='18px' height='18px' fill='white' d={BACK_BUTTON.d} />
                 </button>
             </section>
-            <section className={styles['profile__header__main']}>
-                <h3>{props.user}</h3>
-                <span className={styles.profile__span}>
-                    {props.chirpCount !== null && `${props.chirpCount} chirps`}
-                </span>
-            </section>
+            {props.user &&
+                <section className={styles['profile__header__main']}>
+                    <h3>{props.user}</h3>
+                    <span className={styles.profile__span}>
+                        {props.chirpCount !== null && `${props.chirpCount} chirps`}
+                    </span>
+                </section>
+            }
         </header>
     )
 }

@@ -13,8 +13,7 @@ const FollowButton = (props) => {
                     : <button
                         onClick={props.onFollow}
                         className={styles.follow}
-                        children='Follow'
-                    />
+                    ><span>Follow</span></button>
                 : <></>//<button>Edit Profile</button>
             )}
         </section>

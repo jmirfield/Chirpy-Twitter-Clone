@@ -9,11 +9,17 @@ const ChirpIcons = (props) => {
         1: 'green',
         2: 'red'
     }
+
     return (
         <section className={styles['chirp__actions']}>
             {Object.keys(CHIRP_ICONS).map((icon, idx) => {
+                const clickHandler = (e) => {
+                    e.preventDefault()
+                    e.stopPropagation()
+                    props.options[idx].onClick()
+                }
                 return (
-                    <button className={styles['chirp__actions-icon']} key={idx} onClick={props.options[idx].onClick}>
+                    <button className={styles['chirp__actions-icon']} key={idx} onClick={clickHandler}>
                         <section className={`${styles[`chirp__actions-icon__${icon}`]} ${styles[`chirp__actions-icon__main`]}`}>
                             {!props.options[idx].active ?
                                 <Icon width='24px' height='24px' fill='rgb(101, 119, 134)' d={CHIRP_ICONS[icon]} /> :
