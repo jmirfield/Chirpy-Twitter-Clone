@@ -31,7 +31,7 @@ const reducer = (state, action) => {
                         ...action.payload.chirp,
                         owner: {
                             username: action.payload.client.user,
-                            image: action.payload.client.image
+                            profileImage: action.payload.client.profileImage
                         }
                     },
                     ...state.feed

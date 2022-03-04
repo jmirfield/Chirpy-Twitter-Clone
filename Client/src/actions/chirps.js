@@ -25,7 +25,7 @@ export const getMainChirpFeed = async (dispatch) => {
     }
 }
 
-export const newChirpRequest = async (content, { dispatch, isModal, onClose }, { user, image }) => {
+export const newChirpRequest = async (content, { dispatch, isModal, onClose }, { user, profileImage }) => {
     try {
         if(isModal)onClose()
         const { data } = await newChirp({ content, imageURL: '' })
@@ -43,7 +43,7 @@ export const newChirpRequest = async (content, { dispatch, isModal, onClose }, {
                     isLiked: false,
                     isRechirped: false
                 },
-                client: { user, image }
+                client: { user, profileImage }
             }
         })
     } catch (e) {
@@ -51,7 +51,7 @@ export const newChirpRequest = async (content, { dispatch, isModal, onClose }, {
     }
 }
 
-export const newChirpRequestWithImage = async (content, { dispatch, isModal, onClose }, { user, image }) => {
+export const newChirpRequestWithImage = async (content, { dispatch, isModal, onClose }, { user, profileImage }) => {
     try {
         if(isModal)onClose()
         const { data } = await newChirpWithImage(content)
@@ -69,7 +69,7 @@ export const newChirpRequestWithImage = async (content, { dispatch, isModal, onC
                     isLiked: false,
                     isRechirped: false
                 },
-                client: { user, image }
+                client: { user, profileImage }
             }
         })
     } catch (e) {

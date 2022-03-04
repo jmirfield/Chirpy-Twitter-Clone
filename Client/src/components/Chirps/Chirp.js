@@ -12,7 +12,6 @@ import ChirpImage from './ChirpImage'
 
 const Chirp = (props) => {
     const { state } = useContext(AuthContext)
-
     const post_owner = props.rechirp ? props.rechirp.owner.username : props.owner.username
     const post_id = props.rechirp ? props.rechirp._id : props._id
     const post_time = props.rechirp ? props.rechirp.createdAt : props.createdAt

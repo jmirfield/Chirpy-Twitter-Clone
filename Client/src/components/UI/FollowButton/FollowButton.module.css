@@ -16,10 +16,25 @@
     border-radius: 2rem;
     color: white;
     justify-self: center;
+    cursor: pointer;
 }
 
-.controls > button:hover {
+.follow:hover {
     background-color: rgb(239, 243, 244, .1);
+}
+
+.unfollow:hover {
+    color: red;
+    background-color: rgb(65, 6, 6);
+    border-color: red;
+}
+
+.unfollow:hover > span {
+    display: none;
+}
+
+.unfollow:hover::after{
+    content: 'Unfollow'
 }
 
 .controls >button:active{

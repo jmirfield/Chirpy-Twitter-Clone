@@ -45,21 +45,35 @@ const ProfileMin = (props) => {
         if (props.isFollow) dispatch({ type: 'FOLLOW' })
     }, [])
 
+    const onFollowHandler = (e) => {
+        followRequest(props._id, dispatch)
+        e.stopPropagation()
+        e.preventDefault()
+    }
+
+    const onUnFollowHandler = (e) => {
+        unfollowRequest(props._id, dispatch)
+        e.stopPropagation()
+        e.preventDefault()
+    }
+
     return (
         <ul className={styles.profile__item}>
             <Link to={`/${props.username}`}>
-                <ProfileImage
-                    className={styles.profile__user__icon}
-                    src={props.profileImage}
+                <section className={styles.profile__user}>
+                    <ProfileImage
+                        className={styles.profile__user__icon}
+                        src={props.profileImage}
+                    />
+                    <span>{props.username}</span>
+                </section>
+                <FollowButton
+                    onFollow={onFollowHandler}
+                    onUnfollow={onUnFollowHandler}
+                    isFollowing={profile.isFollow}
+                    myProfile={props.username === state.user}
                 />
-                <span className={styles.profile__user}>{props.username}</span>
             </Link>
-            <FollowButton
-                onFollow={followRequest.bind(this, props._id, dispatch)}
-                onUnfollow={unfollowRequest.bind(this, props._id, dispatch)}
-                isFollowing={profile.isFollow}
-                myProfile={props.username === state.user}
-            />
         </ul>
     )
 }

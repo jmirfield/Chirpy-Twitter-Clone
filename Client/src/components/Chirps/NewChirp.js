@@ -26,12 +26,12 @@ const NewChirp = (props) => {
 
     const onSubmitChirpHandler = (e) => {
         e.preventDefault()
-        if (textInput.trim().length > 0 && !image) newChirpRequest(textInput, props, { user: state.user, image: state.profileImage })
+        if (textInput.trim().length > 0 && !image) newChirpRequest(textInput, props, { user: state.user, profileImage: state.profileImage })
         if (image) {
             const data = new FormData()
             data.append('text', textInput)
             data.append('image', image.data)
-            newChirpRequestWithImage(data, props, { user: state.user, image: state.profileImage })
+            newChirpRequestWithImage(data, props, { user: state.user, profileImage: state.profileImage })
         }
         resetHandler()
     }
