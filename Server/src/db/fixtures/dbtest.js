@@ -3,7 +3,7 @@ const { MongoMemoryServer } = require('mongodb-memory-server');
 const User = require('../../routes/users/userModel')
 const Relationship = require('../../routes/relationships/relationshipModel')
 const Chirp = require('../../routes/chirps/chirpModel')
-const { testUserMain, testUserMainId, mockUsers } = require('./testData')
+const { testUserMain, testUserMainId, mockUsers, mockChirps } = require('./testData')
 
 let mongoServer;
 
@@ -35,6 +35,7 @@ const dbSetup = async () => {
     }).save()
     await User.insertMany(mockUsers.users)
     await Relationship.insertMany(mockUsers.relationships)
+    await Chirp.insertMany(mockChirps)
 }
 
 

@@ -203,7 +203,7 @@ class ChirpController {
                 lean: true
             }).populate({
                 path: 'owner',
-                select: 'image username -_id'
+                select: 'profileImage username -_id'
             })
             res.send({
                 feed: chirps,

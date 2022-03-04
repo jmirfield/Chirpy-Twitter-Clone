@@ -124,6 +124,4 @@ UserSchema.pre('deleteOne', { document: true }, async function (next) {
 
 const User = mongoose.model('User', UserSchema)
 
-User.createIndexes()
-
 module.exports = User

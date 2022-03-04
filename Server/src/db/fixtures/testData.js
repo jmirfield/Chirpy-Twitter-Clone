@@ -24,7 +24,7 @@ const createMockUsers = (n) => {
     for (let i = 0; i < n; i++) {
         const _id = new mongoose.Types.ObjectId()
         users.push({
-            _id: _id,
+            _id,
             username: `User${i}test`,
             username_lower: `user${i}test`,
             email: `User${i}test@test.com`,
@@ -53,8 +53,28 @@ const createMockUsers = (n) => {
     return { users, relationships }
 }
 
+const mockUsers = createMockUsers(5)
+
+const createMockChirps = (users, n) => {
+    const chirps = []
+    for(let i in users) {
+        for(let t=0; t<n; t ++){
+            const _id = new mongoose.Types.ObjectId()
+            chirps.push({
+                _id,
+                owner: users[i]._id,
+                content: `posted by user ${i} chirp number ${t}`,
+                rechirpsCount: 0, 
+                likesCount: 0
+            })
+        }
+    }
+    return chirps
+}
+
 module.exports = {
     testUserMainId,
     testUserMain,
-    mockUsers: createMockUsers(5)
+    mockUsers,
+    mockChirps: createMockChirps(mockUsers.users, 3)
 }

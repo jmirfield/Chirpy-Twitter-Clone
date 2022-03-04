@@ -137,19 +137,20 @@ class UserController {
             const startingLength = req.user.likedChirps.length
             req.user.likedChirps.addToSet(req.body._id)
             if (startingLength !== req.user.likedChirps.length) {
-                await req.user.save()
-                await Chirp.findOneAndUpdate(
+                const chirp = await Chirp.findOneAndUpdate(
                     { _id: req.body._id },
                     { $inc: { likesCount: 1 } }
                 )
+                if(!chirp)throw new Error('Chirp not found')
                 await Chirp.updateMany(
                     { 'rechirp': req.body._id },
                     { $inc: { likesCount: 1 } }
                 )
+                await req.user.save()
             }
             res.status(202).send()
         } catch (e) {
-            res.status(400).send()
+            res.status(404).send()
         }
     }
 
@@ -159,8 +160,7 @@ class UserController {
             const startingLength = req.user.likedChirps.length
             req.user.likedChirps.pull({ _id: req.body._id })
             if (startingLength !== req.user.likedChirps.length) {
-                await req.user.save()
-                await Chirp.findOneAndUpdate(
+                const chirp = await Chirp.findOneAndUpdate(
                     { _id: req.body._id },
                     { $inc: { likesCount: -1 } }
                 )
@@ -168,10 +168,11 @@ class UserController {
                     { 'rechirp': req.body._id },
                     { $inc: { likesCount: -1 } }
                 )
+                await req.user.save()
             }
             res.status(202).send()
         } catch (e) {
-            res.status(400).send()
+            res.status(404).send()
         }
     }
 
@@ -242,7 +243,7 @@ class UserController {
                 lean: true
             }).select(['username', 'profileImage'])).map(user => {
                 const isFollowing = req.user.following.some(u => u.following_id.equals(user._id))
-                return { username: user.username, profileImage: user.profileImage = '', isFollowing, _id: user._id }
+                return { username: user.username, profileImage: user.profileImage || '', isFollowing, _id: user._id }
             })
             res.send(users)
         } catch (e) {

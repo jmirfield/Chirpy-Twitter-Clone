@@ -1,6 +1,11 @@
 const app = require('../../app')
+const mongoose = require('mongoose')
 const request = require('supertest')
-const { dbConnect, dbDisconnect, testUserId, testUser, dbSetup } = require('../../db/fixtures/dbtest')
+const Chirp = require('./chirpModel')
+const User = require('../users/userModel')
+const Relationship = require('../relationships/relationshipModel')
+const { dbConnect, dbDisconnect, dbSetup } = require('../../db/fixtures/dbtest')
+const { testUserMain, testUserMainId, mockUsers, mockChirps } = require('../../db/fixtures/testData')
 
 beforeAll(dbConnect)
 

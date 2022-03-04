@@ -20,6 +20,7 @@ router.patch('/users/profile/upload/banner', auth, upload.single('image'), userC
 
 router.patch('/users/like', auth, userController.likeChirp)
 router.patch('/users/unlike', auth, userController.unlikeChirp)
+
 router.delete('/users/delete', auth, userController.deleteUser)
 
 router.get('/users/search/:username', auth, userController.getListOfUsers)
