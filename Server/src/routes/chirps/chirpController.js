@@ -7,6 +7,7 @@ class ChirpController {
             const chirp = new Chirp({
                 ...req.body,
                 owner: req.user._id,
+                repliesCount: 0,
                 rechirpsCount: 0,
                 likesCount: 0,
             })
@@ -24,6 +25,7 @@ class ChirpController {
             const chirp = new Chirp({
                 content: req.body.text || '**empty**',
                 owner: req.user._id,
+                repliesCount: 0,
                 rechirpsCount: 0,
                 likesCount: 0,
             })
@@ -49,7 +51,10 @@ class ChirpController {
             await req.user.populate({ path: 'following' })
             const followQuery = req.user.following.map(user => user.following_id)
             const chirps = (await Chirp.find({
-                'owner': { $in: followQuery }
+                $and: [
+                    { 'owner': { $in: followQuery } },
+                    { 'reply': { '$exists': false } }
+                ]
             }, null, {
                 sort: { createdAt: -1 },
                 select: '-__v -updatedAt',
@@ -61,7 +66,7 @@ class ChirpController {
                 },
                 {
                     path: 'rechirp',
-                    select: ['createdAt'],
+                    select: ['createdAt', 'repliesCount'],
                     populate: {
                         path: 'owner',
                         select: '-_id profileImage username'
@@ -83,6 +88,7 @@ class ChirpController {
         try {
             const chirp = new Chirp({
                 ...req.body,
+                repliesCount: 0,
                 owner: req.user._id,
             })
             const startingLength = req.user.retweetedChirps.length
@@ -144,7 +150,10 @@ class ChirpController {
     getUserChirps = async (req, res) => {
         try {
             const chirps = await Chirp.find({
-                'owner': req.params.userId
+                $and: [
+                    { 'owner': req.params.userId },
+                    { 'reply': { '$exists': false } }
+                ]
             }, null, {
                 sort: { createdAt: -1 },
                 select: '-__v -updatedAt',
@@ -174,6 +183,7 @@ class ChirpController {
                 $and: [
                     { 'owner': req.params.userId },
                     { 'rechirp': { '$exists': false } },
+                    { 'reply': { '$exists': false } },
                     { 'imageURL': { '$ne': '' }, }
                 ]
             }, null, {
@@ -215,6 +225,46 @@ class ChirpController {
         }
     }
 
+    getChirp = async (req, res) => {
+        try {
+            const chirp = await Chirp.findOne({ _id: req.params.id })
+                .populate({
+                    path: 'owner',
+                    select: '-_id profileImage username'
+                })
+            res.send({
+                feed: [chirp],
+                likedChirps: req.user.likedChirps,
+                retweetedChirps: req.user.retweetedChirps
+            })
+        } catch (e) {
+            res.status(404).send()
+        }
+    }
+
+    addReply = async (req, res) => {
+        try {
+            const chirp = new Chirp({
+                ...req.body,
+                owner: req.user._id,
+                repliesCount: 0,
+                rechirpsCount: 0,
+                likesCount: 0,
+            })
+            await chirp.save()
+            await Chirp.findOneAndUpdate(
+                { _id: req.body.reply },
+                { $inc: { repliesCount: 1 } }
+            )
+            await Chirp.updateMany(
+                { 'rechirp': req.body.reply },
+                { $inc: { repliesCount: 1 } }
+            )
+            res.send(chirp)
+        } catch (e) {
+            res.status(400).send()
+        }
+    }
 
 }
 

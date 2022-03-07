@@ -12,6 +12,10 @@ const ChirpSchema = new Schema({
         trim: true,
         required: true
     },
+    repliesCount: {
+        type: Number,
+        required: true
+    },
     rechirpsCount: {
         type: Number,
         required: true
@@ -24,6 +28,10 @@ const ChirpSchema = new Schema({
         type: String
     },
     rechirp: {
+        type: Schema.ObjectId,
+        ref: 'Chirp'
+    },
+    reply: {
         type: Schema.ObjectId,
         ref: 'Chirp'
     }
