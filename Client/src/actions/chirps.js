@@ -90,17 +90,17 @@ export const replyRequest = async (content, { dispatch, isModal, onClose, _id },
             //Will need to be fixed to update feed on home and profile when using menubar chirp buton
             return
         }
-        // dispatch({
-            //     type: 'NEW_CHIRP',
-        //     payload: {
-        //         chirp: {
-            //             ...data,
-        //             isLiked: false,
-        //             isRechirped: false
-        //         },
-        //         client: { user, profileImage }
-        //     }
-        // })
+        dispatch({
+            type: 'NEW_CHIRP',
+            payload: {
+                chirp: {
+                    ...data,
+                    isLiked: false,
+                    isRechirped: false
+                },
+                client: { user, profileImage }
+            }
+        })
     } catch (e) {
         console.log('Error with chirp request')
     }
@@ -140,13 +140,14 @@ export const getChirpReplies = async (_id, dispatch) => {
             payload: {
                 feed,
                 liked: likedChirps,
-                rechirped: retweetedChirps
+                rechirped: retweetedChirps,
+                isStatic: true
             }
         })
     } catch (e) {
         dispatch({ type: 'ERROR' })
     }
-} 
+}
 
 export const likeChirpRequest = async ({ dispatch, _id, isLiked, likesCount, rechirp }) => {
     const req = !rechirp ? _id : rechirp._id

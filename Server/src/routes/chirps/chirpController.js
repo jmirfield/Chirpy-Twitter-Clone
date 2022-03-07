@@ -266,6 +266,31 @@ class ChirpController {
         }
     }
 
+    getReplies = async (req, res) => {
+        try {
+            const chirps = await Chirp.find({
+                $and: [
+                    { reply: req.params.id },
+                    { 'rechirp': { '$exists': false } }
+                ]
+            }, null, {
+                sort: { createdAt: -1 },
+                select: '-__v -updatedAt',
+                lean: true
+            }).populate({
+                path: 'owner',
+                select: '-_id profileImage username'
+            })
+            res.send({
+                feed: chirps,
+                likedChirps: req.user.likedChirps,
+                retweetedChirps: req.user.retweetedChirps
+            })
+        } catch (e) {
+            res.status(404).send()
+        }
+    }
+
 }
 
 module.exports = new ChirpController()

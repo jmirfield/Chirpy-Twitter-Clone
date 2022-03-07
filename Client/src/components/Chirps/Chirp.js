@@ -9,6 +9,7 @@ import ChirpPostIcon from './ChirpPostIcon'
 import styles from './styles.module.css'
 import ChirpOption from './ChirpOption'
 import ChirpImage from './ChirpImage'
+import ChirpReplyHeader from './ChirpReplyHeader'
 
 const Chirp = (props) => {
     const { state } = useContext(AuthContext)
@@ -17,7 +18,7 @@ const Chirp = (props) => {
     const post_time = props.rechirp ? props.rechirp.createdAt : props.createdAt
     const post_icon = props.rechirp ? props.rechirp.owner.profileImage : props.owner.profileImage
     const post_replies = props.rechirp ? props.rechirp.repliesCount : props.repliesCount
-    
+
     const chirpOptions = [
         {
             count: post_replies,
@@ -35,10 +36,10 @@ const Chirp = (props) => {
             onClick: likeChirpRequest.bind(this, props)
         }
     ]
-
     return (
         <article className={styles['chirp']} key={props._id}>
-            {props.rechirp && <ChirpRechirpHeader user={props.owner.username} />}
+            {props.rechirp && !props.reply && <ChirpRechirpHeader user={props.owner.username} />}
+            {props.reply && <ChirpReplyHeader username={props.owner.username} />}
             <section className={styles['chirp__main']}>
                 <ChirpPostIcon owner={post_owner} profileImage={post_icon} />
                 <section className={styles['chirp__body']}>

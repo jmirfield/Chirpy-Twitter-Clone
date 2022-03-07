@@ -4,6 +4,7 @@
     box-sizing: border-box;
     max-width: 100%;
     padding: 1rem;
+    border-bottom: solid 1px rgb(95, 108, 116);
 }
 
 .new-chirp__icon {

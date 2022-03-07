@@ -4,6 +4,7 @@ import { newChirpRequest, newChirpRequestWithImage, replyRequest } from '../../a
 import AuthContext from '../../context/AuthContext'
 import ChirpInput from '../UI/ChirpInput/ChirpInput'
 import ProfileImage from '../UI/ProfileImage/ProfileImage'
+import ChirpReplyHeader from './ChirpReplyHeader'
 import styles from './NewChirp.module.css'
 
 const NewChirp = (props) => {
@@ -62,7 +63,7 @@ const NewChirp = (props) => {
                 src={state.profileImage}
             />
             <section className={styles['new-chirp__input']}>
-                {props.isReply && <Link to={`/${props.owner.username}`}>{`Replying to @${props.owner.username}`}</Link>}
+                {props.isReply && <ChirpReplyHeader username={props.owner.username}/>}
                 <ChirpInput
                     onSubmit={onSubmitChirpHandler}
                     text={textInput}

@@ -6,8 +6,8 @@ import Header from '../UI/Header/Header'
 import Chirp from '../Chirps/Chirp'
 import LoadingFeed from '../Loading/LoadingFeed'
 import NewChirp from '../Chirps/NewChirp'
-import styles from './styles.module.css'
 import ChirpList from '../Chirps/ChirpList'
+import styles from './styles.module.css'
 
 const Status = () => {
     const [main, mainDispatch] = useFeed()
@@ -19,8 +19,9 @@ const Status = () => {
         getChirpReplies(chirpId, replyDispatch)
         return () => {
             mainDispatch({ type: 'RESET' })
+            replyDispatch({ type: 'RESET' })
         }
-    }, [])
+    }, [chirpId])
 
     if (main.isLoading) {
         return (
@@ -54,13 +55,17 @@ const Status = () => {
                 imageURL={main.feed[0].imageURL}
                 dispatch={mainDispatch}
             />
-            <section className={styles.reply}>
-                <NewChirp isReply={true} owner={main.feed[0].owner} _id={main.feed[0]._id} />
-            </section>
+            <NewChirp
+                isReply={true}
+                owner={main.feed[0].owner}
+                _id={main.feed[0]._id}
+                dispatch={replyDispatch}
+                isModal={false}
+            />
             {reply.feed.length > 0 &&
                 <ChirpList
                     chirps={reply.feed}
-                    dispath={replyDispatch}
+                    dispatch={replyDispatch}
                     error={reply.error}
                     isLoading={reply.isLoading}
                 />

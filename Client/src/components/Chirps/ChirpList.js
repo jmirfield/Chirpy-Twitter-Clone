@@ -28,7 +28,8 @@ const ChirpList = ({ chirps, dispatch, error, isLoading }) => {
                     isLiked,
                     createdAt,
                     imageURL = '',
-                    rechirp = null
+                    rechirp = null,
+                    reply = null
                 } = chirp
                 return (
                     <Chirp
@@ -43,6 +44,7 @@ const ChirpList = ({ chirps, dispatch, error, isLoading }) => {
                         isLiked={isLiked}
                         createdAt={createdAt}
                         rechirp={rechirp}
+                        reply={reply}
                         imageURL={imageURL}
                         dispatch={dispatch}
                     />
