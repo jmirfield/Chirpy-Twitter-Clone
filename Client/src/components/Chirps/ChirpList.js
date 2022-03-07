@@ -1,12 +1,9 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import Chirp from './Chirp'
 import LoadingFeed from '../Loading/LoadingFeed'
 import styles from './ChirpList.module.css'
-import AuthContext from '../../context/AuthContext'
 
 const ChirpList = ({ chirps, dispatch, error, isLoading }) => {
-    const { state } = useContext(AuthContext)
-
     if (isLoading) {
         return (
             <div style={{ 'marginTop': '1rem' }}>
@@ -24,6 +21,7 @@ const ChirpList = ({ chirps, dispatch, error, isLoading }) => {
                     _id,
                     owner,
                     content,
+                    repliesCount,
                     rechirpsCount,
                     isRechirped,
                     likesCount,
@@ -38,6 +36,7 @@ const ChirpList = ({ chirps, dispatch, error, isLoading }) => {
                         _id={_id}
                         owner={owner}
                         content={content}
+                        repliesCount={repliesCount}
                         rechirpsCount={rechirpsCount}
                         isRechirped={isRechirped}
                         likesCount={likesCount}

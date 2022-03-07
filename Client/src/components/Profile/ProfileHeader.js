@@ -1,16 +1,10 @@
 import React from 'react'
-import Icon from '../UI/Icon/Icon'
-import { BACK_BUTTON } from '../../constants/icon'
+import Header from '../UI/Header/Header'
 import styles from './styles.module.css'
 
 const ProfileHeader = (props) => {
     return (
-        <header className={styles['profile__header']}>
-            <section className={styles['profile__header__back']}>
-                <button href='#' onClick={props.onBackButton}>
-                    <Icon width='18px' height='18px' fill='white' d={BACK_BUTTON.d} />
-                </button>
-            </section>
+        <Header backButton={true}>
             {props.user &&
                 <section className={styles['profile__header__main']}>
                     <h3>{props.user}</h3>
@@ -19,7 +13,8 @@ const ProfileHeader = (props) => {
                     </span>
                 </section>
             }
-        </header>
+        </Header>
+
     )
 }
 

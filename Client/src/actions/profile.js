@@ -98,7 +98,8 @@ export const getUserProfileMediaRequest = async (_id, profileImage, user, dispat
             payload: {
                 feed: chirps,
                 liked: likedChirps,
-                rechirped: retweetedChirps
+                rechirped: retweetedChirps,
+                isStatic: true
             }
         })
     } catch (e) {
@@ -121,7 +122,7 @@ export const getUserLikesRequest = async (likes, dipsatch) => {
                 feed,
                 liked: likedChirps,
                 rechirped: retweetedChirps,
-                isLikePage: true
+                isStatic: true
             }
         })
     } catch (e) {

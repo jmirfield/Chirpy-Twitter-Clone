@@ -16,10 +16,11 @@ const Chirp = (props) => {
     const post_id = props.rechirp ? props.rechirp._id : props._id
     const post_time = props.rechirp ? props.rechirp.createdAt : props.createdAt
     const post_icon = props.rechirp ? props.rechirp.owner.profileImage : props.owner.profileImage
-
+    const post_replies = props.rechirp ? props.rechirp.repliesCount : props.repliesCount
+    
     const chirpOptions = [
         {
-            count: 0,
+            count: post_replies,
             active: false,
             onClick: () => console.log('reply')
         },

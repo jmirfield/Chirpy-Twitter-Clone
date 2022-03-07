@@ -3,13 +3,10 @@ import { getListOfUsersRequest } from '../actions/profile'
 
 const useSearch = () => {
     const [text, setText] = useState('')
-    const [search, setSearch] = useState(false)
     const [result, setResult] = useState([])
     const [message, setMessage] = useState('')
 
     const textChangeHandler = (e) => setText(e.target.value)
-    const openSearch = () => setSearch(true)
-    const closeSearch = () => setSearch(false)
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -27,12 +24,9 @@ const useSearch = () => {
 
     return {
         text,
-        search,
         result,
         message,
-        textChangeHandler,
-        openSearch,
-        closeSearch
+        textChangeHandler
     }
 }
 

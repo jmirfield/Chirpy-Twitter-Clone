@@ -12,9 +12,7 @@ const ProfileMedia = () => {
 
     useEffect(() => {
         getUserProfileMediaRequest(_id, profileImage, params.user, feedDispatch)
-        return () => {
-            feedDispatch({type: 'RESET'})
-        }
+        return () => feedDispatch({type: 'RESET'})
     }, [])
 
     return (

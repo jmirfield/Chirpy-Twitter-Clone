@@ -5,7 +5,7 @@ import { CANCEL, IMAGE } from '../../../constants/icon'
 import Button from '../Button/Button'
 import styles from './ChirpInput.module.css'
 
-const ChirpInput = ({ text, image, onChange, onImage, onCancel, onSubmit }) => {
+const ChirpInput = ({ text, image, onChange, onImage, onCancel, onSubmit, isReply }) => {
 
     const [focus, setFocus] = useState(false)
     const imageRef = useRef(null)
@@ -24,7 +24,7 @@ const ChirpInput = ({ text, image, onChange, onImage, onCancel, onSubmit }) => {
     return (
         <form onSubmit={onSubmit} className={styles.chirp__form}>
             <TextareaAutosize
-                placeholder='Chirp chirp?'
+                placeholder={!isReply ? 'Chirp chirp?' : 'Chirp your reply'}
                 value={text}
                 onChange={onChange}
                 onFocus={focusHandler}

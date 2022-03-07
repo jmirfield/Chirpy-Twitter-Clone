@@ -4,7 +4,7 @@ const initialState = {
     feed: [],
     isLoading: true,
     myProfile: undefined,
-    isLikePage: undefined,
+    isStatic: undefined,
     error: null
 }
 
@@ -21,7 +21,7 @@ const reducer = (state, action) => {
                 isLoading: false,
                 error: null,
                 myProfile: action.payload.myProfile,
-                isLikePage: action.payload.isLikePage
+                isStatic: action.payload.isStatic
             }
         case 'NEW_CHIRP':
             return {
@@ -38,7 +38,7 @@ const reducer = (state, action) => {
                 ]
             }
         case 'ADD_RECHIRP':
-            if ((state.myProfile || state.myProfile === undefined) && !state.isLikePage) {
+            if ((state.myProfile || state.myProfile === undefined) && !state.isStatic) {
                 return {
                     ...state,
                     feed: syncRechirps(

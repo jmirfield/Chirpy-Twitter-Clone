@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { SEARCH } from '../../../constants/icon'
-import Icon from '../Icon/Icon'
-import styles from './SearchInput.module.css'
+import { SEARCH } from '../../constants/icon'
+import Icon from '../UI/Icon/Icon'
+import styles from './styles.module.css'
 
 const SearchInput = (props) => {
     const [isActive, setIsActive] = useState(false)
@@ -16,7 +16,7 @@ const SearchInput = (props) => {
     }
 
     return (
-        <div className={`${styles.input} ${isActive && styles.active}`}>
+        <div className={`${styles.search__input} ${isActive && styles['search__input-active']}`}>
             <Icon width='20px' height='20px' fill={!isActive ? 'rgb(110, 118, 125)' : 'rgb(29,155,240)'} d={SEARCH.d} />
             <input
                 placeholder='Search Chirpy'

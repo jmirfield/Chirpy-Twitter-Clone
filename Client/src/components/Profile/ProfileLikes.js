@@ -10,9 +10,7 @@ const ProfileLikes = () => {
 
     useEffect(() => {
         getUserLikesRequest(profile.likes, feedDispatch)
-        return () => {
-            feedDispatch({ type: 'RESET' })
-        }
+        return () => feedDispatch({ type: 'RESET' })
     }, [])
 
     return (

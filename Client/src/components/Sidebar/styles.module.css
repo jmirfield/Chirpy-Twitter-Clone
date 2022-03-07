@@ -1,39 +1,19 @@
 .sidebar {
     position: fixed;
+    width: 20%;
+    right: 9%;
+}
+
+.sidebar h2 {
     margin-left: 1rem;
-    width: 20%;
-    right: 9%;
 }
 
-.backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    z-index: 4;
+.sidebar__follow-off {
+    margin-top: 4rem;
 }
 
-.modal {
-    position: fixed;
-    width: 20%;
-    right: 9%;
-    top: 3rem;
-    min-height: 4rem;
-    background-color: black;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-    background-color: black;
-    z-index: 5;
-    box-shadow: 0 0 3px white;
-    max-height: 50vh;
-    overflow-y: auto;
-}
-
-.modal > p {
-    margin: 1rem;
-    color: rgb(101, 119, 134);
-    font-size: smaller;
+.sidebar__follow-on {
+    margin-top: 1rem;
 }
 
 @media (width < 1075px) {

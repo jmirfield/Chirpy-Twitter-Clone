@@ -1,36 +1,19 @@
 import React from 'react'
-import useSearch from '../../hooks/useSearch'
-import SearchInput from '../UI/SearchInput/SearchInput'
+import Search from '../Search/Search'
 import FollowCard from './FollowCard'
-import SearchModal from './SearchModal'
+import withClickOutside from '../../helpers/withClickOutside'
 import styles from './styles.module.css'
 
 const Sidebar = (props) => {
-  const {
-    text,
-    search,
-    result,
-    message,
-    textChangeHandler,
-    openSearch,
-    closeSearch
-  } = useSearch()
+
+  const SearchWithClickOutside = withClickOutside(Search)
 
   return (
     <aside className={styles.sidebar}>
       {!props.onExplore &&
-        <SearchInput
-          text={text}
-          onChange={textChangeHandler}
-          onFocus={openSearch}
-        />}
-      <FollowCard />
-      {search &&
-        <SearchModal
-          onClose={closeSearch}
-          users={result}
-          message={message}
-        />}
+        <SearchWithClickOutside />
+      }
+      <FollowCard onExplore={props.onExplore} />
     </aside>
   )
 }

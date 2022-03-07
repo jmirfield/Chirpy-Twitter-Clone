@@ -1,40 +1,20 @@
 import React, { useEffect } from 'react'
 import { useOutletContext } from 'react-router-dom'
-import useSearch from '../../hooks/useSearch'
-import SearchInput from '../UI/SearchInput/SearchInput'
-import ExploreModal from './ExploreModal'
+import Search from '../Search/Search'
+import withClickOutside from '../../helpers/withClickOutside'
 
 const Explore = () => {
     const { setOnExplore } = useOutletContext()
-    const {
-        text,
-        search,
-        result,
-        message,
-        textChangeHandler,
-        openSearch,
-        closeSearch
-    } = useSearch()
 
     useEffect(() => {
         setOnExplore(true)
         return () => setOnExplore(false)
     }, [])
 
+    const SearchWithClickOutside = withClickOutside(Search)
+
     return (
-        <>
-            <SearchInput
-                text={text}
-                onChange={textChangeHandler}
-                onFocus={openSearch}
-            />
-            {search &&
-                <ExploreModal
-                    onClose={closeSearch}
-                    users={result}
-                    message={message}
-                />}
-        </>
+        <SearchWithClickOutside />
     )
 }
 

@@ -1,9 +1,10 @@
 import React from 'react'
-import classes from './Card.module.css'
+import styles from './Card.module.css'
 
-const Card = ({children}) => {
+const Card = ({className, children}) => {
+    const cardClass = className ? `${styles.card} ${className}` : styles.card
     return (
-        <div className={classes.card}>
+        <div className={cardClass}>
             {children}
         </div>
     )

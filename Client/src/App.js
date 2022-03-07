@@ -16,6 +16,7 @@ import ProfileFollowers from './components/Profile/ProfileFollower';
 import ProfileMedia from './components/Profile/ProfileMedia';
 import Explore from './components/Explore/Explore';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import Status from './components/Status/Status';
 
 const App = () => {
   const { state } = useContext(AuthContext)
@@ -64,7 +65,7 @@ const App = () => {
             <Route path='*' element={<Navigate replace to='' />} />
           </Route>
           <Route path='flow/lists' element={<p>LISTS PLACEHOLDER</p>} />
-          <Route path=':user/status/:chirpId' element={<p>CHIRP PLACEHOLDER</p>} />
+          <Route path=':user/status/:chirpId' element={<Status />} />
           <Route path='*' element={<Navigate replace to='/home' />} />
           <Route path='/' element={<Navigate replace to='/home' />} />
           <Route path='flow' element={<Navigate replace to='/home' />} />

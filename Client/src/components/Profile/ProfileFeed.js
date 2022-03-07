@@ -15,10 +15,7 @@ const ProfileFeed = () => {
 
     useEffect(() => {
         getUserProfileFeedRequest(_id, profileImage, params.user, myProfile, feedDispatch)
-        return () => {
-            feedDispatch({ type: 'RESET' })
-
-        }
+        return () => feedDispatch({ type: 'RESET' })
     }, [])
 
     return (
