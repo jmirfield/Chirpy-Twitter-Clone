@@ -10,6 +10,7 @@ import {
     unLikeChirp,
     addRechirp,
     deleteRechirp,
+    deleteChirp,
 } from "../api/request"
 
 export const getMainChirpFeed = async (dispatch) => {
@@ -76,6 +77,18 @@ export const newChirpRequestWithImage = async (content, { dispatch, isModal, onC
                 },
                 client: { user, profileImage }
             }
+        })
+    } catch (e) {
+        console.log('Error with chirp request')
+    }
+}
+
+export const deleteChirpRequest = async ({ _id, dispatch }) => {
+    try {
+        const { data } = await deleteChirp(_id)
+        dispatch({
+            type: 'DELETE_CHIRP',
+            payload: _id
         })
     } catch (e) {
         console.log('Error with chirp request')
@@ -221,7 +234,7 @@ export const onRechirpRequest = async (chirp, client) => {
     } else {
         try {
             const req = !rechirp ? chirp._id : rechirp._id
-            await deleteRechirp({ _id: req })
+            await deleteRechirp(req)
             dispatch({
                 type: 'REMOVE_RECHIRP',
                 payload: {

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useOutletContext } from 'react-router-dom'
 import Search from '../Search/Search'
-import withClickOutside from '../../helpers/withClickOutside'
+
 
 const Explore = () => {
     const { setOnExplore } = useOutletContext()
@@ -11,10 +11,11 @@ const Explore = () => {
         return () => setOnExplore(false)
     }, [])
 
-    const SearchWithClickOutside = withClickOutside(Search)
 
     return (
-        <SearchWithClickOutside />
+        <>
+            <Search />
+        </>
     )
 }
 

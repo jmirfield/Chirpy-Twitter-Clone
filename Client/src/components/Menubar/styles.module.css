@@ -82,6 +82,17 @@
     background-color: #272a2e;
 }
 
+.menu__logout:hover > span {
+    display: none;
+}
+
+.menu__logout:hover:after {
+    margin-left: 1rem;
+    content: 'Logout';
+    color: red;
+    font-size: large;
+}
+
 .menu__icon {
     height: 100%;
     border-radius: 10rem;
@@ -148,6 +159,14 @@
     }
 
     .menu__icon {
+        margin: 0;
+    }
+    
+    .menu__logout:hover > .menu__icon {
+        display: none;
+    }
+
+    .menu__logout:hover:after {
         margin: 0;
     }
 

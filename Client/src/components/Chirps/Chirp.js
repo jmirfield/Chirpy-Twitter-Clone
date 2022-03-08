@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import AuthContext from '../../context/AuthContext'
-import { likeChirpRequest, onRechirpRequest } from '../../actions/chirps'
+import { likeChirpRequest, onRechirpRequest, deleteChirpRequest } from '../../actions/chirps'
 import ChirpRechirpHeader from './ChirpRechirpHeader'
 import ChirpIcons from './ChirpIcons'
 import ChirpHeader from './ChirpHeader'
@@ -18,8 +18,8 @@ const Chirp = (props) => {
     const post_time = props.rechirp ? props.rechirp.createdAt : props.createdAt
     const post_icon = props.rechirp ? props.rechirp.owner.profileImage : props.owner.profileImage
     const post_replies = props.rechirp ? props.rechirp.repliesCount : props.repliesCount
-    
-    const chirpOptions = [
+
+    const chirpIconOptions = [
         {
             count: post_replies,
             active: false,
@@ -36,6 +36,7 @@ const Chirp = (props) => {
             onClick: likeChirpRequest.bind(this, props)
         }
     ]
+
     return (
         <article className={styles['chirp']} key={props._id}>
             {props.rechirp && <ChirpRechirpHeader user={props.owner.username} />}
@@ -46,9 +47,9 @@ const Chirp = (props) => {
                     <ChirpHeader owner={post_owner} id={post_id} time={post_time} />
                     {props.content !== '**empty**' && <ChirpMessage owner={post_owner} id={post_id} message={props.content} />}
                     {props.imageURL && <ChirpImage owner={post_owner} id={post_id} imageURL={props.imageURL} />}
-                    <ChirpIcons options={chirpOptions} />
+                    <ChirpIcons options={chirpIconOptions} />
                 </section>
-                <ChirpOption />
+                <ChirpOption owner={props.owner.username} onDelete={deleteChirpRequest.bind(this, props)} />
             </section>
         </article>
     )

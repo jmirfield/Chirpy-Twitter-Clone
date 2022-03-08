@@ -37,6 +37,16 @@ const reducer = (state, action) => {
                     ...state.feed
                 ]
             }
+        case 'DELETE_CHIRP':
+            return {
+                ...state,
+                feed: state.feed.filter(chirp => {
+                    if (chirp.rechirp) {
+                        return chirp.rechirp._id !== action.payload
+                    }
+                    return chirp._id !== action.payload
+                })
+            }
         case 'ADD_RECHIRP':
             if ((state.myProfile || state.myProfile === undefined) && !state.isStatic) {
                 return {
@@ -49,15 +59,14 @@ const reducer = (state, action) => {
                 }
             }
         case 'REMOVE_RECHIRP':
-            const feed = state.feed.filter(chirp => {
-                if (!chirp.rechirp) return true
-                return chirp.rechirp._id !== action.payload._id
-                    || action.payload.user !== chirp.owner.username
-            })
             return {
                 ...state,
                 feed: syncRechirps(
-                    feed,
+                    state.feed.filter(chirp => {
+                        if (!chirp.rechirp) return true
+                        return chirp.rechirp._id !== action.payload._id
+                            || action.payload.user !== chirp.owner.username
+                    }),
                     action.payload._id,
                     action.payload.rechirpsCount
                 )

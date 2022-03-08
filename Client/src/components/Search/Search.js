@@ -2,6 +2,7 @@ import React from 'react'
 import useSearch from '../../hooks/useSearch'
 import SearchInput from './SearchInput'
 import SearchDropdown from './SearchDropdown'
+import withClickOutside from '../../helpers/withClickOutside'
 import styles from './styles.module.css'
 
 const Search = React.forwardRef(({open, setOpen}, ref) => {
@@ -31,4 +32,4 @@ const Search = React.forwardRef(({open, setOpen}, ref) => {
     )
 })
 
-export default Search
+export default withClickOutside(Search)

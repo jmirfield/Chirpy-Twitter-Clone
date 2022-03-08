@@ -97,7 +97,7 @@
     overflow-wrap: break-word;
 }
 
-.chirp__options button {
+.chirp__options > button {
     background-color: black;
     color: rgb(101, 119, 134);
     border: none;
@@ -107,7 +107,7 @@
 }
 
 
-.chirp__options button:hover {
+.chirp__options > button:hover {
     background-color: rgba(29,155,240,0.1);
     color: #099bf5;
 }
@@ -127,5 +127,39 @@
     text-decoration: none;
     color: rgb(101, 119, 134);
     font-size: smaller;
-    margin: .25rem 0 .5rem 5rem;
+    margin: .25rem 0 .25rem 5rem;
+}
+
+.chirp__dropdown {
+    position: absolute;
+    --width: 50%;
+    background-color: grey;
+    width: var(--width);
+    transform: translateX(calc(var(--width)*1.85*-1)) translateY(-40%);
+    box-shadow: 0 0 3px white;
+    z-index: 2;
+    background-color: black;
+    border-radius: .5rem;
+}
+
+.chirp__dropdown > button {
+    display: flex;
+    width: 100%;
+    align-items: left;
+    padding-left: 1rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 1rem;
+}
+
+.chirp__delete {
+    display: flex;
+    color: red;
+    font-size: 16px;
+    align-items: center;
+}
+
+.chirp__delete > span {
+    margin-left: 1rem;
 }

@@ -1,12 +1,16 @@
 import React from 'react'
+import withClickOutside from '../../helpers/withClickOutside'
+import ChirpDropdown from './ChirpDropdown'
 import styles from './styles.module.css'
 
-const ChirpOption = () => {
+const ChirpOption = React.forwardRef(({ open, setOpen, owner, onDelete }, ref) => {
+    const openOptions = () => setOpen(true)
     return (
-        <section className={styles.chirp__options}>
-            <button>···</button>
+        <section className={styles.chirp__options} ref={ref}>
+            <button onClick={openOptions}>···</button>
+            {open && <ChirpDropdown owner={owner} onDelete={onDelete} />}
         </section>
     )
-}
+})
 
-export default ChirpOption
+export default withClickOutside(ChirpOption)

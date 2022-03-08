@@ -3,7 +3,6 @@ import React, { useState, useRef, useEffect } from "react";
 export default function withClickOutside(WrappedComponent) {
   const Component = (props) => {
     const [open, setOpen] = useState(false);
-
     const ref = useRef();
 
     useEffect(() => {
@@ -13,6 +12,7 @@ export default function withClickOutside(WrappedComponent) {
         }
       };
       document.addEventListener("mousedown", handleClickOutside);
+      return () => document.removeEventListener("mousedown", handleClickOutside)
     }, [ref]);
 
     return <WrappedComponent {...props} open={open} setOpen={setOpen} ref={ref}/>;
