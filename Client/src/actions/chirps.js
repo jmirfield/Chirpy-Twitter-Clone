@@ -66,7 +66,6 @@ export const newChirpRequestWithImage = async (content, { dispatch, isModal, onC
             //Will need to be fixed to update feed on home and profile when using menubar chirp buton
             return
         }
-        // console.log(data)
         dispatch({
             type: 'NEW_CHIRP',
             payload: {
@@ -85,7 +84,7 @@ export const newChirpRequestWithImage = async (content, { dispatch, isModal, onC
 
 export const deleteChirpRequest = async ({ _id, dispatch }) => {
     try {
-        const { data } = await deleteChirp(_id)
+        await deleteChirp(_id)
         dispatch({
             type: 'DELETE_CHIRP',
             payload: _id

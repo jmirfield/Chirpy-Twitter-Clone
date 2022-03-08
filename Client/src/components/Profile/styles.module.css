@@ -95,6 +95,7 @@
 
 .profile__span {
     color: rgb(101, 119, 134);
+    margin-top: .25rem;
 }
 
 #user {

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import AuthContext from '../../context/AuthContext'
 import { likeChirpRequest, onRechirpRequest, deleteChirpRequest } from '../../actions/chirps'
 import ChirpRechirpHeader from './ChirpRechirpHeader'
@@ -10,9 +10,21 @@ import styles from './styles.module.css'
 import ChirpOption from './ChirpOption'
 import ChirpImage from './ChirpImage'
 import ChirpReplyHeader from './ChirpReplyHeader'
+import ReplyModal from './ReplyModal'
 
 const Chirp = (props) => {
     const { state } = useContext(AuthContext)
+    const [composeReplyChirp, setComposeReplyChirp] = useState(false)
+
+    const onOpenReplyHandler = () => {
+        setComposeReplyChirp(true)
+    }
+
+    const onCloseReplyHandler = () => {
+        setComposeReplyChirp(false)
+    }
+
+
     const post_owner = props.rechirp ? props.rechirp.owner.username : props.owner.username
     const post_id = props.rechirp ? props.rechirp._id : props._id
     const post_time = props.rechirp ? props.rechirp.createdAt : props.createdAt
@@ -23,7 +35,7 @@ const Chirp = (props) => {
         {
             count: post_replies,
             active: false,
-            onClick: () => console.log('reply')
+            onClick: () => onOpenReplyHandler()
         },
         {
             count: props.rechirpsCount,
@@ -51,6 +63,7 @@ const Chirp = (props) => {
                 </section>
                 <ChirpOption owner={props.owner.username} onDelete={deleteChirpRequest.bind(this, props)} />
             </section>
+            {composeReplyChirp && <ReplyModal onClose={onCloseReplyHandler} owner={props.owner} id={!props.rechirp ? props._id : props.rechirp} />}
         </article>
     )
 }

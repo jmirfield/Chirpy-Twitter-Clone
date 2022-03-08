@@ -74,7 +74,12 @@ class ChirpController {
                     { $inc: { repliesCount: -1 } }
                 )
             } else if (!chirp.rechirp) {
-                await Chirp.deleteMany({ 'rechirp': req.params.id })
+                await Chirp.deleteMany({
+                    $or: [
+                        { 'rechirp': req.params.id },
+                        { 'reply': req.params.id }
+                    ]
+                })
             }
             req.user.chirpCount--
             await req.user.save()

@@ -7,16 +7,16 @@ import ChirpModal from './ChirpModal'
 import styles from './MainLayout.module.css'
 
 const MainLayout = () => {
-    const [composeChirp, setComposeChirp] = useState(false)
+    const [composeNewChirp, setComposeNewChirp] = useState(false)
     const [onExplore, setOnExplore] = useState(false)
     const { state } = useContext(AuthContext)
 
     const onOpenNewChirpHandler = useCallback(() => {
-        setComposeChirp(true)
+        setComposeNewChirp(true)
     }, [])
 
     const onCloseNewChirpHandler = useCallback(() => {
-        setComposeChirp(false)
+        setComposeNewChirp(false)
     }, [])
 
 
@@ -27,7 +27,7 @@ const MainLayout = () => {
                 <Outlet context={{ setOnExplore }} />
             </main>
             <Sidebar onExplore={onExplore} />
-            {composeChirp && <ChirpModal onClose={onCloseNewChirpHandler} />}
+            {composeNewChirp && <ChirpModal onClose={onCloseNewChirpHandler} />}
         </div>
     )
 }

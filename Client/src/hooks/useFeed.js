@@ -40,12 +40,7 @@ const reducer = (state, action) => {
         case 'DELETE_CHIRP':
             return {
                 ...state,
-                feed: state.feed.filter(chirp => {
-                    if (chirp.rechirp) {
-                        return chirp.rechirp._id !== action.payload
-                    }
-                    return chirp._id !== action.payload
-                })
+                feed: state.feed.filter(chirp => chirp._id !== action.payload )
             }
         case 'ADD_RECHIRP':
             if ((state.myProfile || state.myProfile === undefined) && !state.isStatic) {
@@ -159,7 +154,6 @@ const syncRechirps = (feed, id, count) => {
 
 const useFeed = () => {
     const [state, dispatch] = useReducer(reducer, initialState)
-    // console.log(state.feed)
     return [state, dispatch]
 }
 
