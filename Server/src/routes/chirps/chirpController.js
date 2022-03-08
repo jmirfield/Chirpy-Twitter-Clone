@@ -1,3 +1,4 @@
+const { findByIdAndDelete } = require('./chirpModel')
 const Chirp = require('./chirpModel')
 const cloudinary = require('cloudinary').v2
 
@@ -43,6 +44,43 @@ class ChirpController {
         } catch (e) {
             console.log(e)
             res.status(400).send()
+        }
+    }
+
+    deleteChirp = async (req, res) => {
+        try {
+            // console.log(req.params.id)
+            const chirp = await Chirp.findByIdAndDelete({ _id: req.params.id })
+            if (chirp.rechirp) {
+                const startingLength = req.user.retweetedChirps.length
+                req.user.retweetedChirps.pull({ _id: chirp.rechirp })
+                if (startingLength !== req.user.retweetedChirps.length) {
+                    await Chirp.findOneAndUpdate(
+                        { _id: chirp.rechirp },
+                        { $inc: { rechirpsCount: -1 } }
+                    )
+                    await Chirp.updateMany(
+                        { 'rechirp': chirp.rechirp },
+                        { $inc: { rechirpsCount: -1 } }
+                    )
+                }
+            } else if (!chirp.rechirp && chirp.reply) {
+                await Chirp.findOneAndUpdate(
+                    { _id: chirp.reply },
+                    { $inc: { repliesCount: -1 } }
+                )
+                await Chirp.updateMany(
+                    { 'rechirp': chirp.reply },
+                    { $inc: { repliesCount: -1 } }
+                )
+            } else if (!chirp.rechirp) {
+                await Chirp.deleteMany({ 'rechirp': req.params.id })
+            }
+            req.user.chirpCount--
+            await req.user.save()
+            res.send()
+        } catch (e) {
+            res.status(404).send()
         }
     }
 
@@ -122,25 +160,25 @@ class ChirpController {
 
     deleteRechirp = async (req, res) => {
         try {
-            if (!req.body._id) throw new Error('Cannot provide null value')
+            if (!req.params.id) throw new Error('Cannot provide null value')
             const startingLength = req.user.retweetedChirps.length
-            req.user.retweetedChirps.pull({ _id: req.body._id })
+            req.user.retweetedChirps.pull({ _id: req.params.id })
             if (startingLength !== req.user.retweetedChirps.length) {
                 const chirp = await Chirp.findOneAndDelete({
                     $and: [
                         { owner: req.user._id },
-                        { 'rechirp': req.body._id }
+                        { 'rechirp': req.params.id }
                     ]
                 })
                 if (!chirp) throw new Error('Could not find chirp')
                 await Chirp.findOneAndUpdate(
-                    { _id: req.body._id },
+                    { _id: req.params.id },
                     { $inc: { rechirpsCount: -1 } }
                 )
                 req.user.chirpCount--
                 await req.user.save()
                 await Chirp.updateMany(
-                    { 'rechirp': req.body._id },
+                    { 'rechirp': req.params.id },
                     { $inc: { rechirpsCount: -1 } }
                 )
             }
