@@ -53,7 +53,12 @@ class ChirpController {
             const chirps = (await Chirp.find({
                 $and: [
                     { 'owner': { $in: followQuery } },
-                    { 'reply': { '$exists': false } }
+                    {
+                        $or: [
+                            { 'reply': { '$exists': false } },
+                            { 'rechirp': { '$exists': true } }
+                        ]
+                    }
                 ]
             }, null, {
                 sort: { createdAt: -1 },
@@ -152,7 +157,12 @@ class ChirpController {
             const chirps = await Chirp.find({
                 $and: [
                     { 'owner': req.params.userId },
-                    { 'reply': { '$exists': false } }
+                    {
+                        $or: [
+                            { 'reply': { '$exists': false } },
+                            { 'rechirp': { '$exists': true } }
+                        ]
+                    }
                 ]
             }, null, {
                 sort: { createdAt: -1 },
@@ -261,6 +271,40 @@ class ChirpController {
                 { $inc: { repliesCount: 1 } }
             )
             res.send(chirp)
+        } catch (e) {
+            res.status(400).send()
+        }
+    }
+
+    addReplyWithImage = async (req, res) => {
+        try {
+            const chirp = new Chirp({
+                content: req.body.text || '**empty**',
+                reply: req.body.reply,
+                owner: req.user._id,
+                repliesCount: 0,
+                rechirpsCount: 0,
+                likesCount: 0,
+            })
+            cloudinary.uploader.upload_stream({
+                public_id: `chirp/${chirp._id}`,
+                invalidate: true
+            }, async (error, result) => {
+                if (error) throw new Error(error)
+                chirp.imageURL = result.secure_url
+                await chirp.save()
+                req.user.chirpCount++
+                await req.user.save()
+                await Chirp.findOneAndUpdate(
+                    { _id: req.body.reply },
+                    { $inc: { repliesCount: 1 } }
+                )
+                await Chirp.updateMany(
+                    { 'rechirp': req.body.reply },
+                    { $inc: { repliesCount: 1 } }
+                )
+                res.send(chirp)
+            }).end(req.files[0].buffer)
         } catch (e) {
             res.status(400).send()
         }
