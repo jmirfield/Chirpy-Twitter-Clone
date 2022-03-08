@@ -26,6 +26,6 @@
 .new-chirp__input > a{
     text-decoration: none;
     color: rgb(101, 119, 134);
-    padding-left: 1rem;
+    margin-left: 1rem !important;
     font-size: smaller;
 }

@@ -4,7 +4,7 @@ import styles from './styles.module.css'
 
 const ChirpReplyHeader = (props) => {
     return (
-        <Link className={styles.chirp__reply} to={`/${props.username}`}>
+        <Link className={styles.chirp__reply} to={props.link}>
             {`Replying to @${props.username}`}
         </Link>
     )

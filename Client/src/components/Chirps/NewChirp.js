@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react'
-import { Link } from 'react-router-dom'
-import { newChirpRequest, newChirpRequestWithImage, replyRequest } from '../../actions/chirps'
+import { newChirpRequest, newChirpRequestWithImage, replyRequest, replyRequestWithImage } from '../../actions/chirps'
 import AuthContext from '../../context/AuthContext'
 import ChirpInput from '../UI/ChirpInput/ChirpInput'
 import ProfileImage from '../UI/ProfileImage/ProfileImage'
@@ -46,6 +45,7 @@ const NewChirp = (props) => {
                 const data = new FormData()
                 data.append('text', textInput)
                 data.append('image', image.data)
+                data.append('reply', props._id)
                 replyRequestWithImage(data, props, { user: state.user, profileImage: state.profileImage })
             }
         }
@@ -63,7 +63,7 @@ const NewChirp = (props) => {
                 src={state.profileImage}
             />
             <section className={styles['new-chirp__input']}>
-                {props.isReply && <ChirpReplyHeader username={props.owner.username}/>}
+                {props.isReply && <ChirpReplyHeader username={props.owner.username} link={`/${props.owner.username}`} />}
                 <ChirpInput
                     onSubmit={onSubmitChirpHandler}
                     text={textInput}

@@ -29,9 +29,7 @@ const Status = () => {
                 <Header backButton={true}>
                     <h3>Thread</h3>
                 </Header>
-                <div style={{ 'marginTop': '1rem' }}>
-                    <LoadingFeed height={30} width={30} />
-                </div>
+                <LoadingFeed height={30} width={30} />
             </>
         )
     }

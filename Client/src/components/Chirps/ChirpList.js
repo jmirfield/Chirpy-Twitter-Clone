@@ -4,19 +4,14 @@ import LoadingFeed from '../Loading/LoadingFeed'
 import styles from './ChirpList.module.css'
 
 const ChirpList = ({ chirps, dispatch, error, isLoading }) => {
-    if (isLoading) {
-        return (
-            <div style={{ 'marginTop': '1rem' }}>
-                <LoadingFeed height={30} width={30} />
-            </div>
-        )
-    }
-
+    
+    if (isLoading) return  <LoadingFeed height={30} width={30} />
     if (!chirps || chirps.length === 0 || error) return <p className={styles['chirps-none']}>No chirps available...</p>
 
     return (
         <section className={styles.chirps}>
             {chirps.map((chirp) => {
+
                 const {
                     _id,
                     owner,

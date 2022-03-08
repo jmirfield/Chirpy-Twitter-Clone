@@ -1,14 +1,15 @@
 import {
     getMainFeed,
+    getChirp,
     newChirp,
+    newChirpWithImage,
     newReply,
+    newReplyWithImage,
     getReplies,
     likeChirp,
     unLikeChirp,
     addRechirp,
     deleteRechirp,
-    newChirpWithImage,
-    getChirp
 } from "../api/request"
 
 export const getMainChirpFeed = async (dispatch) => {
@@ -109,23 +110,23 @@ export const replyRequest = async (content, { dispatch, isModal, onClose, _id },
 export const replyRequestWithImage = async (content, { dispatch, isModal, onClose, _id }, { user, profileImage }) => {
     try {
         if (isModal) onClose()
-        const { data } = await newReply({ content, reply: _id })
+        const { data } = await newReplyWithImage(content)
         if (isModal) {
             window.location.reload(false)
             //Will need to be fixed to update feed on home and profile when using menubar chirp buton
             return
         }
-        // dispatch({
-        //     type: 'NEW_CHIRP',
-        //     payload: {
-        //         chirp: {
-        //             ...data,
-        //             isLiked: false,
-        //             isRechirped: false
-        //         },
-        //         client: { user, profileImage }
-        //     }
-        // })
+        dispatch({
+            type: 'NEW_CHIRP',
+            payload: {
+                chirp: {
+                    ...data,
+                    isLiked: false,
+                    isRechirped: false
+                },
+                client: { user, profileImage }
+            }
+        })
     } catch (e) {
         console.log('Error with chirp request')
     }
@@ -184,7 +185,7 @@ export const onRechirpRequest = async (chirp, client) => {
     const {
         isLiked,
         isRechirped,
-        repliesCount,
+        reply,
         rechirpsCount,
         rechirp,
         content,
@@ -196,7 +197,8 @@ export const onRechirpRequest = async (chirp, client) => {
             const createdAt = !rechirp ? chirp.createdAt : chirp.rechirp.createdAt
             const _id = !rechirp ? chirp._id : chirp.rechirp._id
             const owner = !rechirp ? chirp.owner : chirp.rechirp.owner
-            const req = { content, imageURL, rechirp: _id }
+            const repliesCount = !rechirp ? chirp.repliesCount : chirp.rechirp.repliesCount
+            const req = { content, imageURL, rechirp: _id, reply }
             const { data } = await addRechirp(req)
             dispatch({
                 type: 'ADD_RECHIRP',
