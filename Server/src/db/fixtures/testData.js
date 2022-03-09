@@ -65,7 +65,8 @@ const createMockChirps = (users, n) => {
                 owner: users[i]._id,
                 content: `posted by user ${i} chirp number ${t}`,
                 rechirpsCount: 0, 
-                likesCount: 0
+                likesCount: 0,
+                repliesCount: 0
             })
         }
     }

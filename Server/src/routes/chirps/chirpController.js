@@ -1,4 +1,3 @@
-const { findByIdAndDelete } = require('./chirpModel')
 const Chirp = require('./chirpModel')
 const cloudinary = require('cloudinary').v2
 
@@ -49,7 +48,6 @@ class ChirpController {
 
     deleteChirp = async (req, res) => {
         try {
-            // console.log(req.params.id)
             const chirp = await Chirp.findByIdAndDelete({ _id: req.params.id })
             if (chirp.rechirp) {
                 const startingLength = req.user.retweetedChirps.length
@@ -74,6 +72,7 @@ class ChirpController {
                     { $inc: { repliesCount: -1 } }
                 )
             } else if (!chirp.rechirp) {
+                req.user.chirpCount--
                 await Chirp.deleteMany({
                     $or: [
                         { 'rechirp': req.params.id },
@@ -81,7 +80,6 @@ class ChirpController {
                     ]
                 })
             }
-            req.user.chirpCount--
             await req.user.save()
             res.send()
         } catch (e) {
@@ -93,6 +91,7 @@ class ChirpController {
         try {
             await req.user.populate({ path: 'following' })
             const followQuery = req.user.following.map(user => user.following_id)
+            const searchQuery = req.params.query !== 'init' ? req.params.query : Date.now()
             const chirps = (await Chirp.find({
                 $and: [
                     { 'owner': { $in: followQuery } },
@@ -101,10 +100,12 @@ class ChirpController {
                             { 'reply': { '$exists': false } },
                             { 'rechirp': { '$exists': true } }
                         ]
-                    }
+                    },
+                    { 'createdAt': { $lt: searchQuery } }
                 ]
             }, null, {
                 sort: { createdAt: -1 },
+                limit: 10,
                 select: '-__v -updatedAt',
                 lean: true
             }).populate([
@@ -149,7 +150,6 @@ class ChirpController {
                 chirp.rechirpsCount = original.rechirpsCount
                 chirp.likesCount = original.likesCount
                 await chirp.save()
-                req.user.chirpCount++
                 await req.user.save()
                 await Chirp.updateMany(
                     { 'rechirp': chirp.rechirp },
@@ -180,7 +180,6 @@ class ChirpController {
                     { _id: req.params.id },
                     { $inc: { rechirpsCount: -1 } }
                 )
-                req.user.chirpCount--
                 await req.user.save()
                 await Chirp.updateMany(
                     { 'rechirp': req.params.id },
@@ -197,6 +196,7 @@ class ChirpController {
 
     getUserChirps = async (req, res) => {
         try {
+            const searchQuery = req.params.query !== 'init' ? req.params.query : Date.now()
             const chirps = await Chirp.find({
                 $and: [
                     { 'owner': req.params.userId },
@@ -205,15 +205,17 @@ class ChirpController {
                             { 'reply': { '$exists': false } },
                             { 'rechirp': { '$exists': true } }
                         ]
-                    }
+                    },
+                    { 'createdAt': { $lt: searchQuery } }
                 ]
             }, null, {
                 sort: { createdAt: -1 },
+                limit: 10,
                 select: '-__v -updatedAt',
                 lean: true
             }).populate({
                 path: 'rechirp',
-                select: ['createdAt'],
+                select: ['createdAt', 'repliesCount'],
                 populate: {
                     path: 'owner',
                     select: '-_id profileImage username'
@@ -232,15 +234,17 @@ class ChirpController {
 
     getUserMedia = async (req, res) => {
         try {
+            const searchQuery = req.params.query !== 'init' ? req.params.query : Date.now()
             const chirps = await Chirp.find({
                 $and: [
                     { 'owner': req.params.userId },
                     { 'rechirp': { '$exists': false } },
-                    { 'reply': { '$exists': false } },
-                    { 'imageURL': { '$ne': '' }, }
+                    { 'imageURL': { '$ne': '' }, },
+                    { 'createdAt': { $lt: searchQuery } }
                 ]
             }, null, {
                 sort: { createdAt: -1 },
+                limit: 5,
                 select: '-__v -updatedAt',
                 lean: true
             })
@@ -256,12 +260,15 @@ class ChirpController {
 
     getUserLikedChirps = async (req, res) => {
         try {
+            const searchQuery = req.params.query !== 'init' ? req.params.query : Date.now()
             const chirps = await Chirp.find({
-                _id: {
-                    $in: req.body
-                }
+                $and: [
+                    { _id: { $in: req.body }, },
+                    { 'createdAt': { $lt: searchQuery } }
+                ]
             }, null, {
                 sort: { createdAt: -1 },
+                limit: 10,
                 select: '-__v -updatedAt',
                 lean: true
             }).populate({
@@ -336,8 +343,6 @@ class ChirpController {
                 if (error) throw new Error(error)
                 chirp.imageURL = result.secure_url
                 await chirp.save()
-                req.user.chirpCount++
-                await req.user.save()
                 await Chirp.findOneAndUpdate(
                     { _id: req.body.reply },
                     { $inc: { repliesCount: 1 } }
@@ -355,13 +360,16 @@ class ChirpController {
 
     getReplies = async (req, res) => {
         try {
+            const searchQuery = req.params.query !== 'init' ? req.params.query : Date.now()
             const chirps = await Chirp.find({
                 $and: [
                     { reply: req.params.id },
-                    { 'rechirp': { '$exists': false } }
+                    { 'rechirp': { '$exists': false } },
+                    { 'createdAt': { $lt: searchQuery } }
                 ]
             }, null, {
                 sort: { createdAt: -1 },
+                limit: 10,
                 select: '-__v -updatedAt',
                 lean: true
             }).populate({
