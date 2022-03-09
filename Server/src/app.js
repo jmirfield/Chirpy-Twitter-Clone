@@ -1,5 +1,5 @@
 const express = require('express')
-// const cors = require('cors')
+const cors = require('cors')
 require('./db/connection.js')
 const cloudinary = require('cloudinary').v2
 const userRouter = require('./routes/users/userRouter')
@@ -9,13 +9,13 @@ const relationshipRouter = require('./routes/relationships/relationshipRouter')
 const app = express()
 
 app.use(express.json())
-// app.use(cors())
+app.use(cors())
 app.use((req, res, next) => {
-    const allowedOrigins = ['http://localhost:3000', 'http://192.168.0.8'];
-    const origin = req.headers.origin;
-    if (allowedOrigins.includes(origin)) {
-        res.setHeader('Access-Control-Allow-Origin', origin);
-    }
+    // const allowedOrigins = ['http://localhost:3000', 'http://192.168.0.8'];
+    // const origin = req.headers.origin;
+    // if (allowedOrigins.includes(origin)) {
+    //     res.setHeader('Access-Control-Allow-Origin', origin);
+    // }
     // res.header("Access-Control-Allow-Origin", "http://localhost:3000");
     res.header("Access-Control-Allow-Credentials", "true");
     res.header("Access-Control-Allow-Headers", "Origin,Content-Type, Authorization, x-id, Content-Length, X-Requested-With");
