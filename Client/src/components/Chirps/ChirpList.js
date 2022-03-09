@@ -3,15 +3,14 @@ import Chirp from './Chirp'
 import LoadingFeed from '../Loading/LoadingFeed'
 import styles from './ChirpList.module.css'
 
-const ChirpList = ({ chirps, dispatch, error, isLoading }) => {
-    
-    if (isLoading) return  <LoadingFeed height={30} width={30} />
+const ChirpList = ({ chirps, dispatch, error, isLoading, thread = null }) => {
+
+    if (isLoading) return <LoadingFeed height={30} width={30} />
     if (!chirps || chirps.length === 0 || error) return <p className={styles['chirps-none']}>No chirps available...</p>
 
     return (
         <section className={styles.chirps}>
             {chirps.map((chirp) => {
-
                 const {
                     _id,
                     owner,
@@ -24,7 +23,7 @@ const ChirpList = ({ chirps, dispatch, error, isLoading }) => {
                     createdAt,
                     imageURL = '',
                     rechirp = null,
-                    reply = null
+                    reply = null,
                 } = chirp
                 return (
                     <Chirp
@@ -42,6 +41,7 @@ const ChirpList = ({ chirps, dispatch, error, isLoading }) => {
                         reply={reply}
                         imageURL={imageURL}
                         dispatch={dispatch}
+                        thread={thread}
                     />
                 )
             })}

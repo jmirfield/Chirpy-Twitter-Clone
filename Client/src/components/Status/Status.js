@@ -1,35 +1,37 @@
 import React, { useEffect } from 'react'
-import { useParams } from 'react-router-dom'
-import { getChirpStatus, getChirpReplies } from '../../actions/chirps'
+import { Outlet, useParams } from 'react-router-dom'
+import { getChirpStatus } from '../../actions/chirps'
 import useFeed from '../../hooks/useFeed'
 import Header from '../UI/Header/Header'
 import Chirp from '../Chirps/Chirp'
 import LoadingFeed from '../Loading/LoadingFeed'
-import NewChirp from '../Chirps/NewChirp'
-import ChirpList from '../Chirps/ChirpList'
-import styles from './styles.module.css'
 
 const Status = () => {
-    const [main, mainDispatch] = useFeed()
-    const [reply, replyDispatch] = useFeed()
     const { chirpId } = useParams()
+    const [main, mainDispatch] = useFeed(getChirpStatus.bind(this, chirpId))
 
     useEffect(() => {
-        getChirpStatus(chirpId, mainDispatch)
-        getChirpReplies(chirpId, replyDispatch)
-        return () => {
-            mainDispatch({ type: 'RESET' })
-            replyDispatch({ type: 'RESET' })
-        }
+        if (main.feed.length !== 0) mainDispatch({ type: "RESET" })
     }, [chirpId])
 
-    if (main.isLoading) {
+    if (!main || main.isLoading) {
         return (
             <>
                 <Header backButton={true}>
                     <h3>Thread</h3>
                 </Header>
                 <LoadingFeed height={30} width={30} />
+            </>
+        )
+    }
+
+    if (main.error) {
+        return (
+            <>
+                <Header backButton={true}>
+                    <h3>Thread</h3>
+                </Header>
+                <h2>Original tweet has been deleted</h2>
             </>
         )
     }
@@ -53,21 +55,7 @@ const Status = () => {
                 imageURL={main.feed[0].imageURL}
                 dispatch={mainDispatch}
             />
-            <NewChirp
-                isReply={true}
-                owner={main.feed[0].owner}
-                _id={main.feed[0]._id}
-                dispatch={replyDispatch}
-                isModal={false}
-            />
-            {reply.feed.length > 0 &&
-                <ChirpList
-                    chirps={reply.feed}
-                    dispatch={replyDispatch}
-                    error={reply.error}
-                    isLoading={reply.isLoading}
-                />
-            }
+            <Outlet context={main} />
         </>
     )
 }

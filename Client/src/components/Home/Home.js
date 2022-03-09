@@ -7,19 +7,11 @@ import styles from './Home.module.css'
 import Header from '../UI/Header/Header'
 
 const Home = () => {
-    const [{ feed, isLoading, error }, feedDispatch] = useFeed()
+    const [{ feed, isLoading, error }, feedDispatch] = useFeed(getMainChirpFeed)
 
     useEffect(() => {
         document.title = 'Home / Chirpy'
         window.scrollTo(0, 0);
-        getMainChirpFeed(feedDispatch)
-        const onScroll = function () { //Can be used for pagination
-            if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-                //   console.log("you're at the bottom of the page")
-            }
-        }
-        window.addEventListener('scroll', onScroll)
-        return () => window.removeEventListener('scroll', onScroll)
     }, [])
 
     return (

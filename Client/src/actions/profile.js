@@ -44,9 +44,9 @@ export const getUserProfileRequest = async (user, dispatch) => {
     }
 }
 
-export const getUserProfileFeedRequest = async (_id, profileImage, user, myProfile, dispatch) => {
+export const getUserProfileFeedRequest = async (options, query, dispatch) => {
     try {
-        const { data } = await getUserProfileFeed(_id)
+        const { data } = await getUserProfileFeed(options.profile._id, query)
         const {
             feed,
             likedChirps,
@@ -56,29 +56,28 @@ export const getUserProfileFeedRequest = async (_id, profileImage, user, myProfi
             return {
                 ...chirp,
                 owner: {
-                    username: user,
-                    profileImage: profileImage
+                    username: options.profile.username,
+                    profileImage: options.profile.profileImage
                 }
             }
         })
         dispatch({
-            type: 'INIT_SYNC',
+            type: 'GET_FEED',
             payload: {
                 feed: chirps,
                 liked: likedChirps,
                 rechirped: retweetedChirps,
-                myProfile
+                myProfile: options.profile.username === options.user
             }
         })
     } catch (e) {
-        console.log(e)
         dispatch({ type: 'ERROR' })
     }
 }
 
-export const getUserProfileMediaRequest = async (_id, profileImage, user, dispatch) => {
+export const getUserProfileMediaRequest = async (options, query, dispatch) => {
     try {
-        const { data } = await getUserMedia(_id)
+        const { data } = await getUserMedia(options._id, query)
         const {
             feed,
             likedChirps,
@@ -88,13 +87,13 @@ export const getUserProfileMediaRequest = async (_id, profileImage, user, dispat
             return {
                 ...chirp,
                 owner: {
-                    username: user,
-                    profileImage: profileImage
+                    username: options.username,
+                    profileImage: options.profileImage
                 }
             }
         })
         dispatch({
-            type: 'INIT_SYNC',
+            type: 'GET_FEED',
             payload: {
                 feed: chirps,
                 liked: likedChirps,
@@ -103,21 +102,20 @@ export const getUserProfileMediaRequest = async (_id, profileImage, user, dispat
             }
         })
     } catch (e) {
-        console.log(e)
         dispatch({ type: 'ERROR' })
     }
 }
 
-export const getUserLikesRequest = async (likes, dipsatch) => {
+export const getUserLikesRequest = async (likes, query, dispatch) => {
     try {
-        const { data } = await getUserLikes(likes)
+        const { data } = await getUserLikes(likes, query)
         const {
             feed,
             likedChirps,
             retweetedChirps
         } = data
-        dipsatch({
-            type: 'INIT_SYNC',
+        dispatch({
+            type: 'GET_FEED',
             payload: {
                 feed,
                 liked: likedChirps,
@@ -127,7 +125,7 @@ export const getUserLikesRequest = async (likes, dipsatch) => {
         })
     } catch (e) {
         console.log(e)
-        dipsatch({ type: 'ERROR' })
+        dispatch({ type: 'ERROR' })
     }
 }
 

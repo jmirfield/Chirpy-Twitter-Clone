@@ -12,6 +12,7 @@ const ReplyModal = (props) => {
                 isReply={true}
                 owner={props.owner}
                 _id={props.id}
+                className={styles.reply}
             />
         </Modal>
     )

@@ -163,3 +163,8 @@
 .chirp__delete > span {
     margin-left: 1rem;
 }
+
+.reply {
+    width: 34rem;
+    min-height: 15rem;
+}

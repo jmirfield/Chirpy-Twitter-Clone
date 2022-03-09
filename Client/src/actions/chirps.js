@@ -13,12 +13,12 @@ import {
     deleteChirp,
 } from "../api/request"
 
-export const getMainChirpFeed = async (dispatch) => {
+export const getMainChirpFeed = async (query, dispatch) => {
     try {
-        const { data } = await getMainFeed()
+        const { data } = await getMainFeed(query)
         const { feed, likedChirps, retweetedChirps } = data
         dispatch({
-            type: 'INIT_SYNC',
+            type: 'GET_FEED',
             payload: {
                 feed,
                 liked: likedChirps,
@@ -36,10 +36,8 @@ export const newChirpRequest = async (content, { dispatch, isModal, onClose }, {
         const { data } = await newChirp({ content, imageURL: '' })
         if (isModal) {
             window.location.reload(false)
-            //Will need to be fixed to update feed on home and profile when using menubar chirp buton
             return
         }
-        // console.log(data)
         dispatch({
             type: 'NEW_CHIRP',
             payload: {
@@ -63,7 +61,6 @@ export const newChirpRequestWithImage = async (content, { dispatch, isModal, onC
         const { data } = await newChirpWithImage(content)
         if (isModal) {
             window.location.reload(false)
-            //Will need to be fixed to update feed on home and profile when using menubar chirp buton
             return
         }
         dispatch({
@@ -144,12 +141,12 @@ export const replyRequestWithImage = async (content, { dispatch, isModal, onClos
     }
 }
 
-export const getChirpReplies = async (_id, dispatch) => {
+export const getChirpReplies = async (_id, query, dispatch) => {
     try {
-        const { data } = await getReplies(_id)
+        const { data } = await getReplies(_id, query)
         const { feed, likedChirps, retweetedChirps } = data
         dispatch({
-            type: 'INIT_SYNC',
+            type: 'GET_FEED',
             payload: {
                 feed,
                 liked: likedChirps,
@@ -248,19 +245,26 @@ export const onRechirpRequest = async (chirp, client) => {
     }
 }
 
-export const getChirpStatus = async (_id, dispatch) => {
+export const getChirpStatus = async (_id, query, dispatch) => {
     try {
-        const { data } = await getChirp(_id)
-        const { feed, likedChirps, retweetedChirps } = data
-        dispatch({
-            type: 'INIT_SYNC',
-            payload: {
-                feed,
-                liked: likedChirps,
-                rechirped: retweetedChirps,
-                isStatic: true
+        if (query === 'init') {
+            const { data } = await getChirp(_id)
+            const { feed, likedChirps, retweetedChirps } = data
+            if (feed[0] !== null) {
+                dispatch({
+                    type: 'GET_SINGLE',
+                    payload: {
+                        feed,
+                        liked: likedChirps,
+                        rechirped: retweetedChirps,
+                        isStatic: true,
+                        query: undefined
+                    }
+                })
+            } else {
+                dispatch({ type: 'ERROR' })
             }
-        })
+        }
     } catch (e) {
         console.log(e)
     }

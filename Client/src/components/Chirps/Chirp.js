@@ -24,7 +24,6 @@ const Chirp = (props) => {
         setComposeReplyChirp(false)
     }
 
-
     const post_owner = props.rechirp ? props.rechirp.owner.username : props.owner.username
     const post_id = props.rechirp ? props.rechirp._id : props._id
     const post_time = props.rechirp ? props.rechirp.createdAt : props.createdAt
@@ -52,7 +51,7 @@ const Chirp = (props) => {
     return (
         <article className={styles['chirp']} key={props._id}>
             {props.rechirp && <ChirpRechirpHeader user={props.owner.username} />}
-            {props.reply && <ChirpReplyHeader username={props.owner.username} link={`/${props.owner.username}/status/${props.reply}`} />}
+            {props.reply && props.thread && <ChirpReplyHeader username={props.thread} link={`/${props.owner.username}/status/${props.reply}`} />}
             <section className={styles['chirp__main']}>
                 <ChirpPostIcon owner={post_owner} profileImage={post_icon} />
                 <section className={styles['chirp__body']}>
