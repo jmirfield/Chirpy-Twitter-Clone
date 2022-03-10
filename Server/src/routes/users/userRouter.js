@@ -24,6 +24,7 @@ router.patch('/users/unlike', auth, userController.unlikeChirp)
 router.delete('/users/delete', auth, userController.deleteUser)
 
 router.get('/users/search/:username', auth, userController.getListOfUsers)
+router.get('/users/recommended', auth, userController.getRecommenedUsers)
 
 
 

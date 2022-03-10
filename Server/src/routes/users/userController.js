@@ -141,7 +141,7 @@ class UserController {
                     { _id: req.body._id },
                     { $inc: { likesCount: 1 } }
                 )
-                if(!chirp)throw new Error('Chirp not found')
+                if (!chirp) throw new Error('Chirp not found')
                 await Chirp.updateMany(
                     { 'rechirp': req.body._id },
                     { $inc: { likesCount: 1 } }
@@ -245,6 +245,19 @@ class UserController {
                 const isFollowing = req.user.following.some(u => u.following_id.equals(user._id))
                 return { username: user.username, profileImage: user.profileImage || '', isFollowing, _id: user._id }
             })
+            res.send(users)
+        } catch (e) {
+            res.status(400).send()
+        }
+    }
+
+    getRecommenedUsers = async (req, res) => {
+        try {
+            await req.user.populate({ path: 'following' })
+            const query = req.user.following.map(key => key.following_id)
+            const users = await User.find({
+                '_id': { $nin: query }
+            }, null, { limit: 3 })
             res.send(users)
         } catch (e) {
             res.status(400).send()
