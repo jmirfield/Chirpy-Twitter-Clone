@@ -19,7 +19,7 @@ const MainLayout = () => {
         setComposeNewChirp(false)
     }, [])
 
-    const isMobile = window.screen.width < 1100
+    const isMobile = window.screen.width < 800
 
     return (
         <div className={styles['layout']}>
