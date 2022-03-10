@@ -6,9 +6,11 @@ import styles from './styles.module.css'
 const ChirpOption = React.forwardRef(({ open, setOpen, owner, onDelete }, ref) => {
     const openOptions = () => setOpen(true)
     return (
-        <section className={styles.chirp__options} ref={ref}>
-            <button onClick={openOptions}>···</button>
-            {open && <ChirpDropdown owner={owner} onDelete={onDelete} />}
+        <section className={styles.chirp__options}>
+            <section ref={ref}>
+                <button onClick={openOptions}>···</button>
+                {open && <ChirpDropdown owner={owner} onDelete={onDelete} />}
+            </section>
         </section>
     )
 })

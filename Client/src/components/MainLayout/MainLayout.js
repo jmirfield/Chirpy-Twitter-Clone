@@ -19,6 +19,7 @@ const MainLayout = () => {
         setComposeNewChirp(false)
     }, [])
 
+    const isMobile = window.screen.width < 1100
 
     return (
         <div className={styles['layout']}>
@@ -26,7 +27,7 @@ const MainLayout = () => {
             <main className={styles['layout__main']}>
                 <Outlet context={{ setOnExplore }} />
             </main>
-            <Sidebar onExplore={onExplore} />
+            {!isMobile && <Sidebar onExplore={onExplore} />}
             {composeNewChirp && <ChirpModal onClose={onCloseNewChirpHandler} />}
         </div>
     )

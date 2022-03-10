@@ -76,3 +76,11 @@
     color: rgb(101, 119, 134);
 }
 
+@media only screen and (max-width: 600px) {
+    .chirp__actions {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        padding-right: 0;
+    }
+}

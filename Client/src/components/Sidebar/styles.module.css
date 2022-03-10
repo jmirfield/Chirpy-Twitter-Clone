@@ -16,12 +16,14 @@
     margin-top: 1rem;
 }
 
-@media (width < 1075px) {
-    .sidebar {
-        display: none;
-    }
-    .modal {
+@media only screen and (max-width: 600px) and (orientation:portrait) {
+    .sidebar{
         display: none;
     }
 }
 
+@media only screen and (max-height: 575.98px) and (orientation: landscape) {
+    .sidebar{
+        display: none;
+    }
+}
