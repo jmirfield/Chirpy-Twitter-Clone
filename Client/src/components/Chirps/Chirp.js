@@ -51,7 +51,7 @@ const Chirp = (props) => {
     return (
         <article className={styles['chirp']} key={props._id}>
             {props.rechirp && <ChirpRechirpHeader user={props.owner.username} />}
-            {props.reply && props.thread && <ChirpReplyHeader username={props.thread} link={`/${props.owner.username}/status/${props.reply}`} />}
+            {props.reply && props.thread && <ChirpReplyHeader username={props.thread} link={`/${props.thread}/status/${props.reply}`} />}
             <section className={styles['chirp__main']}>
                 <ChirpPostIcon owner={post_owner} profileImage={post_icon} />
                 <section className={styles['chirp__body']}>
@@ -62,7 +62,7 @@ const Chirp = (props) => {
                 </section>
                 <ChirpOption owner={props.owner.username} onDelete={deleteChirpRequest.bind(this, props)} />
             </section>
-            {composeReplyChirp && <ReplyModal onClose={onCloseReplyHandler} owner={props.owner} id={!props.rechirp ? props._id : props.rechirp} />}
+            {composeReplyChirp && <ReplyModal onClose={onCloseReplyHandler} owner={props.owner} id={post_id} />}
         </article>
     )
 }

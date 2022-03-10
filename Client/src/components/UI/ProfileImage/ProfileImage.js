@@ -11,6 +11,10 @@ const ProfileImage = (props) => {
             className={profileClass}
             onClick={props.onClick}
             style={props.style}
+            onError={({ currentTarget }) => {
+                currentTarget.onerror = null; // prevents looping
+                currentTarget.src = "https://abs.twimg.com/sticky/default_profile_images/default_profile_200x200.png";
+            }}
         />
     )
 }

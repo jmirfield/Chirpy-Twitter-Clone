@@ -42,3 +42,4 @@ export const getUserFollowers = (user) => API.get(`users/profile/followers/${use
 export const uploadImage = (img) => API.patch('users/profile/upload/pic', img, { headers: { 'Content-Type': img.type } })
 export const uploadBanner = (img) => API.patch('users/profile/upload/banner', img, { headers: { 'Content-Type': img.type } })
 export const getListOfUsers = (search) => API.get(`users/search/${search}`)
+export const getRecommendedFollowers = () => API.get('users/recommended')
