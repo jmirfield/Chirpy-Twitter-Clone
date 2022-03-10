@@ -14,7 +14,7 @@ class ChirpController {
             await chirp.save()
             req.user.chirpCount++
             await req.user.save()
-            res.send(chirp)
+            res.status(201).send(chirp)
         } catch (e) {
             res.status(400).send()
             console.log(e)
