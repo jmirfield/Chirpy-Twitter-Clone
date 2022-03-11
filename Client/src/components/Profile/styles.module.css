@@ -105,6 +105,9 @@
     
     .profile__list {
         list-style: none;
+        max-height: 60vh;
+        overflow-y: auto;
+        overflow-x: hidden;
     }
     
     .profile__item {
@@ -120,17 +123,24 @@
     
     .profile__item > a {
         display: flex;
+        flex-grow: 1;
         padding: 1rem;
         text-decoration: none;
         color: white;
         align-items: center;
-        width: 100%;
         justify-content: space-between;
     }
     
     .profile__user {
         display: flex;
         align-items: center;
+        max-width: 75%;
+        
+    }
+
+    .profile__user > span {
+        font-size: 18px;
+        overflow: hidden;
     }
     
     .profile__user__icon {
