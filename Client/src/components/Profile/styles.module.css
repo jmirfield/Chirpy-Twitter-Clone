@@ -115,6 +115,7 @@
         padding: 0;
         display: flex;
         justify-content: space-between;
+        min-width: 0;
     }
     
     .profile__item:hover {
@@ -129,17 +130,18 @@
         color: white;
         align-items: center;
         justify-content: space-between;
+        min-width: 0;
     }
     
     .profile__user {
         display: flex;
         align-items: center;
-        max-width: 75%;
+        max-width: 60%;
         
     }
 
     .profile__user > span {
-        font-size: 18px;
+        font-size: 20px;
         overflow: hidden;
     }
     
@@ -322,6 +324,7 @@
     .profile__user {
         display: flex;
         align-items: center;
+        min-width: 0;
     }
     
     .profile__user__icon {
@@ -365,6 +368,7 @@
         align-items: center;
         width: 100%;
         justify-content: space-between;
+        min-width: 0;
     }
 
 }
