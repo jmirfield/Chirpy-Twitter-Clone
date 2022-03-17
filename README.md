@@ -5,9 +5,9 @@ Twitter clone built with MongoDB, Express, React, NodeJS (MERN).
 
 # Preview :
 
-<img src="https://github.com/jmirfield/Chirpy-Twitter-Clone/blob/main/Demo/LoginPageDemo.png" alt="Login Page Demo" width="800">
+<img src="https://github.com/jmirfield/Chirpy-Twitter-Clone/blob/main/Demo/LoginPageDemo.PNG" alt="Login Page Demo" width="800">
 
-<img src="https://github.com/jmirfield/Chirpy-Twitter-Clone/blob/main/Demo/HomePageDemo.png" alt="Home Page Demo" width="800">
+<img src="https://github.com/jmirfield/Chirpy-Twitter-Clone/blob/main/Demo/HomePageDemo.PNG" alt="Home Page Demo" width="800">
 
 ## Features
 1. Signin / Signup
