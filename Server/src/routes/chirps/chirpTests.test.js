@@ -33,4 +33,31 @@ describe('Create and delete chirps', () => {
             .set('Authorization', `Bearer ${testUserMain.tokens[0].token}`)
             .expect(400)
     })
+
+    test('Should delete chirp', async () => {
+        await request(app)
+            .delete(`/chirps/delete/${mockChirps[0]._id}`)
+            .set('Authorization', `Bearer ${testUserMain.tokens[0].token}`)
+            .expect(200)
+        const chirp = await Chirp.findById(mockChirps[0]._id)
+        expect(chirp).toBeNull()
+    })
+
+    test('Should fail to delete non-existing chirp', async () => {
+        await request(app)
+            .delete(`/chirps/delete/fake-id`)
+            .set('Authorization', `Bearer ${testUserMain.tokens[0].token}`)
+            .expect(404)
+    })
+})
+
+describe('Chirp feeds', () => {
+    test('Should get current user chirp feed', async () => {
+        const response = await request(app)
+            .get('/chirps/feed/init')
+            .set('Authorization', `Bearer ${testUserMain.tokens[0].token}`)
+            .expect(200)
+        expect(response.body).toHaveProperty('feed')
+        expect(response.body?.feed).toHaveLength(10)
+    })
 })
