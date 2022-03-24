@@ -1,5 +1,5 @@
 # Twitter Clone - Chirpy using MERN Stack
-Demo 👉 https://chirpy-clone-twitter.herokuapp.com/
+Demo 👉 https://chirpy-clone-twitter.herokuapp.com/ (App may take a bit to load since web dyno is asleep)
 
 Username: demo
 
